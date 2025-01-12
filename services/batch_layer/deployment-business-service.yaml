@@ -17,11 +17,9 @@ services:
       timeout: 10s
       retries: 3
 
-
 volumes:
   business-metabase:
 
 networks:
   hadoop_network:
     external: true
-

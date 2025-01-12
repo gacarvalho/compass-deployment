@@ -1,11 +1,13 @@
 version: '3.8'
 
-# Referenciando os arquivos individuais de cada serviço
 services:
-  # Carregar configurações de todos os outros arquivos
-  # Certifique-se de que os caminhos estão corretos para o seu projeto
-  - ./batch_layer/deployment-airflow-service.yaml
-  - ./batch_layer/deployment-business-service.yaml
-  - ./batch_layer/deployment-database-mongodb-service.yaml
-  - ./batch_layer/deployment-hadoop-service.yaml
-  - ./batch_layer/deployment-spark-service.yaml
+  airflow:
+    file: services/batch_layer/deployment-airflow-service.yaml
+  business:
+    file: services/batch_layer/deployment-business-service.yaml
+  mongodb:
+    file: services/batch_layer/deployment-database-mongodb-service.yaml
+  hadoop:
+    file: services/batch_layer/deployment-hadoop-service.yaml
+  spark:
+    file: services/batch_layer/deployment-spark-service.yaml

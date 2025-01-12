@@ -1,3 +1,4 @@
+---
 version: '3.8'
 
 # Âncoras para configurações comuns
@@ -34,7 +35,7 @@ services:
     environment:
       <<: *default-environment
     healthcheck:
-      test: [ "CMD", "nc", "-z", "namenode", "9870" ]
+      test: ["CMD", "nc", "-z", "namenode", "9870"]
       <<: *default-healthcheck
 
   # Serviço do Datanode
@@ -51,7 +52,7 @@ services:
       - SERVICE_PRECONDITION=namenode:9870
       - DATANODE_PORT=9864  # Define a variável de ambiente para a porta
     healthcheck:
-      test: ["CMD", "nc", "-z", "datanode", "${DATANODE_PORT}"]  # Usando a variável de ambiente para a porta
+      test: ["CMD", "nc", "-z", "datanode", "${DATANODE_PORT}"]
       <<: *default-healthcheck
     depends_on:
       - infra-namenode
@@ -69,7 +70,7 @@ services:
     ports:
       - "8188:8188"
     healthcheck:
-      test: [ "CMD", "nc", "-z", "history-server", "8188" ]
+      test: ["CMD", "nc", "-z", "history-server", "8188"]
       <<: *default-healthcheck
     depends_on:
       - infra-namenode
@@ -86,7 +87,7 @@ services:
     ports:
       - "8088:8088"
     healthcheck:
-      test: [ "CMD", "nc", "-z", "resourcemanager", "8088" ]
+      test: ["CMD", "nc", "-z", "resourcemanager", "8088"]
       <<: *default-healthcheck
     depends_on:
       - infra-namenode
@@ -104,7 +105,7 @@ services:
     ports:
       - "8042:8042"
     healthcheck:
-      test: [ "CMD", "nc", "-z", "nodemanager", "8042" ]
+      test: ["CMD", "nc", "-z", "nodemanager", "8042"]
       <<: *default-healthcheck
     depends_on:
       - infra-namenode

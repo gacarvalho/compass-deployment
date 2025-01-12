@@ -1,3 +1,4 @@
+---
 version: '3.8'
 
 # Âncoras para configurações comuns
@@ -36,7 +37,7 @@ services:
     depends_on:
       - infra-namenode
     healthcheck:
-      test: [ "CMD", "nc", "-z", "spark-master", "8082" ]
+      test: ["CMD", "nc", "-z", "spark-master", "8082"]
       <<: *default-healthcheck
 
   # Serviço do Spark Worker
