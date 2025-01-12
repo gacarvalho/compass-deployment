@@ -1,5 +1,4 @@
-version: '2.4'
-
+---
 # Âncoras para configurações comuns
 x-logging: &default-logging
   driver: "json-file"
