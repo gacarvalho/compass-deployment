@@ -1,13 +1,38 @@
-version: '3.8'
-
 services:
-  airflow:
-    file: services/batch_layer/deployment-airflow-service.yaml
-  business:
-    file: services/batch_layer/deployment-business-service.yaml
-  mongodb:
-    file: services/batch_layer/deployment-database-mongodb-service.yaml
-  hadoop:
-    file: services/batch_layer/deployment-hadoop-service.yaml
-  spark:
-    file: services/batch_layer/deployment-spark-service.yaml
+
+  deployment-hadoop-service:
+    extends:
+      file: services/batch_layer/deployment-hadoop-service.yaml
+      service: deployment-hadoop-service
+
+  deployment-spark-service:
+    extends:
+      file: services/batch_layer/deployment-spark-service.yaml
+      service: deployment-spark-service
+
+  deployment-database-mongodb-service:
+    extends:
+      file: services/batch_layer/deployment-database-mongodb-service.yaml
+      service: deployment-database-mongodb-service
+
+  deployment-business-service:
+    extends:
+      file: services/batch_layer/deployment-business-service.yaml
+      service: deployment-business-service
+
+  deployment-airflow-service:
+    extends:
+      file: services/batch_layer/deployment-airflow-service.yaml
+      service: deployment-airflow-service
+
+networks:
+  hadoop_network:
+    driver: bridge
+    external: true
+
+volumes:
+  deployment-hadoop-services:
+  deployment-spark-services:
+  deployment-database-mongodb-services:
+  deployment-business-services:
+  deployment-airflow-services:
