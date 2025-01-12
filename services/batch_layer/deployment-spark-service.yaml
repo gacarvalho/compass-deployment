@@ -1,0 +1,75 @@
+version: '3.8'
+
+# Âncoras para configurações comuns
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-file: "5"
+    max-size: "10m"
+
+x-healthcheck: &default-healthcheck
+  timeout: 45s
+  interval: 10s
+  retries: 10
+
+x-restart: &default-restart
+  restart: always
+
+x-volumes: &default-volumes
+  - ./mnt/spark/apps:/opt/spark-apps
+  - ./mnt/spark/data:/opt/spark-data
+
+services:
+  # Serviço do Spark Master
+  infra-spark-master:
+    image: iamgacarvalho/spark-master-data-in-compass:0.0.3
+    container_name: spark-master
+    logging:
+      <<: *default-logging
+    ports:
+      - "8082:8082"
+      - "8083:7077"
+    networks:
+      - hadoop_network
+    volumes:
+      <<: *default-volumes
+    depends_on:
+      - infra-namenode
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "spark-master", "8082" ]
+      <<: *default-healthcheck
+
+  # Serviço do Spark Worker
+  infra-spark-worker:
+    image: iamgacarvalho/spark-worker-data-in-compass:0.0.3
+    container_name: spark-worker  # Nome base para o container
+    logging:
+      <<: *default-logging
+    ports:
+      - "8081-8083:8081"  # Mapeando portas externas para portas internas
+    networks:
+      - hadoop_network
+    volumes:
+      - ./mnt/spark/apps:/opt/spark-apps
+      - ./mnt/spark/data:/opt/spark-data
+      - ./mnt/spark/worker-logs:/opt/spark/logs  # Volume para logs dos workers
+    environment:
+      - WORKER_PORT=8081
+    healthcheck:
+      test: ["CMD", "nc", "-z", "spark-worker", "${WORKER_PORT}"]
+      <<: *default-healthcheck
+    depends_on:
+      - infra-spark-master
+    deploy:
+      replicas: 3
+
+volumes:
+  # Volumes compartilhados, se necessário
+  infra-spark-master:
+  infra-spark-worker:
+  infra-spark-worker-logs:
+    driver: local
+
+networks:
+  hadoop_network:
+    external: true

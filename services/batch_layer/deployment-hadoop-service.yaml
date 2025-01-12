@@ -1,0 +1,121 @@
+version: '3.8'
+
+# Âncoras para configurações comuns
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-file: "5"
+    max-size: "10m"
+
+x-healthcheck: &default-healthcheck
+  timeout: 45s
+  interval: 10s
+  retries: 10
+
+x-environment: &default-environment
+  - CLUSTER_NAME=hadoop_cluster
+
+x-restart: &default-restart
+  restart: always
+
+services:
+  # Serviço do Namenode
+  infra-namenode:
+    image: iamgacarvalho/hadoop-namenode-data-in-compass:0.0.3
+    container_name: namenode
+    networks:
+      - hadoop_network
+    logging:
+      <<: *default-logging
+    ports:
+      - "32763:9870"
+    volumes:
+      - ./mnt/hadoop/namenode:/hadoop/dfs/name
+    environment:
+      <<: *default-environment
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "namenode", "9870" ]
+      <<: *default-healthcheck
+
+  # Serviço do Datanode
+  infra-datanode:
+    image: iamgacarvalho/hadoop-datanode-data-in-compass:0.0.3
+    container_name: datanode
+    networks:
+      - hadoop_network
+    logging:
+      <<: *default-logging
+    volumes:
+      - ./mnt/hadoop/datanode:/hadoop/dfs/data
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - DATANODE_PORT=9864  # Define a variável de ambiente para a porta
+    healthcheck:
+      test: ["CMD", "nc", "-z", "datanode", "${DATANODE_PORT}"]  # Usando a variável de ambiente para a porta
+      <<: *default-healthcheck
+    depends_on:
+      - infra-namenode
+    deploy:
+      replicas: 3
+
+  # Serviço do History Server
+  infra-history-server:
+    image: iamgacarvalho/hadoop-historyserver-data-in-compass:0.0.3
+    container_name: history-server
+    networks:
+      - hadoop_network
+    logging:
+      <<: *default-logging
+    ports:
+      - "8188:8188"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "history-server", "8188" ]
+      <<: *default-healthcheck
+    depends_on:
+      - infra-namenode
+      - infra-datanode
+
+  # Serviço do ResourceManager
+  infra-resourcemanager:
+    image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
+    container_name: resourcemanager
+    networks:
+      - hadoop_network
+    logging:
+      <<: *default-logging
+    ports:
+      - "8088:8088"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "resourcemanager", "8088" ]
+      <<: *default-healthcheck
+    depends_on:
+      - infra-namenode
+      - infra-datanode
+      - infra-history-server
+
+  # Serviço do NodeManager
+  infra-nodemanager:
+    image: iamgacarvalho/hadoop-nodemanager-data-in-compass:0.0.3
+    container_name: nodemanager
+    networks:
+      - hadoop_network
+    logging:
+      <<: *default-logging
+    ports:
+      - "8042:8042"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "nodemanager", "8042" ]
+      <<: *default-healthcheck
+    depends_on:
+      - infra-namenode
+      - infra-datanode
+      - infra-history-server
+      - infra-resourcemanager
+
+volumes:
+  infra-namenode:
+  infra-datanode:
+
+networks:
+  hadoop_network:
+    external: true

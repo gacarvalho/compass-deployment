@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  business-metabase:
+    container_name: observalidade-metabase
+    image: metabase/metabase:latest
+    ports:
+      - "8084:3000"
+    volumes:
+      - ./mnt/metabase:/metabase.db
+    networks:
+      - hadoop_network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+
+volumes:
+  business-metabase:
+
+networks:
+  hadoop_network:
+    external: true
+
