@@ -1,5 +1,4 @@
 ---
-# Âncoras para configurações comuns
 x-logging: &default-logging
   driver: "json-file"
   options:
@@ -43,19 +42,6 @@ services:
     <<: *default-restart
     healthcheck:
       <<: *default-healthcheck
-
-  # Serviço MongoDB Exporter para Prometheus
-  mongo-exporter:
-    container_name: mongo-exporter
-    image: bitnami/mongodb-exporter:latest
-    ports:
-      - "9216:9216"
-    environment:
-      - MONGODB_URI=mongodb://${MONGO_USER_ADMIN}:${MONGO_PASS_ADMIN}@mongodb:27017
-    networks:
-      - hadoop_network
-    logging:
-      <<: *default-logging
 
 volumes:
   mongodb_data:

@@ -1,7 +1,6 @@
 ---
 version: '3.8'
 
-# Âncoras para configurações comuns
 x-logging: &default-logging
   driver: "json-file"
   options:
@@ -43,7 +42,7 @@ services:
   # Serviço do Spark Worker
   infra-spark-worker:
     image: iamgacarvalho/spark-worker-data-in-compass:0.0.3
-    container_name: spark-worker  # Nome base para o container
+    container_name: spark-worker
     logging:
       <<: *default-logging
     ports:
