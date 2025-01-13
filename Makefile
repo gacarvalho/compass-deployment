@@ -1,35 +1,28 @@
 DOCKER_NETWORK = hadoop-network
 VERSION_REPOSITORY_DOCKER = 1.0.0
 
+
+################################### create network ###########################################################
 create-network:
 	docker network create --driver overlay hadoop_network
 
 ################################### prepare mnt #############################################################
 
+BASE_DIR := $(shell pwd)/swarm-compass/compass-deployment
+
 prepare-mnt:
-	# Definir o diretório base como o diretório atual
-	BASE_DIR := $(CURDIR)
+	mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
+	mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
+	echo "Diretórios de montagem criados com sucesso."
 
-	# Criar os diretórios de montagem para namenode e datanode
-	mkdir -p $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/namenode/
-	mkdir -p $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/datanode/
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
 
-	# Verificar se os diretórios foram criados corretamente
-	@echo "Diretórios de montagem criados com sucesso."
+	sudo chmod -R 755 $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
+	sudo chmod -R 755 $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
 
-	# Ajustar as permissões para garantir que o Docker tenha acesso adequado
-	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/namenode
-	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/datanode
-
-	# Atribuir permissões 755 ao diretório
-	sudo chmod -R 755 $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/namenode
-	sudo chmod -R 755 $(BASE_DIR)/compass-deployment/services/batch_layer/mnt/hadoop/datanode
-
-	# Verificar se as permissões foram definidas corretamente
-	@echo "Permissões 755 aplicadas ao diretório de montagem."
-
+	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
 #################################### deployment environment production ########################################
-
 deployment-hadoop-service:
 	docker stack deploy -c services/batch_layer/deployment-hadoop-service.yaml deployment-hadoop

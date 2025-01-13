@@ -34,7 +34,7 @@ services:
     environment: *default-environment
     healthcheck:
       <<: *default-healthcheck
-      test: ["CMD", "nc", "-z", "namenode", "9870"]
+      test: ["CMD", "nc", "-z", "localhost", "9870"]
 
   # Serviço do Datanode
   infra-datanode:
@@ -46,15 +46,10 @@ services:
     volumes:
       - ./mnt/hadoop/datanode:/hadoop/dfs/data
     environment:
-      SERVICE_PRECONDITION: namenode:9870
+      SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864
-    healthcheck:
-      <<: *default-healthcheck
-      test: ["CMD", "nc", "-z", "datanode", "9864"]
-    depends_on:
-      - infra-namenode
     deploy:
-      replicas: 3
+      replicas: 1
 
 volumes:
   infra-namenode:
@@ -63,3 +58,4 @@ volumes:
 networks:
   hadoop_network:
     external: true
+    driver: overlay
