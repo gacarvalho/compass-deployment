@@ -25,7 +25,9 @@ services:
     image: iamgacarvalho/hadoop-namenode-data-in-compass:0.0.3
     container_name: namenode
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - namenode
     logging: *default-logging
     ports:
       - "32763:9870"
@@ -41,7 +43,9 @@ services:
     image: iamgacarvalho/hadoop-datanode-data-in-compass:0.0.3
     container_name: datanode
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - datanode
     logging: *default-logging
     volumes:
       - ./mnt/hadoop/datanode:/hadoop/dfs/data
@@ -57,7 +61,9 @@ services:
     image: iamgacarvalho/hadoop-historyserver-data-in-compass:0.0.3
     container_name: history-server
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - history-server
     logging: *default-logging
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
@@ -73,7 +79,9 @@ services:
     image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
     container_name: resourcemanager
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - resourcemanager
     logging: *default-logging
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
@@ -89,7 +97,9 @@ services:
     image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
     container_name: nodemanager
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - nodemanager
     logging: *default-logging
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
