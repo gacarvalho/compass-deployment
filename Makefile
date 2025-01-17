@@ -11,8 +11,8 @@ create-network:
 BASE_DIR := /swarm-compass/compass-deployment
 
 prepare-mnt:
-	mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
-	mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
+	sudo mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
+	sudo mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
 	echo "Diretórios de montagem criados com sucesso."
 
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
