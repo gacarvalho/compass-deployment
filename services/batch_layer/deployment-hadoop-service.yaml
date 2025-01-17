@@ -32,7 +32,7 @@ services:
     ports:
       - "32763:9870"
     volumes:
-      - ./mnt/hadoop/namenode:/hadoop/dfs/name
+      - ../mnt/hadoop/namenode:/hadoop/dfs/name
     environment: *default-environment
     healthcheck:
       <<: *default-healthcheck
