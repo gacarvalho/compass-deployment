@@ -8,18 +8,18 @@ create-network:
 
 ################################### prepare mnt #############################################################
 
-BASE_DIR := /swarm-compass/compass-deployment
+BASE_DIR := .
 
 prepare-mnt:
-	sudo mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
-	sudo mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
+	sudo mkdir -p $(BASE_DIR)/mnt/hadoop/namenode
+	sudo mkdir -p $(BASE_DIR)/mnt/hadoop/datanode
 	echo "Diretórios de montagem criados com sucesso."
 
-	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
-	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/namenode
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/datanode
 
 	sudo chmod -R 755 $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
-	sudo chmod -R 755 $(BASE_DIR)/services/batch_layer/mnt/hadoop/datanode
+	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/datanode
 
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
