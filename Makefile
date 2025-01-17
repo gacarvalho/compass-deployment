@@ -8,7 +8,7 @@ create-network:
 
 ################################### prepare mnt #############################################################
 
-BASE_DIR := $(shell pwd)/swarm-compass/compass-deployment
+BASE_DIR := /swarm-compass/compass-deployment
 
 prepare-mnt:
 	mkdir -p $(BASE_DIR)/services/batch_layer/mnt/hadoop/namenode
