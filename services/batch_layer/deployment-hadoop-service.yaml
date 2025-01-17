@@ -48,7 +48,7 @@ services:
           - datanode
     logging: *default-logging
     volumes:
-      - ./mnt/hadoop/datanode:/hadoop/dfs/data
+      - ../mnt/hadoop/datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864

@@ -8,7 +8,7 @@ create-network:
 
 ################################### prepare mnt #############################################################
 
-BASE_DIR := ./services/
+BASE_DIR := .
 
 prepare-mnt:
 	sudo mkdir -p $(BASE_DIR)/mnt/hadoop/namenode
