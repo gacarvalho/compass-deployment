@@ -55,6 +55,8 @@ services:
         aliases:
           - datanode
     logging: *default-logging
+    ports:
+      - "9864:9864"
     volumes:
       - ../../mnt/hadoop/datanode:/hadoop/dfs/data
     environment:
@@ -79,6 +81,8 @@ services:
         aliases:
           - history-server
     logging: *default-logging
+    ports:
+      - "8188:8188"
     environment:
       SERVICE_PRECONDITION: namenode:9870
       DATANODE_PORT: 8188
@@ -104,6 +108,8 @@ services:
         aliases:
           - resourcemanager
     logging: *default-logging
+    ports:
+      - "8088:8088"
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
@@ -129,6 +135,8 @@ services:
         aliases:
           - nodemanager
     logging: *default-logging
+    ports:
+      - "8042:8042"
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
