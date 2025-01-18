@@ -37,6 +37,14 @@ services:
     healthcheck:
       <<: *default-healthcheck
       test: ["CMD", "nc", "-z", "localhost", "9870"]
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '1.0'
+        reservations:
+          memory: 2G
+          cpus: '0.5'
 
   # Serviço do Datanode
   infra-datanode:
@@ -54,7 +62,13 @@ services:
       DATANODE_PORT: 9864
     deploy:
       replicas: 1
-
+      resources:
+        limits:
+          memory: 4G
+          cpus: '1.0'
+        reservations:
+          memory: 2G
+          cpus: '0.5'
 
   # Serviço do infra-history-server
   infra-history-server:
@@ -70,6 +84,13 @@ services:
       DATANODE_PORT: 8188
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 3G
+          cpus: '0.5'
+        reservations:
+          memory: 1G
+          cpus: '0.25'
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "history-server", "8188" ]
@@ -88,11 +109,18 @@ services:
       DATANODE_PORT: 8188
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 3G
+          cpus: '0.5'
+        reservations:
+          memory: 1G
+          cpus: '0.25'
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "resourcemanager", "8088"  ]
 
-  # Serviço do infra resourcemanager
+  # Serviço do infra nodemanager
   infra-nodemanager:
     image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
     container_name: nodemanager
@@ -106,10 +134,16 @@ services:
       DATANODE_PORT: 8188
     deploy:
       replicas: 1
+      resources:
+        limits:
+          memory: 3G
+          cpus: '0.5'
+        reservations:
+          memory: 1G
+          cpus: '0.25'
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "nodemanager", "8042" ]
-
 
 volumes:
   infra-namenode:
