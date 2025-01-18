@@ -122,7 +122,7 @@ services:
 
   # Serviço do infra nodemanager
   infra-nodemanager:
-    image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
+    image: iamgacarvalho/hadoop-nodemanager-data-in-compass:0.0.3
     container_name: nodemanager
     networks:
       hadoop_network:
