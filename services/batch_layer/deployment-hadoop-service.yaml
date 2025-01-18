@@ -32,7 +32,7 @@ services:
     ports:
       - "32763:9870"
     volumes:
-      - ../mnt/hadoop/namenode:/hadoop/dfs/name
+      - ../../mnt/hadoop/namenode:/hadoop/dfs/name
     environment: *default-environment
     healthcheck:
       <<: *default-healthcheck
@@ -48,7 +48,7 @@ services:
           - datanode
     logging: *default-logging
     volumes:
-      - ../mnt/hadoop/datanode:/hadoop/dfs/data
+      - ../../mnt/hadoop/datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864
