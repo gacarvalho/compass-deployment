@@ -2,6 +2,18 @@ DOCKER_NETWORK = hadoop-network
 VERSION_REPOSITORY_DOCKER = 1.0.0
 
 
+################################### tools ###################################################################
+
+remove-images:
+	docker rmi -f $(docker images -q)
+
+remove-all-services:
+	docker service rm $(docker service ls -q)
+
+stop-containers:
+	docker rm -f $(docker ps -aq)
+
+
 ################################### create network ###########################################################
 create-network:
 	docker network create --driver overlay hadoop_network

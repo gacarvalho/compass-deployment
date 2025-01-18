@@ -66,7 +66,7 @@ services:
           - history-server
     logging: *default-logging
     environment:
-      SERVICE_PRECONDITION: infra-namenode:9870
+      SERVICE_PRECONDITION: namenode:9870
       DATANODE_PORT: 8188
     deploy:
       replicas: 1
