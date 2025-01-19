@@ -59,9 +59,6 @@ services:
       - ../../mnt/spark/apps:/opt/spark-apps
       - ../../mnt/spark/data:/opt/spark-data
       - ../../mnt/spark/worker-logs:/opt/spark/logs
-    healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "${WORKER_PORT}"]
-      <<: *default-healthcheck
     deploy:
       replicas: 2
 
