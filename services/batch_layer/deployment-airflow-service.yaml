@@ -107,7 +107,7 @@ services:
     command:
       - -c
       - |
-        exec /entrypoint airflow version
+        exec /entrypoint airflow version && tail -f /dev/null
     deploy:
       replicas: 1
       restart_policy:
