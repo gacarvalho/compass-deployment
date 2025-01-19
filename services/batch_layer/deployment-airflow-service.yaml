@@ -46,7 +46,7 @@ services:
     networks:
       hadoop_network:
         aliases:
-          - postgree
+          - postgres
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     deploy:
