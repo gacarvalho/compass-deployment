@@ -32,6 +32,7 @@ prepare-mnt:
 	sudo mkdir -p $(BASE_DIR)/mnt/mongodb_configData
 	sudo mkdir -p $(BASE_DIR)/mnt/mongodb_init
 	sudo mkdir -p $(BASE_DIR)/mnt/metabase
+	sudo mkdir -p $(BASE_DIR)/mnt/airflow
 	echo "Diretórios de montagem criados com sucesso."
 
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/namenode
@@ -43,6 +44,7 @@ prepare-mnt:
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/mongodb_configData
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/mongodb_init
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/metabase
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow
 
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/namenode
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/datanode
@@ -53,6 +55,7 @@ prepare-mnt:
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb_configData
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb_init
 	sudo chmod -R 755 $(BASE_DIR)/mnt/metabase
+	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
 
