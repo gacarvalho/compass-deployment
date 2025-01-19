@@ -198,10 +198,10 @@ services:
 
   airflow-cli:
     <<: *airflow-common
+    user: "0:0"
     environment:
       <<: *airflow-common-env
       CONNECTION_CHECK_MAX_COUNT: "0"
-    # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
     command:
       - bash
       - -c
