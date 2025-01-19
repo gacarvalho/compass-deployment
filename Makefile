@@ -38,3 +38,7 @@ prepare-mnt:
 #################################### deployment environment production ########################################
 deployment-hadoop-service:
 	docker stack deploy -c services/batch_layer/deployment-hadoop-service.yaml deployment-hadoop
+
+
+deployment-spark-service:
+	docker stack deploy -c services/batch_layer/deployment-spark-service.yaml deployment-spark
