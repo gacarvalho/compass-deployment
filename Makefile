@@ -90,4 +90,4 @@ deployment-metabase-service:
 	docker stack deploy -c services/batch_layer/deployment-business-service.yaml  deployment-metabase
 
 deployment-airflow-service:
-	docker stack deploy -c services/batch_layer/deployment-airflow-service.yaml  deployment-airflow
+	sudo docker stack deploy -c services/batch_layer/deployment-airflow-service.yaml  deployment-airflow
