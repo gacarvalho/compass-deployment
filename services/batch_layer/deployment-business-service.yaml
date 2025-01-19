@@ -8,9 +8,11 @@ services:
     ports:
       - "8084:3000"
     volumes:
-      - ./mnt/metabase:/metabase.db
+      - ../../mnt/metabase:/metabase.db
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - metabase
     restart: always
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:3000/"]
