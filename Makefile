@@ -59,7 +59,7 @@ prepare-mnt:
            user: 'app_user', \
            pwd: 'secure_password123', \
            roles: [{ role: 'readWrite', db: 'compass' }] \
-         });" > ../../mnt/mongodb_init/init-mongo.js
+         });" > /mnt/mongodb_init/init-mongo.js
 
 
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
