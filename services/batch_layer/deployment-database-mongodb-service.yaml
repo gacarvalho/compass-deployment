@@ -25,9 +25,6 @@ services:
           - mongodb
     logging:
       <<: *default-logging
-    healthcheck:
-      test: ["CMD","mongo","--eval","db.runCommand('ping')"]
-      <<: *default-healthcheck
     volumes:
       - ../../mnt/mongodb:/data/db
       - ../../mnt/mongodb_configData:/data/configdb
