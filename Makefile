@@ -50,19 +50,21 @@ prepare-mnt:
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb_configData
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb_init
-
-	sudo echo "\
-         db = db.getSiblingDB('compass'); \
-         db.createCollection('reviews-santander-way'); \
-          \
-         db.createUser({ \
-           user: 'app_user', \
-           pwd: 'secure_password123', \
-           roles: [{ role: 'readWrite', db: 'compass' }] \
-         });" > /mnt/mongodb_init/init-mongo.js
-
-
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
+
+
+init-mongo:
+	mkdir -p /mnt/mongodb_init && \
+	sudo tee /mnt/mongodb_init/init-mongo.js > /dev/null <<EOF
+		db = db.getSiblingDB('compass');
+		db.createCollection('reviews-santander-way');
+
+		db.createUser({
+		  user: 'app_user',
+		  pwd: 'secure_password123',
+		  roles: [{ role: 'readWrite', db: 'compass' }]
+		});
+		EOF
 
 #################################### deployment environment production ########################################
 deployment-hadoop-service:
