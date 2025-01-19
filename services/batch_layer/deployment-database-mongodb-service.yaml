@@ -6,12 +6,6 @@ x-logging: &default-logging
     max-size: "10m"
 
 x-healthcheck: &default-healthcheck
-  test:
-    - "CMD"
-    - "mongo"
-    - "--eval"
-    - "db.runCommand('ping')"
-
   interval: 30s
   retries: 3
   start_period: 10s
@@ -43,7 +37,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS_ADMIN}
     ports:
       - "27018:27017"
-    <<: *default-restart
 
 volumes:
   mongodb_data:
