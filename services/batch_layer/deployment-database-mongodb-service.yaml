@@ -20,34 +20,34 @@ x-healthcheck: &default-healthcheck
 x-restart: &default-restart
   restart: always
 
-x-mongo-volumes: &default-mongo-volumes
-  - ./mnt/mongodb:/data/db
-  - ./mnt/mongodb_configData:/data/configdb
-  - ./mnt/mongodb_init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
-
 services:
   # Serviço MongoDB
   database-mongodb:
     image: mongo:7
     container_name: mongodb
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - mongodb
+    logging:
+      <<: *default-logging
+    healthcheck:
+      test: ["CMD","mongo","--eval","db.runCommand('ping')"]
+      <<: *default-healthcheck
     volumes:
-      <<: *default-mongo-volumes
+      - ../../mnt/mongodb:/data/db
+      - ../../mnt/mongodb_configData:/data/configdb
+      - ../../mnt/mongodb_init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER_ADMIN}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS_ADMIN}
     ports:
       - "27017:27017"
     <<: *default-restart
-    healthcheck:
-      <<: *default-healthcheck
 
 volumes:
   mongodb_data:
-    driver: local
   mongodb_configdb_data:
-    driver: local
 
 networks:
   hadoop_network:
