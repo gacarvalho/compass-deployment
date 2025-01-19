@@ -25,13 +25,19 @@ BASE_DIR := .
 prepare-mnt:
 	sudo mkdir -p $(BASE_DIR)/mnt/hadoop/namenode
 	sudo mkdir -p $(BASE_DIR)/mnt/hadoop/datanode
+	sudo mkdir -p $(BASE_DIR)/mnt/spark/apps
+	sudo mkdir -p $(BASE_DIR)/mnt/spark/worker-logs
 	echo "Diretórios de montagem criados com sucesso."
 
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/namenode
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/datanode
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/spark/apps
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/spark/worker-logs
 
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/namenode
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/datanode
+	sudo chmod -R 755 $(BASE_DIR)/mnt/spark/apps
+	sudo chmod -R 755 $(BASE_DIR)/mnt/spark/worker-logs
 
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
