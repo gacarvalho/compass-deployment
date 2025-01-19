@@ -6,7 +6,7 @@ services:
     container_name: observalidade-metabase
     image: metabase/metabase:latest
     ports:
-      - "8084:3000"
+      - "8085:3000"
     volumes:
       - ../../mnt/metabase:/metabase.db
     networks:

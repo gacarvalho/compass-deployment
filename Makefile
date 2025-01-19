@@ -78,3 +78,7 @@ deployment-spark-service:
 
 deployment-mongodb-service:
 	docker stack deploy -c services/batch_layer/deployment-database-mongodb-service.yaml  deployment-mondodb
+
+
+deployment-metabase-service:
+	docker stack deploy -c services/batch_layer/deployment-business-service.yaml  deployment-metabase
