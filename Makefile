@@ -54,7 +54,7 @@ prepare-mnt:
 
 
 init-mongo:
-	mkdir -p /mnt/mongodb_init && \
+	sudo mkdir -p /mnt/mongodb_init && \
 	sudo tee /mnt/mongodb_init/init-mongo.js > /dev/null <<EOF
 		db = db.getSiblingDB('compass');
 		db.createCollection('reviews-santander-way');
@@ -65,6 +65,7 @@ init-mongo:
 		  roles: [{ role: 'readWrite', db: 'compass' }]
 		});
 		EOF
+
 
 #################################### deployment environment production ########################################
 deployment-hadoop-service:
