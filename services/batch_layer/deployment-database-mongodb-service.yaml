@@ -36,7 +36,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER_ADMIN}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS_ADMIN}
     ports:
-      - "27018:27017"
+      - "27017:27017"
 
 volumes:
   mongodb_data:
