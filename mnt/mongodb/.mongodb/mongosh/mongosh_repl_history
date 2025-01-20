@@ -1,0 +1,8 @@
+db.getUsers();
+use admin;Write", db: "admin" }  // Ajuste o banco de dados conforme necessário
+  roles: [
+  pwd: "santand@r",
+  user: "gacarvalho",
+use admin;
+db.getUsers();
+use admin;
