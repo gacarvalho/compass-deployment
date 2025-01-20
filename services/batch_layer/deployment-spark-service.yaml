@@ -52,7 +52,7 @@ services:
         aliases:
           - spark-worker
     ports:
-      - "8079-8081:8081"
+      - "8070-8081:8081"
     environment:
       - WORKER_PORT=8081
     volumes:
