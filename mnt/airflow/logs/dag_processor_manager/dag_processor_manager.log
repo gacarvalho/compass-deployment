@@ -4081,3 +4081,2134 @@ File Path                                                    PID    Runtime     
 /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:09:45
 /opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:10:01
 ================================================================================
+[2025-01-25T16:10:27.642+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:10:03
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:10:11
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T16:10:13
+================================================================================
+[2025-01-25T16:10:40.800+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:10:15
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:10:15
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:10:31
+================================================================================
+[2025-01-25T16:10:57.872+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:10:33
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.20s           2025-01-25T16:10:41
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T16:10:43
+================================================================================
+[2025-01-25T16:11:00.201+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:11:00.202+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:11:11.251+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.33s           2025-01-25T16:10:46
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.33s           2025-01-25T16:10:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:11:02
+================================================================================
+[2025-01-25T16:11:28.209+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.34s           2025-01-25T16:11:04
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:11:12
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:11:14
+================================================================================
+[2025-01-25T16:11:41.478+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:11:16
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:11:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:11:32
+================================================================================
+[2025-01-25T16:11:58.461+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:11:35
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:11:42
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:11:44
+================================================================================
+[2025-01-25T16:12:11.698+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:11:46
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:11:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:12:02
+================================================================================
+[2025-01-25T16:12:28.851+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:12:05
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:12:12
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:12:14
+================================================================================
+[2025-01-25T16:12:30.858+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:12:30.859+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:12:41.941+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:12:16
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:12:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.33s           2025-01-25T16:12:33
+================================================================================
+[2025-01-25T16:12:59.091+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:12:36
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.24s           2025-01-25T16:12:43
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:12:45
+================================================================================
+[2025-01-25T16:13:12.250+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:12:47
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.21s           2025-01-25T16:12:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:13:03
+================================================================================
+[2025-01-25T16:13:29.410+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:13:06
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:13:13
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:13:15
+================================================================================
+[2025-01-25T16:13:42.447+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:13:17
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:13:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:13:33
+================================================================================
+[2025-01-25T16:13:59.673+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.47s           2025-01-25T16:13:36
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:13:43
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.29s           2025-01-25T16:13:45
+================================================================================
+[2025-01-25T16:14:12.624+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:13:47
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:13:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:14:03
+================================================================================
+[2025-01-25T16:14:29.927+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.12s           2025-01-25T16:14:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:14:13
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:14:16
+================================================================================
+[2025-01-25T16:14:42.854+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:14:17
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:14:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:14:33
+================================================================================
+[2025-01-25T16:15:00.296+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:14:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:14:44
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:14:46
+================================================================================
+[2025-01-25T16:15:13.088+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:14:48
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:14:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.22s           2025-01-25T16:15:04
+================================================================================
+[2025-01-25T16:15:30.532+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:15:08
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.27s           2025-01-25T16:15:14
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:15:16
+================================================================================
+[2025-01-25T16:15:43.352+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:15:18
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:15:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:15:34
+================================================================================
+[2025-01-25T16:16:00.421+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:16:00.422+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:16:00.844+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:15:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:15:44
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:15:46
+================================================================================
+[2025-01-25T16:16:13.561+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.11s           2025-01-25T16:15:48
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.11s           2025-01-25T16:15:48
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:16:04
+================================================================================
+[2025-01-25T16:16:30.961+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.38s           2025-01-25T16:16:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:16:15
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:16:17
+================================================================================
+[2025-01-25T16:16:44.024+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.26s           2025-01-25T16:16:18
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.36s           2025-01-25T16:16:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:16:35
+================================================================================
+[2025-01-25T16:17:01.357+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:16:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:16:45
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:16:47
+================================================================================
+[2025-01-25T16:17:14.208+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:16:49
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:16:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:17:05
+================================================================================
+[2025-01-25T16:17:31.613+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:17:31.614+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:17:31.621+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:17:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:17:15
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.19s           2025-01-25T16:17:17
+================================================================================
+[2025-01-25T16:17:44.439+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:17:19
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:17:19
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:17:35
+================================================================================
+[2025-01-25T16:18:01.870+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:17:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:17:45
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.39s           2025-01-25T16:17:48
+================================================================================
+[2025-01-25T16:18:14.704+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:17:49
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:17:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.32s           2025-01-25T16:18:05
+================================================================================
+[2025-01-25T16:18:32.131+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:18:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:18:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:18:19
+================================================================================
+[2025-01-25T16:18:44.955+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:18:19
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:18:19
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:18:37
+================================================================================
+[2025-01-25T16:19:02.392+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:18:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:18:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:18:49
+================================================================================
+[2025-01-25T16:19:15.226+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:18:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:18:50
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:19:07
+================================================================================
+[2025-01-25T16:19:32.707+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:19:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:19:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:19:19
+================================================================================
+[2025-01-25T16:19:45.423+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:19:20
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:19:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:19:37
+================================================================================
+[2025-01-25T16:20:03.051+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:19:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:19:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:19:50
+================================================================================
+[2025-01-25T16:20:15.694+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:19:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.11s           2025-01-25T16:19:50
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:20:07
+================================================================================
+[2025-01-25T16:20:33.414+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:20:12
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:20:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:20:20
+================================================================================
+[2025-01-25T16:20:46.077+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T16:20:20
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.12s           2025-01-25T16:20:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.32s           2025-01-25T16:20:38
+================================================================================
+[2025-01-25T16:21:00.453+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:21:00.454+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:21:04.273+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:20:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.57s           2025-01-25T16:20:48
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:20:49
+================================================================================
+[2025-01-25T16:21:16.630+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:20:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.21s           2025-01-25T16:21:05
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:20:49
+================================================================================
+[2025-01-25T16:21:34.538+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:21:26
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:21:06
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:21:19
+================================================================================
+[2025-01-25T16:21:46.798+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:21:26
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:21:36
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:21:19
+================================================================================
+[2025-01-25T16:21:57.149+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:22:05.039+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.25s           2025-01-25T16:21:57
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:21:36
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.27s           2025-01-25T16:22:00
+================================================================================
+[2025-01-25T16:22:16.822+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:22:16.824+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.59s           2025-01-25T16:22:16
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:22:06
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.30s           2025-01-25T16:21:59
+================================================================================
+[2025-01-25T16:22:32.350+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:22:32.351+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:22:35.370+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:22:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:22:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:22:30
+================================================================================
+[2025-01-25T16:22:46.936+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1526  0.00s             0          -1  0.59s           2025-01-25T16:22:16
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:22:37
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:22:30
+================================================================================
+[2025-01-25T16:23:05.536+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:22:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.18s           2025-01-25T16:22:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:23:00
+================================================================================
+[2025-01-25T16:23:17.142+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:23:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1532  0.00s             1           0  0.09s           2025-01-25T16:22:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:23:00
+================================================================================
+[2025-01-25T16:23:35.699+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:23:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:23:16
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:23:30
+================================================================================
+[2025-01-25T16:23:47.329+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:23:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1545  0.00s             1           0  0.08s           2025-01-25T16:23:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:23:30
+================================================================================
+[2025-01-25T16:24:05.866+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:23:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:23:46
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:24:00
+================================================================================
+[2025-01-25T16:24:17.510+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:24:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1554  0.00s             1           0  0.08s           2025-01-25T16:23:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:24:00
+================================================================================
+[2025-01-25T16:24:36.042+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:24:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:24:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.10s           2025-01-25T16:24:31
+================================================================================
+[2025-01-25T16:24:47.684+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:24:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1571  0.00s             1           0  0.07s           2025-01-25T16:24:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:24:30
+================================================================================
+[2025-01-25T16:25:06.211+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:24:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:24:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:25:01
+================================================================================
+[2025-01-25T16:25:17.860+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:25:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1588  0.00s             1           0  0.07s           2025-01-25T16:24:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.32s           2025-01-25T16:25:01
+================================================================================
+[2025-01-25T16:25:31.631+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_d_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:25:36.481+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0          -1  0.24s           2025-01-25T16:25:31
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:25:08
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:25:17
+================================================================================
+[2025-01-25T16:25:48.438+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:25:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1594  0.00s             1           0  0.47s           2025-01-25T16:25:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:25:31
+================================================================================
+[2025-01-25T16:26:00.483+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:26:00.484+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:26:06.765+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:25:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:25:47
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.11s           2025-01-25T16:26:01
+================================================================================
+[2025-01-25T16:26:18.610+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:26:08
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1600  0.00s             1           0  0.07s           2025-01-25T16:25:48
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:26:01
+================================================================================
+[2025-01-25T16:26:37.024+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:26:08
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:26:17
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:26:32
+================================================================================
+[2025-01-25T16:26:48.797+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:26:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1606  0.00s             1           0  0.07s           2025-01-25T16:26:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T16:26:32
+================================================================================
+[2025-01-25T16:27:02.681+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_d_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:27:07.333+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0          -1  0.50s           2025-01-25T16:27:02
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:26:39
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:26:48
+================================================================================
+[2025-01-25T16:27:19.173+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:27:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1612  0.00s             1           0  0.27s           2025-01-25T16:26:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:27:02
+================================================================================
+[2025-01-25T16:27:32.478+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:27:32.479+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:27:37.507+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:27:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:27:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:27:33
+================================================================================
+[2025-01-25T16:27:40.027+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:27:49.582+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.24s           2025-01-25T16:27:39
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1618  0.00s             1           0  0.15s           2025-01-25T16:27:19
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:27:32
+================================================================================
+[2025-01-25T16:28:07.689+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.51s           2025-01-25T16:27:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:27:48
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:28:03
+================================================================================
+[2025-01-25T16:28:19.858+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:28:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1624  0.00s             1           0  0.07s           2025-01-25T16:27:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:28:02
+================================================================================
+[2025-01-25T16:28:37.866+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.22s           2025-01-25T16:28:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:28:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:28:33
+================================================================================
+[2025-01-25T16:28:49.981+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:28:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.25s           2025-01-25T16:28:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:28:33
+================================================================================
+[2025-01-25T16:29:08.099+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:28:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:28:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:29:04
+================================================================================
+[2025-01-25T16:29:20.173+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:29:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:28:51
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:29:03
+================================================================================
+[2025-01-25T16:29:38.280+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:29:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:29:19
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:29:34
+================================================================================
+[2025-01-25T16:29:39.807+0000] {manager.py:487} INFO - Processing files using up to 2 processes at a time 
+[2025-01-25T16:29:39.807+0000] {manager.py:488} INFO - Process each file at most once every 30 seconds
+[2025-01-25T16:29:39.807+0000] {manager.py:489} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-01-25T16:29:39.807+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:29:39.808+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:29:39.864+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py           1652  0.03s             0           0
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py   1651  0.03s             0           0
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0           0
+================================================================================
+[2025-01-25T16:29:43.873+0000] {manager.py:469} INFO - Exiting gracefully upon receiving signal 15
+[2025-01-25T16:29:50.364+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:29:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:29:21
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:29:33
+================================================================================
+[2025-01-25T16:30:08.456+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.24s           2025-01-25T16:29:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:29:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:30:04
+================================================================================
+[2025-01-25T16:30:20.675+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:30:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:29:51
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:30:03
+================================================================================
+[2025-01-25T16:30:38.709+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:30:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:30:19
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:30:34
+================================================================================
+[2025-01-25T16:30:50.952+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:30:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:30:21
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:30:33
+================================================================================
+[2025-01-25T16:31:01.013+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:31:01.014+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:31:08.888+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:30:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:30:49
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:31:04
+================================================================================
+[2025-01-25T16:31:21.235+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.36s           2025-01-25T16:31:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:30:52
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:31:04
+================================================================================
+[2025-01-25T16:31:39.067+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.27s           2025-01-25T16:31:12
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.18s           2025-01-25T16:31:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:31:35
+================================================================================
+[2025-01-25T16:31:51.488+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:31:42
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:31:22
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:31:34
+================================================================================
+[2025-01-25T16:32:09.304+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:31:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:31:50
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:32:05
+================================================================================
+[2025-01-25T16:32:21.660+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:32:12
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:31:52
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:32:04
+================================================================================
+[2025-01-25T16:32:32.604+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:32:32.605+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:32:39.504+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:32:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:32:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:32:35
+================================================================================
+[2025-01-25T16:32:51.854+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:32:42
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:32:22
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:32:34
+================================================================================
+[2025-01-25T16:33:09.671+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:32:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:32:50
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:33:05
+================================================================================
+[2025-01-25T16:33:22.028+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:33:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:32:52
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:33:05
+================================================================================
+[2025-01-25T16:33:39.912+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:33:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:33:20
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:33:35
+================================================================================
+[2025-01-25T16:33:52.211+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:33:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:33:23
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:33:35
+================================================================================
+[2025-01-25T16:34:10.084+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:33:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:33:51
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:34:06
+================================================================================
+[2025-01-25T16:34:22.542+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.51s           2025-01-25T16:34:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:33:53
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:34:05
+================================================================================
+[2025-01-25T16:34:40.361+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:34:14
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.28s           2025-01-25T16:34:21
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:34:36
+================================================================================
+[2025-01-25T16:34:52.725+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:34:44
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:34:23
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:34:35
+================================================================================
+[2025-01-25T16:35:10.786+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:34:44
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:34:51
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T16:35:06
+================================================================================
+[2025-01-25T16:35:15.191+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:35:23.031+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.32s           2025-01-25T16:35:15
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:34:53
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:35:05
+================================================================================
+[2025-01-25T16:35:41.030+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:35:14
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.28s           2025-01-25T16:35:22
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:35:37
+================================================================================
+[2025-01-25T16:35:53.283+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.10s           2025-01-25T16:35:45
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:35:24
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:35:36
+================================================================================
+[2025-01-25T16:36:01.348+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:36:01.349+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:36:11.355+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:35:45
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:35:53
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T16:36:07
+================================================================================
+[2025-01-25T16:36:15.897+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:36:23.577+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.47s           2025-01-25T16:36:15
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:35:54
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:36:06
+================================================================================
+[2025-01-25T16:36:41.634+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:36:15
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:36:23
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:36:37
+================================================================================
+[2025-01-25T16:36:53.775+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:36:46
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:36:24
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.19s           2025-01-25T16:36:36
+================================================================================
+[2025-01-25T16:37:11.781+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.37s           2025-01-25T16:36:46
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:36:53
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:37:07
+================================================================================
+[2025-01-25T16:37:23.943+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:37:16
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:36:54
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:37:07
+================================================================================
+[2025-01-25T16:37:32.994+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:37:32.995+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:37:42.113+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:37:16
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:37:24
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:37:38
+================================================================================
+[2025-01-25T16:37:47.314+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:37:54.114+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:37:47
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:37:25
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:37:37
+================================================================================
+[2025-01-25T16:38:12.231+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.18s           2025-01-25T16:37:47
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:37:54
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.10s           2025-01-25T16:38:08
+================================================================================
+[2025-01-25T16:38:17.943+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:38:24.311+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:38:17
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:37:55
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.26s           2025-01-25T16:38:07
+================================================================================
+[2025-01-25T16:38:42.443+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.59s           2025-01-25T16:38:17
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.27s           2025-01-25T16:38:24
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:38:38
+================================================================================
+[2025-01-25T16:38:54.816+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:38:47
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.40s           2025-01-25T16:38:25
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:38:37
+================================================================================
+[2025-01-25T16:39:12.619+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:38:48
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.18s           2025-01-25T16:38:55
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T16:39:08
+================================================================================
+[2025-01-25T16:39:25.024+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:39:18
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:38:55
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.25s           2025-01-25T16:39:08
+================================================================================
+[2025-01-25T16:39:42.937+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:39:18
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:39:25
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.25s           2025-01-25T16:39:39
+================================================================================
+[2025-01-25T16:39:55.200+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:39:48
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.09s           2025-01-25T16:39:26
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:39:39
+================================================================================
+[2025-01-25T16:39:56.847+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:40:13.098+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:39:49
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.49s           2025-01-25T16:39:56
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:40:09
+================================================================================
+[2025-01-25T16:40:25.524+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.64s           2025-01-25T16:39:56
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:40:18
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:40:09
+================================================================================
+[2025-01-25T16:40:43.354+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:40:19
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:40:27
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T16:40:39
+================================================================================
+[2025-01-25T16:40:55.774+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.45s           2025-01-25T16:40:49
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:40:27
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:40:39
+================================================================================
+[2025-01-25T16:41:01.795+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:41:01.796+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:41:13.691+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:40:49
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:40:57
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.26s           2025-01-25T16:41:09
+================================================================================
+[2025-01-25T16:41:25.890+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:41:19
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.33s           2025-01-25T16:40:58
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:41:09
+================================================================================
+[2025-01-25T16:41:40.514+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_d_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:41:43.929+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:41:19
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.27s           2025-01-25T16:41:28
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.18s           2025-01-25T16:41:40
+================================================================================
+[2025-01-25T16:41:56.079+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0          -1  0.52s           2025-01-25T16:41:40
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.12s           2025-01-25T16:41:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:41:28
+================================================================================
+[2025-01-25T16:42:14.369+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.19s           2025-01-25T16:41:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:41:58
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.38s           2025-01-25T16:42:10
+================================================================================
+[2025-01-25T16:42:26.260+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:42:20
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:41:59
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:42:11
+================================================================================
+[2025-01-25T16:42:33.517+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:42:33.518+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:42:44.827+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:42:20
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.35s           2025-01-25T16:42:28
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.25s           2025-01-25T16:42:41
+================================================================================
+[2025-01-25T16:42:56.448+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:42:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:42:29
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:42:41
+================================================================================
+[2025-01-25T16:43:15.221+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:42:50
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.29s           2025-01-25T16:42:59
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:43:11
+================================================================================
+[2025-01-25T16:43:26.629+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.22s           2025-01-25T16:43:20
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:42:59
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:43:11
+================================================================================
+[2025-01-25T16:43:45.480+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:43:21
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:43:29
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:43:41
+================================================================================
+[2025-01-25T16:43:56.812+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:43:51
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:43:29
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:43:41
+================================================================================
+[2025-01-25T16:44:15.800+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:43:51
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.16s           2025-01-25T16:43:59
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.26s           2025-01-25T16:44:11
+================================================================================
+[2025-01-25T16:44:22.581+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:44:27.038+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.61s           2025-01-25T16:44:22
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:43:59
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:44:11
+================================================================================
+[2025-01-25T16:44:30.648+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:44:46.169+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.26s           2025-01-25T16:44:22
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.25s           2025-01-25T16:44:30
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:44:42
+================================================================================
+[2025-01-25T16:44:57.740+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.60s           2025-01-25T16:44:30
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:44:52
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T16:44:42
+================================================================================
+[2025-01-25T16:45:16.580+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.38s           2025-01-25T16:44:52
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:45:00
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:45:12
+================================================================================
+[2025-01-25T16:45:28.000+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:45:23
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:45:00
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:45:13
+================================================================================
+[2025-01-25T16:45:46.847+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:45:22
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:45:30
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.27s           2025-01-25T16:45:43
+================================================================================
+[2025-01-25T16:45:58.180+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:45:53
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:45:31
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:45:43
+================================================================================
+[2025-01-25T16:46:01.449+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:46:02.249+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:46:02.250+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:46:13.726+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_d_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:46:17.372+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.24s           2025-01-25T16:45:53
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.42s           2025-01-25T16:46:01
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T16:46:13
+================================================================================
+[2025-01-25T16:46:24.063+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:46:28.773+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.55s           2025-01-25T16:46:24
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.26s           2025-01-25T16:46:01
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0          -1  0.44s           2025-01-25T16:46:13
+================================================================================
+[2025-01-25T16:46:47.746+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.24s           2025-01-25T16:46:23
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.19s           2025-01-25T16:46:31
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:46:43
+================================================================================
+[2025-01-25T16:46:58.885+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:46:54
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.10s           2025-01-25T16:46:31
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:46:43
+================================================================================
+[2025-01-25T16:47:02.086+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:47:14.749+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_d_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:47:17.761+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.18s           2025-01-25T16:47:02
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0          -1  0.79s           2025-01-25T16:47:14
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:46:53
+================================================================================
+[2025-01-25T16:47:29.192+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:47:25
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:47:02
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:47:14
+================================================================================
+[2025-01-25T16:47:32.791+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:47:34.195+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:47:34.196+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:47:48.253+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.42s           2025-01-25T16:47:24
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.27s           2025-01-25T16:47:32
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:47:45
+================================================================================
+[2025-01-25T16:47:55.664+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:47:59.437+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.37s           2025-01-25T16:47:55
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.58s           2025-01-25T16:47:32
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:47:44
+================================================================================
+[2025-01-25T16:48:03.952+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:48:18.488+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:47:55
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:48:03
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:48:15
+================================================================================
+[2025-01-25T16:48:29.783+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.50s           2025-01-25T16:48:03
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:48:25
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:48:14
+================================================================================
+[2025-01-25T16:48:48.937+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:48:25
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.28s           2025-01-25T16:48:33
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.31s           2025-01-25T16:48:46
+================================================================================
+[2025-01-25T16:48:56.318+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:49:00.097+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:48:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:48:34
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:48:45
+================================================================================
+[2025-01-25T16:49:19.412+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.35s           2025-01-25T16:48:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.28s           2025-01-25T16:49:04
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:49:16
+================================================================================
+[2025-01-25T16:49:30.357+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:49:26
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:49:05
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:49:15
+================================================================================
+[2025-01-25T16:49:49.595+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:49:26
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.14s           2025-01-25T16:49:34
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:49:46
+================================================================================
+[2025-01-25T16:49:56.951+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_e_pipeline_compass_reviews.py exited with return code 1.
+[2025-01-25T16:50:00.635+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.31s           2025-01-25T16:49:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:49:35
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:49:45
+================================================================================
+[2025-01-25T16:50:20.036+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   0          -1  0.33s           2025-01-25T16:49:56
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.26s           2025-01-25T16:50:04
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:50:17
+================================================================================
+[2025-01-25T16:50:30.986+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:50:27
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:50:05
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.23s           2025-01-25T16:50:15
+================================================================================
+[2025-01-25T16:50:50.223+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:50:27
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.25s           2025-01-25T16:50:35
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:50:47
+================================================================================
+[2025-01-25T16:51:01.240+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:50:57
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:50:36
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:50:46
+================================================================================
+[2025-01-25T16:51:02.299+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:51:02.300+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:51:06.557+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:51:20.600+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.19s           2025-01-25T16:51:06
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:50:57
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.36s           2025-01-25T16:51:17
+================================================================================
+[2025-01-25T16:51:31.548+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:51:27
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.19s           2025-01-25T16:51:06
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:51:16
+================================================================================
+[2025-01-25T16:51:37.291+0000] {manager.py:1025} ERROR - Processor for /opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py exited with return code 1.
+[2025-01-25T16:51:51.341+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           0          -1  0.63s           2025-01-25T16:51:37
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:51:27
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:51:48
+================================================================================
+[2025-01-25T16:52:01.924+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:51:57
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.17s           2025-01-25T16:51:36
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:51:46
+================================================================================
+[2025-01-25T16:52:21.522+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:51:58
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:52:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:52:18
+================================================================================
+[2025-01-25T16:52:32.231+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:52:28
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:52:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:52:17
+================================================================================
+[2025-01-25T16:52:34.632+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:52:34.633+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:52:51.771+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:52:28
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.08s           2025-01-25T16:52:37
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:52:48
+================================================================================
+[2025-01-25T16:53:02.559+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.13s           2025-01-25T16:52:58
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.15s           2025-01-25T16:52:37
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:52:47
+================================================================================
+[2025-01-25T16:53:21.953+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.06s           2025-01-25T16:52:58
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.07s           2025-01-25T16:53:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:53:18
+================================================================================
+[2025-01-25T16:55:09.316+0000] {manager.py:487} INFO - Processing files using up to 2 processes at a time 
+[2025-01-25T16:55:09.319+0000] {manager.py:488} INFO - Process each file at most once every 30 seconds
+[2025-01-25T16:55:09.319+0000] {manager.py:489} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-01-25T16:55:09.319+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:55:09.320+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:55:09.560+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             29  0.12s             0           0
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     28  0.15s             0           0
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0           0
+================================================================================
+[2025-01-25T16:55:39.682+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.65s           2025-01-25T16:55:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.75s           2025-01-25T16:55:10
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.51s           2025-01-25T16:55:10
+================================================================================
+[2025-01-25T16:56:10.517+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             35  0.00s             1           0  0.14s           2025-01-25T16:55:40
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     34  0.01s             1           0  0.14s           2025-01-25T16:55:40
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:55:41
+================================================================================
+[2025-01-25T16:56:40.767+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             38  0.00s             1           0  0.13s           2025-01-25T16:56:10
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     37  0.01s             1           0  0.15s           2025-01-25T16:56:10
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:56:11
+================================================================================
+[2025-01-25T16:57:10.989+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.31s           2025-01-25T16:56:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.31s           2025-01-25T16:56:41
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:56:42
+================================================================================
+[2025-01-25T16:57:36.560+0000] {manager.py:487} INFO - Processing files using up to 2 processes at a time 
+[2025-01-25T16:57:36.560+0000] {manager.py:488} INFO - Process each file at most once every 30 seconds
+[2025-01-25T16:57:36.560+0000] {manager.py:489} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-01-25T16:57:36.560+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T16:57:36.561+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T16:57:36.612+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             67  0.02s             0           0
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     66  0.03s             0           0
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   0           0
+================================================================================
+[2025-01-25T16:57:41.405+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             72  0.01s             1           0  0.13s           2025-01-25T16:57:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     71  0.02s             1           0  0.15s           2025-01-25T16:57:11
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:57:12
+================================================================================
+[2025-01-25T16:58:06.857+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             80  0.00s             1           0  0.14s           2025-01-25T16:57:36
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     79  0.01s             1           0  0.16s           2025-01-25T16:57:36
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:57:36
+================================================================================
+[2025-01-25T16:58:11.801+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             83  0.00s             1           0  0.27s           2025-01-25T16:57:41
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     82  0.01s             1           0  0.30s           2025-01-25T16:57:41
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T16:57:42
+================================================================================
+[2025-01-25T16:58:37.125+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             95  0.00s             1           0  0.16s           2025-01-25T16:58:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     94  0.01s             1           0  0.16s           2025-01-25T16:58:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:58:07
+================================================================================
+[2025-01-25T16:58:42.044+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py             98  0.00s             1           0  0.13s           2025-01-25T16:58:11
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py     97  0.01s             1           0  0.14s           2025-01-25T16:58:11
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:58:13
+================================================================================
+[2025-01-25T16:59:07.320+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            101  0.00s             1           0  0.07s           2025-01-25T16:58:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    100  0.01s             1           0  0.09s           2025-01-25T16:58:37
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T16:58:37
+================================================================================
+[2025-01-25T16:59:12.245+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            104  0.00s             1           0  0.07s           2025-01-25T16:58:42
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    103  0.01s             1           0  0.09s           2025-01-25T16:58:42
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:58:43
+================================================================================
+[2025-01-25T16:59:37.565+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            107  0.00s             1           0  0.14s           2025-01-25T16:59:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    106  0.01s             1           0  0.15s           2025-01-25T16:59:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T16:59:07
+================================================================================
+[2025-01-25T16:59:42.602+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            110  0.00s             1           0  0.24s           2025-01-25T16:59:12
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    109  0.01s             1           0  0.25s           2025-01-25T16:59:12
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.07s           2025-01-25T16:59:13
+================================================================================
+[2025-01-25T17:00:07.818+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            113  0.00s             1           0  0.13s           2025-01-25T16:59:37
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    112  0.01s             1           0  0.15s           2025-01-25T16:59:37
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T16:59:37
+================================================================================
+[2025-01-25T17:00:09.786+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T17:00:09.787+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T17:00:12.816+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            116  0.00s             1           0  0.08s           2025-01-25T16:59:42
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    115  0.01s             1           0  0.09s           2025-01-25T16:59:42
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T16:59:43
+================================================================================
+[2025-01-25T17:00:38.076+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            119  0.01s             1           0  0.13s           2025-01-25T17:00:07
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    118  0.02s             1           0  0.15s           2025-01-25T17:00:07
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T17:00:08
+================================================================================
+[2025-01-25T17:00:43.000+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            122  0.00s             1           0  0.06s           2025-01-25T17:00:12
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    121  0.01s             1           0  0.08s           2025-01-25T17:00:12
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.09s           2025-01-25T17:00:13
+================================================================================
+[2025-01-25T17:01:08.323+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            125  0.00s             1           0  0.15s           2025-01-25T17:00:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    124  0.01s             1           0  0.16s           2025-01-25T17:00:38
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T17:00:38
+================================================================================
+[2025-01-25T17:01:13.167+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py                                   1           0  0.27s           2025-01-25T17:00:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py                           1           0  0.28s           2025-01-25T17:00:43
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.17s           2025-01-25T17:00:44
+================================================================================
+[2025-01-25T17:01:38.576+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            131  0.00s             1           0  0.13s           2025-01-25T17:01:08
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    130  0.01s             1           0  0.15s           2025-01-25T17:01:08
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T17:01:08
+================================================================================
+[2025-01-25T17:01:43.588+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            134  0.00s             1           0  0.16s           2025-01-25T17:01:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    133  0.01s             1           0  0.15s           2025-01-25T17:01:13
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.28s           2025-01-25T17:01:14
+================================================================================
+[2025-01-25T17:02:08.812+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            137  0.00s             1           0  0.13s           2025-01-25T17:01:38
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    136  0.01s             1           0  0.14s           2025-01-25T17:01:38
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T17:01:38
+================================================================================
+[2025-01-25T17:02:13.762+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            140  0.00s             1           0  0.06s           2025-01-25T17:01:43
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    139  0.01s             1           0  0.07s           2025-01-25T17:01:43
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T17:01:45
+================================================================================
+[2025-01-25T17:02:37.233+0000] {manager.py:755} INFO - Searching for files in /opt/airflow/dags
+[2025-01-25T17:02:37.235+0000] {manager.py:758} INFO - There are 3 files in /opt/airflow/dags
+[2025-01-25T17:02:39.260+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            143  0.00s             1           0  0.33s           2025-01-25T17:02:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    142  0.01s             1           0  0.34s           2025-01-25T17:02:09
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.16s           2025-01-25T17:02:09
+================================================================================
+[2025-01-25T17:02:43.946+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            146  0.00s             1           0  0.08s           2025-01-25T17:02:13
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    145  0.01s             1           0  0.08s           2025-01-25T17:02:13
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T17:02:15
+================================================================================
+[2025-01-25T17:03:09.539+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            149  0.00s             1           0  0.14s           2025-01-25T17:02:39
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    148  0.01s             1           0  0.18s           2025-01-25T17:02:39
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T17:02:39
+================================================================================
+[2025-01-25T17:03:14.136+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            152  0.00s             1           0  0.07s           2025-01-25T17:02:44
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    151  0.01s             1           0  0.08s           2025-01-25T17:02:44
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T17:02:46
+================================================================================
+[2025-01-25T17:03:39.816+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            155  0.00s             1           0  0.15s           2025-01-25T17:03:09
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    154  0.01s             1           0  0.17s           2025-01-25T17:03:09
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T17:03:09
+================================================================================
+[2025-01-25T17:03:44.317+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            158  0.00s             1           0  0.06s           2025-01-25T17:03:14
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    157  0.01s             1           0  0.08s           2025-01-25T17:03:14
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.08s           2025-01-25T17:03:16
+================================================================================
+[2025-01-25T17:04:10.071+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            161  0.00s             1           0  0.13s           2025-01-25T17:03:39
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    160  0.01s             1           0  0.14s           2025-01-25T17:03:39
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.15s           2025-01-25T17:03:40
+================================================================================
+[2025-01-25T17:04:14.578+0000] {manager.py:887} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dag_e_pipeline_compass_reviews.py            164  0.00s             1           0  0.15s           2025-01-25T17:03:44
+/opt/airflow/dags/dag_s_pipeline_expurge_compass_reviews.py    163  0.01s             1           0  0.15s           2025-01-25T17:03:44
+/opt/airflow/dags/dag_d_pipeline_compass_reviews.py                                   1           0  0.14s           2025-01-25T17:03:46
+================================================================================

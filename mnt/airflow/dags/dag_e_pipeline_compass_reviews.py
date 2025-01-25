@@ -8,7 +8,7 @@ import subprocess
 import os
 
 # Função para executar o comando Docker Run com volumes
-def run_docker_run(image, param1, param2, config_env="pre"):
+def run_docker_run(image, param1, param2, config_env="prod"):
     try:
         # Caminhos dos volumes no host e no contêiner
         host_volume_path = f"/env/.env"  # Caminho do arquivo .env no host
@@ -84,7 +84,7 @@ with DAG(
                     task_id=f"MONGO_GENERATOR_{param1.upper()}",
                     python_callable=run_docker_run,
                     op_args=[image, param1, param2],
-                    op_kwargs={"config_env": "pre"},
+                    op_kwargs={"config_env": "prod"},
                     task_concurrency=1,  # Garante que apenas uma tarefa seja executada por vez
                 )
                 generator_tasks.append(task)

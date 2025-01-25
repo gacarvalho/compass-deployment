@@ -13,7 +13,7 @@ import os
 import subprocess
 
 # Função para executar o comando Docker Run com volumes
-def run_docker_run(image, param1, param2=None, config_env="pre"): 
+def run_docker_run(image, param1, param2=None, config_env="prod"): 
     try:
         host_volume_path = f"/env/.env"  # Caminho do arquivo .env no host
         container_volume_path = "/app/.env"  # Caminho dentro do contêiner
@@ -91,7 +91,7 @@ with DAG(
                     task_id=f"MONGO_INGESTION_{param1.upper()}",
                     python_callable=run_docker_run,
                     op_kwargs={
-                        "config_env": 'pre',
+                        "config_env": 'prod',
                         "param1": param1,
                         "param2": 'sim',
                         "image": image 
@@ -116,7 +116,7 @@ with DAG(
                     task_id=f"APPLE_INGESTION_{param2.upper()}",
                     python_callable=run_docker_run,
                     op_kwargs={
-                        "config_env": 'pre',
+                        "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
                         "image": image 
@@ -146,7 +146,7 @@ with DAG(
                     task_id=f"GOOGLE_INGESTION_{param1.upper()}",
                     python_callable=run_docker_run,
                     op_kwargs={
-                        "config_env": 'pre',
+                        "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
                         "image": image 
@@ -171,7 +171,7 @@ with DAG(
             task_id="SILVER_APP_SILVER_APPLE_STORE",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-app-silver-reviews-apple-store:1.0.0", "APP_SILVER_APPLE_STORE"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
         )
@@ -183,7 +183,7 @@ with DAG(
             task_id="SILVER_APP_SILVER_GOOGLE_PLAY",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-app-silver-reviews-google-play:1.0.0", "APP_SILVER_GOOGLE_PLAY"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
         )
@@ -195,7 +195,7 @@ with DAG(
             task_id="SILVER_APP_SILVER_MONGODB",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-app-silver-reviews-mongodb:1.0.0", "APP_SILVER_MONGODB"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
         )
@@ -214,7 +214,7 @@ with DAG(
             task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.0", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
         )
@@ -235,7 +235,7 @@ with DAG(
             task_id="B_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.0", "bronze"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",
         )
@@ -250,7 +250,7 @@ with DAG(
             task_id="S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
             op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.0", "silver"],
-            op_kwargs={"config_env": "pre"},
+            op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",
         )

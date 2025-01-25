@@ -6,7 +6,7 @@ import subprocess
 import os
 
 # Função para executar o comando Docker Run com volumes
-def run_docker_run(image, param1, param2=None, config_env="pre"):  # `param2` agora é opcional
+def run_docker_run(image, param1, param2=None, config_env="prod"):  # `param2` agora é opcional
     try:
         host_volume_path = f"/env/.env"  # Caminho do arquivo .env no host
         container_volume_path = "/app/.env"  # Caminho dentro do contêiner
@@ -111,32 +111,32 @@ with DAG(
         # Subgrupo Apple Store (Bronze)
         with TaskGroup("group_jobs_expurgo_bronze_apple_store", tooltip="Expurgo Apple Store") as group_jobs_expurgo_bronze_apple_store:
             expurge_tasks_b_apple_store = create_expurgo_jobs(
-                "B_EXPURGE_APPLE_STORE_HDFS_HISTORY", bronze_tasks_params[:3], op_kwargs={"config_env": "pre"}
+                "B_EXPURGE_APPLE_STORE_HDFS_HISTORY", bronze_tasks_params[:3], op_kwargs={"config_env": "prod"}
             )
 
         # Subgrupo Google Play (Bronze)
         with TaskGroup("group_jobs_expurgo_bronze_google_play", tooltip="Expurgo Google Play") as group_jobs_expurgo_bronze_google_play:
             expurge_tasks_b_google_play = create_expurgo_jobs(
-                "B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY", bronze_tasks_params[3:6], op_kwargs={"config_env": "pre"}
+                "B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY", bronze_tasks_params[3:6], op_kwargs={"config_env": "prod"}
             )
 
         # Subgrupo MongoDB (Bronze)
         with TaskGroup("group_jobs_expurgo_bronze_mongodb", tooltip="Expurgo MongoDB") as group_jobs_expurgo_bronze_mongodb:
             expurge_tasks_b_mongodb = create_expurgo_jobs(
-                "B_EXPURGE_MONGODB_HDFS_HISTORY", bronze_tasks_params[6:], op_kwargs={"config_env": "pre"}
+                "B_EXPURGE_MONGODB_HDFS_HISTORY", bronze_tasks_params[6:], op_kwargs={"config_env": "prod"}
             )
 
     ###################################################################################################################
     # Grupo de tarefas do job expurgo: SILVER
     ###################################################################################################################
     with TaskGroup("group_jobs_expurgo_silver", tooltip="Camada Expurgo Silver") as group_jobs_expurgo_silver:
-        expurge_tasks_s = create_expurgo_jobs("S_EXPURGE_APP_HDFS_HISTORY", silver_tasks_params, op_kwargs={"config_env": "pre"})
+        expurge_tasks_s = create_expurgo_jobs("S_EXPURGE_APP_HDFS_HISTORY", silver_tasks_params, op_kwargs={"config_env": "prod"})
 
     ###################################################################################################################
     # Grupo de tarefas do job expurgo: GOLD
     ###################################################################################################################
     with TaskGroup("group_jobs_expurgo_gold", tooltip="Camada Expurgo Gold") as group_jobs_expurgo_gold:
-        expurge_tasks_g = create_expurgo_jobs("G_EXPURGE_APP_HDFS_HISTORY", gold_tasks_params, op_kwargs={"config_env": "pre"})
+        expurge_tasks_g = create_expurgo_jobs("G_EXPURGE_APP_HDFS_HISTORY", gold_tasks_params, op_kwargs={"config_env": "prod"})
 
     ###################################################################################################################
     # Sequenciamento entre os grupos
