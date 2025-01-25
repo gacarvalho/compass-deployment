@@ -9,9 +9,6 @@ from datetime import datetime
 import subprocess
 import os
 from airflow.utils.dates import days_ago
-import smtplib
-
-
 import os
 import subprocess
 
@@ -270,9 +267,6 @@ with DAG(
     group_jobs_silver >> dm_init_gold
     
     dm_init_gold >> group_jobs_gold
-
-    # group_jobs_silver >> group_jobs_quality_silver
-
 
 
 
