@@ -33,6 +33,9 @@ prepare-mnt:
 	sudo mkdir -p $(BASE_DIR)/mnt/mongodb_init
 	sudo mkdir -p $(BASE_DIR)/mnt/metabase
 	sudo mkdir -p $(BASE_DIR)/mnt/airflow
+	sudo mkdir -p $(BASE_DIR)/mnt/airflow/dags
+	sudo mkdir -p $(BASE_DIR)/mnt/airflow/logs
+	sudo mkdir -p $(BASE_DIR)/mnt/airflow/plugins
 	sudo mkdir -p $(BASE_DIR)/mnt/postgres-db-volume/
 	echo "Diretórios de montagem criados com sucesso."
 
@@ -46,6 +49,9 @@ prepare-mnt:
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/mongodb_init
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/metabase
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow/dags
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow/logs
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow/plugins
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/postgres-db-volume/
 
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/namenode
@@ -58,6 +64,9 @@ prepare-mnt:
 	sudo chmod -R 755 $(BASE_DIR)/mnt/mongodb_init
 	sudo chmod -R 755 $(BASE_DIR)/mnt/metabase
 	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow
+	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/dags
+	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/logs
+	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/plugins
 	sudo chmod -R 755 $(BASE_DIR)/mnt/postgres-db-volume/
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
@@ -90,4 +99,4 @@ deployment-metabase-service:
 	docker stack deploy -c services/batch_layer/deployment-business-service.yaml  deployment-metabase
 
 deployment-airflow-service:
-	sudo docker stack deploy -c services/batch_layer/deployment-airflow-service.yaml  deployment-airflow
+	docker stack deploy -c services/batch_layer/deployment-airflow-service.yaml  deployment-airflow

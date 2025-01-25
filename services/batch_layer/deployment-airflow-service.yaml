@@ -143,6 +143,7 @@ services:
         exec /entrypoint airflow version
     environment:
       <<: *airflow-common-env
+      AIRFLOW_UID: 50000
       _AIRFLOW_DB_UPGRADE: 'true'
       _AIRFLOW_WWW_USER_CREATE: 'true'
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
