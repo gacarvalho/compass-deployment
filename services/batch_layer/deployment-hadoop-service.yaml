@@ -120,7 +120,7 @@ services:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
     deploy:
-      replicas: 1
+      replicas: 2
       resources:
         limits:
           memory: 3G
@@ -146,7 +146,7 @@ services:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
     deploy:
-      replicas: 1
+      replicas: 3
       resources:
         limits:
           memory: 3G
