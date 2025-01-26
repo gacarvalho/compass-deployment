@@ -141,7 +141,7 @@ services:
           - nodemanager
     logging: *default-logging
     ports:
-      - "8042:8042"
+      - "8032-8042:8042"
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
