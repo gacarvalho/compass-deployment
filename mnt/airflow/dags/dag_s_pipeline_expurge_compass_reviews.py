@@ -144,3 +144,4 @@ with DAG(
     [group_jobs_expurgo_bronze_apple_store, group_jobs_expurgo_bronze_google_play, group_jobs_expurgo_bronze_mongodb] >> group_jobs_expurgo_silver 
     group_jobs_expurgo_silver >> group_jobs_expurgo_gold
 
+
