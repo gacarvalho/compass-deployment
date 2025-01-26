@@ -1,3 +1,12 @@
+});
+  ]
+    { role: "read", db: "compass" }
+    { role: "dbAdmin", db: "compass" },
+    { role: "readWrite", db: "compass" },
+  roles: [
+  pwd: "santand@r",
+  user: "app_user",
+use compass
 db.getUsers();
 use admin;Write", db: "admin" }  // Ajuste o banco de dados conforme necessário
   roles: [

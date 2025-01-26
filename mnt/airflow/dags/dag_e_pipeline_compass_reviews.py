@@ -11,22 +11,23 @@ import os
 def run_docker_run(image, param1, param2, config_env="prod"):
     try:
         # Caminhos dos volumes no host e no contêiner
-        host_volume_path = f"/env/.env"  # Caminho do arquivo .env no host
+        host_volume_path = "/env/.env"  # Caminho do arquivo .env no host
         container_volume_path = "/app/.env"  # Caminho dentro do contêiner
 
-        # Adicionando um volume extra, por exemplo, montando um diretório local para o contêiner
-        additional_volume_host_path = f"{os.getcwd()}/data"  # Caminho de exemplo
+        # Montando o diretório de dados com o diretório atual do host
+        additional_volume_host_path = f"{os.getcwd()}/data"  # Caminho para o diretório de dados no host
         additional_volume_container_path = "/app/data"  # Caminho no contêiner
 
-        # Comando Docker Run em formato de lista
+        # Comando Docker Run em formato de lista (adaptação para o novo formato)
         command = [
             "docker", "run", "--rm",
-            "--network", "hadoop_network",  # Certifique-se de que o Docker está na rede apropriada
+            "--network", "hadoop_network",
+            "-e", f"CONFIG_ENV={config_env}",
             "-e", f"PARAM1={param1}",
             "-e", f"PARAM2={param2}",
-            "-e", f"CONFIG_ENV={config_env}", 
-            "-v", f"{host_volume_path}:{container_volume_path}",
+            "-v", f"{host_volume_path}:{container_volume_path}:ro",
             "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
+            "-v", "/var/run/docker.sock:/var/run/docker.sock",
             image
         ]
 
@@ -45,6 +46,7 @@ def run_docker_run(image, param1, param2, config_env="prod"):
     except Exception as e:
         print(f"Erro inesperado: {e}")
         raise
+
 
 # Configuração padrão da DAG
 default_args = {
@@ -98,6 +100,3 @@ with DAG(
 
 
     group_generator
-
-
-

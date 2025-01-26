@@ -50,6 +50,7 @@ services:
   airflow-webserver:
     <<: *airflow-common
     command: webserver
+    user: "${AIRFLOW_UID:-50000}:0"
     ports:
       - 8080:8080
     restart: always
@@ -58,27 +59,27 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: always
 
   airflow-worker:
     <<: *airflow-common
     command: celery worker
+    user: "${AIRFLOW_UID:-50000}:0"
     environment:
       <<: *airflow-common-env
-      # Required to handle warm shutdown of the celery workers properly
-      # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
       DUMB_INIT_SETSID: "0"
     restart: always
 
   airflow-triggerer:
     <<: *airflow-common
     command: triggerer
+    user: "${AIRFLOW_UID:-50000}:0"
     restart: always
 
   airflow-init:
     <<: *airflow-common
     entrypoint: /bin/bash
-    # yamllint disable rule:line-length
     command:
       - -c
       - |
@@ -149,13 +150,13 @@ services:
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
       _PIP_ADDITIONAL_REQUIREMENTS: ''
-    user: "0:0"
+    user: "${AIRFLOW_UID:-50000}:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
 
   airflow-cli:
     <<: *airflow-common
-    user: "0:0"
+    user: "${AIRFLOW_UID:-50000}:0"
     environment:
       <<: *airflow-common-env
       CONNECTION_CHECK_MAX_COUNT: "0"
@@ -167,6 +168,7 @@ services:
   flower:
     <<: *airflow-common
     command: celery flower
+    user: "${AIRFLOW_UID:-50000}:0"
     ports:
       - 5555:5555
     restart: always
@@ -180,4 +182,5 @@ networks:
   hadoop_network:
     external: true
     driver: overlay
+
 
