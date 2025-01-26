@@ -31,23 +31,18 @@ services:
       - "32763:9870"
     volumes:
       - ../../mnt/hadoop/namenode:/hadoop/dfs/name
+    environment: *default-environment
     healthcheck:
       <<: *default-healthcheck
       test: ["CMD", "nc", "-z", "localhost", "9870"]
     deploy:
       resources:
         limits:
-          memory: 8G
-          cpus: '5.0'
-        reservations:
-          memory: 4G
+          memory: 2G
           cpus: '2.0'
-    environment:
-      CLUSTER_NAME: hadoop_cluster
-      SPARK_DRIVER_CORES: 4
-      SPARK_EXECUTOR_CORES: 4
-      SPARK_DRIVER_MEMORY: 4G
-      SPARK_EXECUTOR_MEMORY: 4G
+        reservations:
+          memory: 2G
+          cpus: '1.0'
 
   infra-datanode:
     image: iamgacarvalho/hadoop-datanode-data-in-compass:0.0.3
@@ -61,23 +56,18 @@ services:
       - "9854-9864:9864"
     volumes:
       - ../../mnt/hadoop/datanode:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: infra-namenode:9870
+      DATANODE_PORT: 9864
     deploy:
       replicas: 3
       resources:
         limits:
-          memory: 8G
-          cpus: '5.0'
-        reservations:
           memory: 4G
-          cpus: '2.0'
-    environment:
-      CLUSTER_NAME: hadoop_cluster
-      SERVICE_PRECONDITION: infra-namenode:9870
-      DATANODE_PORT: 9864
-      SPARK_DRIVER_CORES: 4
-      SPARK_EXECUTOR_CORES: 4
-      SPARK_DRIVER_MEMORY: 4G
-      SPARK_EXECUTOR_MEMORY: 4G
+          cpus: '4.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
 
   # Serviço do infra-history-server
   infra-history-server:
@@ -98,7 +88,7 @@ services:
       resources:
         limits:
           memory: 3G
-          cpus: '5.0'
+          cpus: '2.0'
         reservations:
           memory: 1G
           cpus: '2.0'
@@ -120,14 +110,14 @@ services:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
     deploy:
-      replicas: 2
+      replicas: 1
       resources:
         limits:
           memory: 3G
-          cpus: '5.0'
+          cpus: '2.0'
         reservations:
           memory: 1G
-          cpus: '2.0'
+          cpus: '1.0'
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "localhost", "8088" ]
@@ -149,10 +139,10 @@ services:
       replicas: 3
       resources:
         limits:
-          memory: 3G
-          cpus: '10.0'
+          memory: 8G
+          cpus: '8.0'
         reservations:
-          memory: 1G
+          memory: 4G
           cpus: '2.0'
     healthcheck:
       <<: *default-healthcheck
