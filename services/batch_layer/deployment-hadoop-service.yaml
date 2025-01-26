@@ -56,7 +56,7 @@ services:
           - datanode
     logging: *default-logging
     ports:
-      - "9864:9864"
+      - "9854-9864:9864"
     volumes:
       - ../../mnt/hadoop/datanode:/hadoop/dfs/data
     environment:

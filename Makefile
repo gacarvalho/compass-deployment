@@ -16,7 +16,7 @@ stop-containers:
 
 ################################### create network ###########################################################
 create-network:
-	docker network create --driver overlay hadoop_network
+	docker network create --driver overlay hadoop_network --attachable
 
 ################################### prepare mnt #############################################################
 
@@ -68,6 +68,13 @@ prepare-mnt:
 	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/logs
 	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/plugins
 	sudo chmod -R 755 $(BASE_DIR)/mnt/postgres-db-volume/
+
+	sudo chmod -R 755 /home/azureuser/compass-deployment/mnt/airflow/dags
+	sudo chmod -R 755 /home/azureuser/compass-deployment/mnt/airflow/logs
+	sudo chmod -R 755 /home/azureuser/compass-deployment/mnt/airflow/plugins
+
+	sudo chmod 666 /var/run/docker.sock
+
 	echo "Permissões 755 aplicadas aos diretórios de montagem."
 
 
