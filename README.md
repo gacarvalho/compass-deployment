@@ -28,3 +28,19 @@ A solução da arquitetura do `projeto Compass` foi projetada para ser executada
 O modelo de arquitetura proposto tem como base o ambiente on-premises da empresa, utilizando um banco de dados não relacional para o armazenamento de avaliações internas e métricas. O processamento de dados é realizado com Spark, enquanto o Hadoop é utilizado para armazenamento histórico. A orquestração dos fluxos de dados fica a cargo do Airflow. Para monitoramento e visualização, o Grafana Cloud é empregado para métricas técnicas, enquanto o Metabase é utilizado para a análise do modelo de negócios. 
 
 ![<componentes-arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/componentes_arquitetura.png)
+
+#### 2.3 Elementos da Arquitetura
+
+A arquitetura foi estruturada em componentes fundamentais para garantir o funcionamento eficiente da malha, abrangendo as seguintes áreas: Orquestração, Processamento, Armazenamento, Armazenamento Histórico e Visualização (técnica e de negócios).
+
+- **Storage Historical**: Armazenamento de dados históricos com retenção máxima de cinco anos, utilizando Apache Hadoop para suportar grandes volumes de dados.
+- **Storage**: Armazenamento de dados operacionais dividido em duas categorias:
+    - **Avaliações internas dos aplicativos Santander**, alimentadas via API e canal de feedback.
+    - **Métricas aplicacionais**, armazenadas no MongoDB (versão 7).
+- **Processing**: Para processamento distribuído, a ferramenta escolhida foi o Apache Spark.
+- **Visualization**: A visualização dos dados segue dois princípios:
+    - Dashboards com **métricas técnicas** utilizando Grafana Cloud.
+    - Dashboards com **métricas funcionais** no Metabase.
+- **Orchestrator**: O Apache Airflow é utilizado como orquestrador principal da malha do projeto Compass.
+
+
