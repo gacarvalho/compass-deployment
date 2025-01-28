@@ -22,3 +22,9 @@ A solução da arquitetura do `projeto Compass` foi projetada para ser executada
 
 
 ![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/arquitetura_compass.png?raw=true)
+
+#### 2.2 Modelo Arquitetural da Solução
+
+O modelo de arquitetura proposto tem como base o ambiente on-premises da empresa, utilizando um banco de dados não relacional para o armazenamento de avaliações internas e métricas. O processamento de dados é realizado com Spark, enquanto o Hadoop é utilizado para armazenamento histórico. A orquestração dos fluxos de dados fica a cargo do Airflow. Para monitoramento e visualização, o Grafana Cloud é empregado para métricas técnicas, enquanto o Metabase é utilizado para a análise do modelo de negócios. 
+
+![<componentes-arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/componentes_arquitetura.png)
