@@ -37,6 +37,9 @@ prepare-mnt:
 	sudo mkdir -p $(BASE_DIR)/mnt/airflow/logs
 	sudo mkdir -p $(BASE_DIR)/mnt/airflow/plugins
 	sudo mkdir -p $(BASE_DIR)/mnt/postgres-db-volume/
+	sudo mkdir -p $(BASE_DIR)/mnt/grafana_data/
+	sudo mkdir -p $(BASE_DIR)/mnt/es_data
+	sudo mkdir -p $(BASE_DIR)/mnt/logstash
 	echo "Diretórios de montagem criados com sucesso."
 
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/hadoop/namenode
@@ -53,6 +56,9 @@ prepare-mnt:
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow/logs
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/airflow/plugins
 	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/postgres-db-volume/
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/grafana_data/
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/es_data
+	sudo chown -R $(whoami):$(whoami) $(BASE_DIR)/mnt/logstash
 
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/namenode
 	sudo chmod -R 755 $(BASE_DIR)/mnt/hadoop/datanode
@@ -68,6 +74,9 @@ prepare-mnt:
 	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/logs
 	sudo chmod -R 755 $(BASE_DIR)/mnt/airflow/plugins
 	sudo chmod -R 755 $(BASE_DIR)/mnt/postgres-db-volume/
+	sudo chmod -R 755 $(BASE_DIR)/mnt/grafana_data/
+	sudo chmod -R 755 $(BASE_DIR)/mnt/es_data
+	sudo chmod -R 755 $(BASE_DIR)/mnt/logstash
 
 	sudo chmod -R 755 /home/azureuser/compass-deployment/mnt/airflow/dags
 	sudo chmod -R 755 /home/azureuser/compass-deployment/mnt/airflow/logs
@@ -107,3 +116,9 @@ deployment-metabase-service:
 
 deployment-airflow-service:
 	docker stack deploy -c services/batch_layer/deployment-airflow-service.yaml  deployment-airflow
+
+deployment-grafana-service:
+	docker stack deploy -c services/batch_layer/deployment-observabilidade-service.yaml  deployment-grafana
+
+deployment-elasticsearch-service:
+	docker stack deploy -c services/batch_layer/deployment-elasticsearch-service.yaml  deployment-elasticsearch
