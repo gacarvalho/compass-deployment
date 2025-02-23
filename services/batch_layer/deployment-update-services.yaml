@@ -1,0 +1,57 @@
+version: '3.8'
+
+x-logging: &default-logging
+    driver: "json-file"
+    options:
+        max-file: "5"
+        max-size: "10m"
+
+x-healthcheck: &default-healthcheck
+    test: ["CMD", "nc", "-z", "localhost", "port"]
+    timeout: 45s
+    interval: 10s
+    retries: 10
+
+
+services:
+    infra-nodemanager:
+    image: iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0
+    container_name: nodemanager
+    networks:
+    hadoop_network:
+    aliases:
+    - nodemanager
+    logging: *default-logging
+    ports:
+    - "8032-8042:8042"
+    environment:
+    SERVICE_PRECONDITION: infra-namenode:9870
+    DATANODE_PORT: 8188
+    deploy:
+    replicas: 2
+    healthcheck:
+    <<: *default-healthcheck
+    test: [ "CMD", "nc", "-z", "localhost", "8042" ]
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:8.16.1
+        environment:
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - ELASTICSEARCH_USERNAME=kibana_user_service
+            - ELASTICSEARCH_PASSWORD=data-@a1
+        ports:
+            - "5601:5601"
+        deploy:
+            replicas: 1
+            placement:
+                constraints:
+                    - node.role == manager
+            restart_policy:
+                condition: on-failure
+        networks:
+            - hadoop_network
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "http://localhost:5601" ]
+            interval: 30s
+            timeout: 10s
+            retries: 3

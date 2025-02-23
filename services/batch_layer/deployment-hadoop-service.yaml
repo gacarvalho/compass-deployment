@@ -52,7 +52,7 @@ services:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864
     deploy:
-      replicas: 1
+      replicas: 2
 
   # Serviço do infra-history-server
   infra-history-server:
@@ -108,7 +108,7 @@ services:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 8188
     deploy:
-      replicas: 3
+      replicas: 2
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "localhost", "8042" ]
