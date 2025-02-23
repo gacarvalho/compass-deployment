@@ -1,0 +1,14 @@
+[2025-02-13T01:54:30.309+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY manual__2025-02-13T01:44:56.174197+00:00 [queued]>
+[2025-02-13T01:54:30.317+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY manual__2025-02-13T01:44:56.174197+00:00 [queued]>
+[2025-02-13T01:54:30.317+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-02-13T01:54:30.326+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY> on 2025-02-13 01:44:56.174197+00:00
+[2025-02-13T01:54:30.330+0000] {standard_task_runner.py:57} INFO - Started process 250 to run task
+[2025-02-13T01:54:30.333+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dag_d_pipeline_compass_reviews', 'group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY', 'manual__2025-02-13T01:44:56.174197+00:00', '--job-id', '857', '--raw', '--subdir', 'DAGS_FOLDER/dag_d_pipeline_compass_reviews.py', '--cfg-path', '/tmp/tmpv3ossyri']
+[2025-02-13T01:54:30.334+0000] {standard_task_runner.py:85} INFO - Job 857: Subtask group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY
+[2025-02-13T01:54:30.367+0000] {task_command.py:416} INFO - Running <TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY manual__2025-02-13T01:44:56.174197+00:00 [running]> on host 963159f3819a
+[2025-02-13T01:54:30.426+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='gacarvalho.contato@gmail.com' AIRFLOW_CTX_DAG_OWNER='gacarvalho' AIRFLOW_CTX_DAG_ID='dag_d_pipeline_compass_reviews' AIRFLOW_CTX_TASK_ID='group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY' AIRFLOW_CTX_EXECUTION_DATE='2025-02-13T01:44:56.174197+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-02-13T01:44:56.174197+00:00'
+[2025-02-13T01:57:07.312+0000] {logging_mixin.py:151} INFO - Docker Run executado com sucesso para iamgacarvalho/dmc-app-silver-reviews-google-play:1.0.0 com APP_SILVER_GOOGLE_PLAY e None!
+[2025-02-13T01:57:07.312+0000] {python.py:194} INFO - Done. Returned value was: None
+[2025-02-13T01:57:07.322+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=dag_d_pipeline_compass_reviews, task_id=group_jobs_silver.SILVER_APP_SILVER_GOOGLE_PLAY, execution_date=20250213T014456, start_date=20250213T015430, end_date=20250213T015707
+[2025-02-13T01:57:07.349+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-02-13T01:57:07.366+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

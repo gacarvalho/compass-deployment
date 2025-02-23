@@ -1,3 +1,83 @@
+--eval 'db.adminCommand({getCmdLineOpts:1})'
+use compass;
+db["banco-santander-br"].createIndex({ "votes_count": 1 });
+db["banco-santander-br"].createIndex({ "os": 1, "os_version": 1 });
+db["banco-santander-br"].createIndex({ "rating": 1 });
+db["banco-santander-br"].createIndex({ "app_version": 1, "country": 1 });
+db["banco-santander-br"].createIndex({ "customer_id": 1 });
+db["banco-santander-br"].createIndex({ "timestamp": 1 });
+db["santander-select-global"].createIndex({ "votes_count": 1 });
+db["santander-select-global"].createIndex({ "os": 1, "os_version": 1 });
+db["santander-select-global"].createIndex({ "rating": 1 });
+db["santander-select-global"].createIndex({ "app_version": 1, "country": 1 });
+db["santander-select-global"].createIndex({ "customer_id": 1 });
+db["santander-select-global"].createIndex({ "timestamp": 1 });
+db["santander-way"].createIndex({ "votes_count": 1 });
+db["santander-way"].createIndex({ "os": 1, "os_version": 1 });
+db["santander-way"].createIndex({ "rating": 1 });
+db["santander-way"].createIndex({ "app_version": 1, "country": 1 });
+db["santander-way"].createIndex({ "customer_id": 1 });
+db["santander-way"].createIndex({ "timestamp": 1 });
+db["reviews-santander-way"].createIndex({ "votes_count": 1 });
+db["reviews-santander-way"].createIndex({ "os": 1, "os_version": 1 });
+db["reviews-santander-way"].createIndex({ "rating": 1 });
+db["reviews-santander-way"].createIndex({ "app_version": 1, "country": 1 });
+db["reviews-santander-way"].createIndex({ "customer_id": 1 });
+db["reviews-santander-way"].createIndex({ "timestamp": 1 });
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }] );
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }] );
+db["reviews-santander-way"].createIndexes([ { "key": { "timestamp": 1 } }, { "key": { "customer_id": 1 } }, { "key": { "app_version": 1, "country": 1 } }, { "key": { "rating": 1 } }, { "key": { "os": 1, "os_version": 1 } }, { "key": { "votes_count": 1 } }] );
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }] );
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }, { key: { "ip_address": 1 } }, { key: { "comment": "text" } }] );
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }] );
+db["reviews-santander-way"].createIndexes([ { key: { "timestamp": 1 } }, { key: { "customer_id": 1 } }, { key: { "app_version": 1, "country": 1 } }, { key: { "rating": 1 } }, { key: { "os": 1, "os_version": 1 } }, { key: { "votes_count": 1 } }] );
+db["reviews-santander-way"].find().limit(10)
+show collections;
+db["reviews-santander-way"].find().limit(10)
+compass> db.["reviews-santander-way"].find()
+db.["reviews-santander-way"].find()
+db.reviews-santander-way.find()
+show collections;
+show dbs;
+db.dt_datametrics_compass.createIndex( { "_ts.compass_end_ts": 1 }, { expireAfterSeconds: 7776000 } );
+db.createCollection("dt_datametrics_compass");
+db.dt_datametrics_fail_compass.createIndex( { "data_e_hora": 1 }, { expireAfterSeconds: 7776000 } );
+db.createCollection("dt_datametrics_fail_compass");
+use compass
+use admin;
+db.getUsers();
+db.dropUser("gacarvalho");
+use compass;
+use admin;
+db.dropUser("gacarvalho");
+use compass;
+user: "app_user", pwd: "santand@r",
+});
+  ]
+    { role: "readWrite", db: "admin" }  
+  roles: [
+  pwd: "santand@r",
+  user: "app_user",
+db.createUser({ user: "app_user", pwd: "santand@r", roles: [ { role: "readWrite", db: "compass" }, { role: "dbAdmin", db: "compass" }, { role: "read", db: "compass" }] });
+user admin;
+admin
+ls -lh /data/db
+ls -lh /var/lib/mongodb/
+db.getCollectionNames()
+show collections
+use admin
+db.README.find().pretty()
+db.compass.find().limit(5)
+db.compass.find().pretty()
+db.nome_da_colecao.find().pretty()
+db.getCollectionNames()
+show collections
+use READ__ME_TO_RECOVER_YOUR_DATA
+db.adminCommand({ listDatabases: 1 })
+show dbs
+grep "drop database" /var/log/mongodb/mongod.log
+db.adminCommand({ listDatabases: 1 })
+use admin;
 });
   ]
     { role: "read", db: "compass" }
@@ -12,6 +92,23 @@ use admin;Write", db: "admin" }  // Ajuste o banco de dados conforme necessário
   roles: [
   pwd: "santand@r",
   user: "gacarvalho",
+use admin;
+db.getUsers();
+use admin;
+use admin;
+db.getUsers();
+use admin; roles: [
+  pwd: "santand@r",
+  user: "gacarvalho",
+use admin;
+db.getUsers();
+use admin;
+use admin;
+db.getUsers();
+use admin;ser: "gacarvalho",
+use admin;
+db.getUsers();
+use admin;
 use admin;
 db.getUsers();
 use admin;

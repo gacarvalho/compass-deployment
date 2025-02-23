@@ -20,7 +20,7 @@ x-restart: &default-restart
 
 services:
   infra-namenode:
-    image: iamgacarvalho/hadoop-namenode-data-in-compass:0.0.3
+    image: iamgacarvalho/hadoop-namenode-data-in-compass:2.0.0
     container_name: namenode
     networks:
       hadoop_network:
@@ -30,14 +30,14 @@ services:
     ports:
       - "32763:9870"
     volumes:
-      - ../../mnt/hadoop/namenode:/hadoop/dfs/name
+      - ../../mnt/hadoop/namenode:/data/hdfs/name
     environment: *default-environment
     healthcheck:
       <<: *default-healthcheck
       test: ["CMD", "nc", "-z", "localhost", "9870"]
 
   infra-datanode:
-    image: iamgacarvalho/hadoop-datanode-data-in-compass:0.0.3
+    image: iamgacarvalho/hadoop-datanode-data-in-compass:2.0.0
     container_name: datanode
     networks:
       hadoop_network:
@@ -47,7 +47,7 @@ services:
     ports:
       - "9854-9864:9864"
     volumes:
-      - ../../mnt/hadoop/datanode:/hadoop/dfs/data
+      - ../../mnt/hadoop/datanode:/data/hdfs/data
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864
@@ -56,11 +56,12 @@ services:
 
   # Serviço do infra-history-server
   infra-history-server:
-    image: iamgacarvalho/hadoop-historyserver-data-in-compass:0.0.3
-    container_name: history-server
+    image: iamgacarvalho/hadoop-historyserver-data-in-compass:2.0.0
+    container_name: historyserver
     networks:
       hadoop_network:
         aliases:
+          - historyserver
           - history-server
     logging: *default-logging
     ports:
@@ -75,7 +76,7 @@ services:
       test: [ "CMD", "nc", "-z", "localhost", "8188" ]
 
   infra-resourcemanager:
-    image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:0.0.3
+    image: iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0
     container_name: resourcemanager
     networks:
       hadoop_network:
@@ -94,7 +95,7 @@ services:
       test: [ "CMD", "nc", "-z", "localhost", "8088" ]
 
   infra-nodemanager:
-    image: iamgacarvalho/hadoop-nodemanager-data-in-compass:0.0.3
+    image: iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0
     container_name: nodemanager
     networks:
       hadoop_network:
@@ -111,6 +112,7 @@ services:
     healthcheck:
       <<: *default-healthcheck
       test: [ "CMD", "nc", "-z", "localhost", "8042" ]
+
 
 volumes:
   infra-namenode:

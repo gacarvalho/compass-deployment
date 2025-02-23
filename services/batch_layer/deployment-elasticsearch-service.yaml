@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    environment:
+      - node.name=es-node
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=elasticsearch
+      - cluster.initial_master_nodes=es-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node/es-node.key
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node/es-node.crt
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
+      - ELASTIC_PASSWORD=data-@a1
+    volumes:
+      - ../../mnt/es_data:/usr/share/elasticsearch/data
+      - ../../mnt/certs:/usr/share/elasticsearch/config/certs
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - hadoop_network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - node.role == manager
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.16.1
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_user_service
+      - ELASTICSEARCH_PASSWORD=data-@a1
+    ports:
+      - "5601:5601"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+    networks:
+      - hadoop_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5601"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:8.5.0
+  #   environment:
+  #     - LS_JAVA_OPTS="-Xms512m -Xmx512m"
+  #   volumes:
+  #     - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #   networks:
+  #     - hadoop_network
+  #   healthcheck:
+  #     test: ["CMD", "logstash", "-t", "-f", "/usr/share/logstash/pipeline/logstash.conf"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
+volumes:
+  elasticsearch_yml:
+    driver: local
+  certs:
+    driver: local
+  es_data:
+    driver: local
+
+networks:
+  hadoop_network:
+    external: true
+    driver: overlay

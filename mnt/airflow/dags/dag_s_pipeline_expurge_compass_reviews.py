@@ -14,12 +14,30 @@ def run_docker_run(image, param1, param2=None, config_env="prod"):  # `param2` a
         additional_volume_container_path = "/app/data"  # Caminho no contêiner
 
         # Comando Docker Run em formato de lista
+        # command = [
+        #     "docker", "run", "--rm",
+        #     "--network", "hadoop_network",
+        #     "-e", f"CONFIG_ENV={config_env}", 
+        #     "-e", f"PARAM1={param1}",
+        # ]
+
         command = [
             "docker", "run", "--rm",
             "--network", "hadoop_network",
-            "-e", f"CONFIG_ENV={config_env}", 
+            "-e", f"CONFIG_ENV={config_env}",
             "-e", f"PARAM1={param1}",
+            "-e", f"PARAM2={param2}",
+            "-v", f"{host_volume_path}:{container_volume_path}:ro",
+            "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
+            "-v", "/var/run/docker.sock:/var/run/docker.sock",
+            image
         ]
+
+        # Copiar o ambiente atual para garantir que PATH e outras variáveis estejam disponíveis
+        env = os.environ.copy()
+        # Verificar se o caminho para o Docker está no PATH
+        if "PATH" not in env or "/usr/local/bin" not in env["PATH"]:
+            env["PATH"] = "/usr/local/bin:" + env["PATH"]
 
         if param2:  # Adiciona `param2` somente se ele for fornecido
             command.extend(["-e", f"PARAM2={param2}"])
@@ -143,5 +161,6 @@ with DAG(
     ###################################################################################################################
     [group_jobs_expurgo_bronze_apple_store, group_jobs_expurgo_bronze_google_play, group_jobs_expurgo_bronze_mongodb] >> group_jobs_expurgo_silver 
     group_jobs_expurgo_silver >> group_jobs_expurgo_gold
+
 
 

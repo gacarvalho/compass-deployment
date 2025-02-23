@@ -15,7 +15,7 @@ x-healthcheck: &default-healthcheck
 services:
   # Serviço do Spark Master
   infra-spark-master:
-    image: iamgacarvalho/spark-master-data-in-compass:0.0.3
+    image: iamgacarvalho/spark-master-data-in-compass:2.0.0
     container_name: spark-master
     logging:
       <<: *default-logging
@@ -43,7 +43,7 @@ services:
 
   # Serviço do Spark Worker
   infra-spark-worker:
-    image: iamgacarvalho/spark-worker-data-in-compass:0.0.3
+    image: iamgacarvalho/spark-worker-data-in-compass:2.0.0
     container_name: spark-worker
     logging:
       <<: *default-logging

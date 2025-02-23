@@ -1,0 +1,118 @@
+[2025-02-03T02:08:13.296+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY scheduled__2025-02-01T06:00:00+00:00 [queued]>
+[2025-02-03T02:08:13.306+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY scheduled__2025-02-01T06:00:00+00:00 [queued]>
+[2025-02-03T02:08:13.307+0000] {taskinstance.py:1361} INFO - Starting attempt 4 of 4
+[2025-02-03T02:08:13.317+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY> on 2025-02-01 06:00:00+00:00
+[2025-02-03T02:08:13.321+0000] {standard_task_runner.py:57} INFO - Started process 174 to run task
+[2025-02-03T02:08:13.324+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dag_d_pipeline_compass_reviews', 'group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY', 'scheduled__2025-02-01T06:00:00+00:00', '--job-id', '690', '--raw', '--subdir', 'DAGS_FOLDER/dag_d_pipeline_compass_reviews.py', '--cfg-path', '/tmp/tmptbz21y_e']
+[2025-02-03T02:08:13.325+0000] {standard_task_runner.py:85} INFO - Job 690: Subtask group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY
+[2025-02-03T02:08:13.362+0000] {task_command.py:416} INFO - Running <TaskInstance: dag_d_pipeline_compass_reviews.group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY scheduled__2025-02-01T06:00:00+00:00 [running]> on host ce1364f14cd5
+[2025-02-03T02:08:13.428+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='gacarvalho.contato@gmail.com' AIRFLOW_CTX_DAG_OWNER='gacarvalho' AIRFLOW_CTX_DAG_ID='dag_d_pipeline_compass_reviews' AIRFLOW_CTX_TASK_ID='group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY' AIRFLOW_CTX_EXECUTION_DATE='2025-02-01T06:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='4' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-02-01T06:00:00+00:00'
+[2025-02-03T02:08:23.097+0000] {logging_mixin.py:151} INFO - Erro ao executar Docker Run: Command '['docker', 'run', '--rm', '--network', 'hadoop_network', '-e', 'CONFIG_ENV=prod', '-e', 'PARAM1=1154266372', '-e', 'PARAM2=santander-way', '-v', '/env/.env:/app/.env', '-v', '/opt/***/data:/app/data', 'iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.0']' returned non-zero exit status 1.
+[2025-02-03T02:08:23.098+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/dag_d_pipeline_compass_reviews.py", line 41, in run_docker_run
+    subprocess.run(command, check=True, env=os.environ.copy())
+  File "/usr/local/lib/python3.8/subprocess.py", line 516, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['docker', 'run', '--rm', '--network', 'hadoop_network', '-e', 'CONFIG_ENV=prod', '-e', 'PARAM1=1154266372', '-e', 'PARAM2=santander-way', '-v', '/env/.env:/app/.env', '-v', '/opt/airflow/data:/app/data', 'iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.0']' returned non-zero exit status 1.
+[2025-02-03T02:08:23.109+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 690 for task group_ingestion.group_jobs_apple.APPLE_INGESTION_SANTANDER-WAY ((psycopg2.OperationalError) could not translate host name "postgres" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8); 174)
+[2025-02-03T02:08:23.136+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-02-03T02:08:23.144+0000] {taskinstance.py:2784} INFO - Skipping mini scheduling run due to exception: None
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 691, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: could not translate host name "postgres" to address: Name or service not known
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 2733, in schedule_downstream_tasks
+    dag_run = with_row_locks(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2870, in one
+    return self._iter().one()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 2916, in _iter
+    result = self.session.execute(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1716, in execute
+    conn = self._connection_for_bind(bind)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1555, in _connection_for_bind
+    return self._transaction._connection_for_bind(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 750, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/future/engine.py", line 406, in connect
+    return super(Engine, self).connect()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 691, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name "postgres" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)

@@ -20,22 +20,24 @@ def run_docker_run(image, param1, param2=None, config_env="prod"):
         additional_volume_host_path = f"{os.getcwd()}/data"  # Caminho de exemplo
         additional_volume_container_path = "/app/data"  # Caminho no contêiner
 
-        # Comando Docker Run em formato de lista
         command = [
             "docker", "run", "--rm",
-            "--network", "hadoop_network", 
-            "-e", f"CONFIG_ENV={config_env}", 
+            "--network", "hadoop_network",
+            "-e", f"CONFIG_ENV={config_env}",
             "-e", f"PARAM1={param1}",
+            "-e", f"PARAM2={param2}",
+            "-v", f"{host_volume_path}:{container_volume_path}:ro",
+            "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
+            "-v", "/var/run/docker.sock:/var/run/docker.sock",
+            image
         ]
 
-        if param2:  # Adiciona `param2` somente se ele for fornecido
-            command.extend(["-e", f"PARAM2={param2}"])
+        # Copiar o ambiente atual para garantir que PATH e outras variáveis estejam disponíveis
+        env = os.environ.copy()
+        # Verificar se o caminho para o Docker está no PATH
+        if "PATH" not in env or "/usr/local/bin" not in env["PATH"]:
+            env["PATH"] = "/usr/local/bin:" + env["PATH"]
 
-        command.extend([
-            "-v", f"{host_volume_path}:{container_volume_path}",
-            "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
-            image  # A imagem Docker deve ser passada no final
-        ])
 
         # Executar o comando
         subprocess.run(command, check=True, env=os.environ.copy())
@@ -83,9 +85,9 @@ with DAG(
         with TaskGroup("group_jobs_mongo", tooltip="Ingestão MongoDB") as group_jobs_mongo:
             mongo_tasks = []
             for image, param1 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.0", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.0", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.0", "santander-select-global"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-way"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "banco-santander-br"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-select-global"),
             ]:
                 task = PythonOperator(
                     task_id=f"MONGO_INGESTION_{param1.upper()}",
@@ -108,9 +110,9 @@ with DAG(
         with TaskGroup("group_jobs_apple", tooltip="Ingestão Apple Store") as group_jobs_apple:
             apple_tasks = []
             for param1, param2, image in [
-                ("1154266372", "santander-way", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.0"),
-                ("613365711", "banco-santander-br", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.0"),
-                ("6462515499", "santander-select-global", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.0"),
+                ("1154266372", "santander-way", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("613365711", "banco-santander-br", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("6462515499", "santander-select-global", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
             ]:
                 task = PythonOperator(
                     task_id=f"APPLE_INGESTION_{param2.upper()}",
@@ -138,9 +140,9 @@ with DAG(
         with TaskGroup("group_jobs_google", tooltip="Ingestão Google Play") as group_jobs_google:
             google_tasks = []
             for image, param1, param2 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.0", "br.com.santander.way", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.0", "com.santander.app", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.0", "com.santander.selectglobal", "santander-select-global"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "br.com.santander.way", "santander-way"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.app", "banco-santander-br"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.selectglobal", "santander-select-global"),
             ]:
                 task = PythonOperator(
                     task_id=f"GOOGLE_INGESTION_{param1.upper()}",
@@ -170,7 +172,7 @@ with DAG(
         silver_task_apple = PythonOperator(
             task_id="SILVER_APP_SILVER_APPLE_STORE",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-app-silver-reviews-apple-store:1.0.0", "APP_SILVER_APPLE_STORE"],
+            op_args=["iamgacarvalho/dmc-app-silver-reviews-apple-store:1.0.1", "APP_SILVER_APPLE_STORE"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
@@ -182,7 +184,7 @@ with DAG(
         silver_task_google = PythonOperator(
             task_id="SILVER_APP_SILVER_GOOGLE_PLAY",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-app-silver-reviews-google-play:1.0.0", "APP_SILVER_GOOGLE_PLAY"],
+            op_args=["iamgacarvalho/dmc-app-silver-reviews-google-play:1.0.1", "APP_SILVER_GOOGLE_PLAY"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
@@ -194,7 +196,7 @@ with DAG(
         silver_task_mongo = PythonOperator(
             task_id="SILVER_APP_SILVER_MONGODB",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-app-silver-reviews-mongodb:1.0.0", "APP_SILVER_MONGODB"],
+            op_args=["iamgacarvalho/dmc-app-silver-reviews-mongodb:1.0.1", "APP_SILVER_MONGODB"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="one_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
@@ -213,7 +215,7 @@ with DAG(
         gold_task_aggregate = PythonOperator(
             task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.0", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
+            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.1", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
@@ -234,7 +236,7 @@ with DAG(
         quality_task_pipeline_b = PythonOperator(
             task_id="B_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.0", "bronze"],
+            op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.1", "bronze"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",
@@ -249,7 +251,7 @@ with DAG(
         quality_task_pipeline_s = PythonOperator(
             task_id="S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER",
             python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.0", "silver"],
+            op_args=["iamgacarvalho/dmc-quality-pipeline-compass:1.0.1", "silver"],
             op_kwargs={"config_env": "prod"},
             task_concurrency=1,
             trigger_rule="all_success",
@@ -267,6 +269,3 @@ with DAG(
     group_jobs_silver >> dm_init_gold
     
     dm_init_gold >> group_jobs_gold
-
-
-

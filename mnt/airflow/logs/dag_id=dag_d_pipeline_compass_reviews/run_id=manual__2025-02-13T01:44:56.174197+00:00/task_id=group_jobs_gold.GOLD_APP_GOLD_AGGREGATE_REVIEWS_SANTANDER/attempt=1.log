@@ -1,0 +1,16 @@
+[2025-02-13T01:58:32.457+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER manual__2025-02-13T01:44:56.174197+00:00 [queued]>
+[2025-02-13T01:58:32.465+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER manual__2025-02-13T01:44:56.174197+00:00 [queued]>
+[2025-02-13T01:58:32.465+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-02-13T01:58:32.475+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER> on 2025-02-13 01:44:56.174197+00:00
+[2025-02-13T01:58:32.479+0000] {standard_task_runner.py:57} INFO - Started process 291 to run task
+[2025-02-13T01:58:32.481+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dag_d_pipeline_compass_reviews', 'group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER', 'manual__2025-02-13T01:44:56.174197+00:00', '--job-id', '861', '--raw', '--subdir', 'DAGS_FOLDER/dag_d_pipeline_compass_reviews.py', '--cfg-path', '/tmp/tmpwbbhs0j7']
+[2025-02-13T01:58:32.482+0000] {standard_task_runner.py:85} INFO - Job 861: Subtask group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER
+[2025-02-13T01:58:32.522+0000] {task_command.py:416} INFO - Running <TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER manual__2025-02-13T01:44:56.174197+00:00 [running]> on host 963159f3819a
+[2025-02-13T01:58:32.614+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='gacarvalho.contato@gmail.com' AIRFLOW_CTX_DAG_OWNER='gacarvalho' AIRFLOW_CTX_DAG_ID='dag_d_pipeline_compass_reviews' AIRFLOW_CTX_TASK_ID='group_jobs_gold.GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER' AIRFLOW_CTX_EXECUTION_DATE='2025-02-13T01:44:56.174197+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-02-13T01:44:56.174197+00:00'
+[2025-02-13T02:08:19.618+0000] {local_task_job_runner.py:294} WARNING - State of this instance has been externally set to success. Terminating instance.
+[2025-02-13T02:08:19.619+0000] {process_utils.py:131} INFO - Sending 15 to group 291. PIDs of all processes in the group: [301, 291]
+[2025-02-13T02:08:19.619+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 291
+[2025-02-13T02:08:19.620+0000] {taskinstance.py:1632} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-02-13T02:08:19.622+0000] {logging_mixin.py:151} INFO - Erro inesperado: Task received SIGTERM signal
+[2025-02-13T02:08:19.623+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=301, status='terminated', started='01:58:31') (301) terminated with exit code None
+[2025-02-13T02:08:19.676+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=291, status='terminated', exitcode=0, started='01:58:31') (291) terminated with exit code 0

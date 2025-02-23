@@ -1,0 +1,14 @@
+[2025-01-30T15:01:22.528+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER manual__2025-01-30T14:42:21.975131+00:00 [queued]>
+[2025-01-30T15:01:22.537+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER manual__2025-01-30T14:42:21.975131+00:00 [queued]>
+[2025-01-30T15:01:22.537+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-01-30T15:01:22.547+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER> on 2025-01-30 14:42:21.975131+00:00
+[2025-01-30T15:01:22.551+0000] {standard_task_runner.py:57} INFO - Started process 343 to run task
+[2025-01-30T15:01:22.553+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dag_d_pipeline_compass_reviews', 'group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER', 'manual__2025-01-30T14:42:21.975131+00:00', '--job-id', '546', '--raw', '--subdir', 'DAGS_FOLDER/dag_d_pipeline_compass_reviews.py', '--cfg-path', '/tmp/tmpp97wp9jo']
+[2025-01-30T15:01:22.554+0000] {standard_task_runner.py:85} INFO - Job 546: Subtask group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER
+[2025-01-30T15:01:22.592+0000] {task_command.py:416} INFO - Running <TaskInstance: dag_d_pipeline_compass_reviews.group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER manual__2025-01-30T14:42:21.975131+00:00 [running]> on host 3b1e82d934b4
+[2025-01-30T15:01:22.654+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='gacarvalho.contato@gmail.com' AIRFLOW_CTX_DAG_OWNER='gacarvalho' AIRFLOW_CTX_DAG_ID='dag_d_pipeline_compass_reviews' AIRFLOW_CTX_TASK_ID='group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER' AIRFLOW_CTX_EXECUTION_DATE='2025-01-30T14:42:21.975131+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-30T14:42:21.975131+00:00'
+[2025-01-30T15:02:22.404+0000] {logging_mixin.py:151} INFO - Docker Run executado com sucesso para iamgacarvalho/dmc-quality-pipeline-compass:1.0.0 com silver e None!
+[2025-01-30T15:02:22.405+0000] {python.py:194} INFO - Done. Returned value was: None
+[2025-01-30T15:02:22.416+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=dag_d_pipeline_compass_reviews, task_id=group_jobs_quality_silver.S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER, execution_date=20250130T144221, start_date=20250130T150122, end_date=20250130T150222
+[2025-01-30T15:02:22.436+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-30T15:02:22.451+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
