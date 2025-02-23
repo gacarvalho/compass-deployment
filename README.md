@@ -3,7 +3,7 @@
 
 O repositório compass-deployment é uma solução desenvolvida para o programa Data Master organizado pela F1rst Tecnologia.
 
-
+![<data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/header.png)
 
 ### ♨️ 1. OBJETIVO DO CASE
 
@@ -21,7 +21,7 @@ Ao coletar e interpretar os feedbacks dos clientes, identificamos necessidades e
 A solução da arquitetura do `projeto Compass` foi projetada para ser executada em um ambiente interno do Santander Brasil com o poder em disponibilizar em um data lake as informações reais da visão cliente sobre os produtos e serviços santander, separando por categoria e origens. Vamos considerar o seguinte cenário: Um Product Owner, um Product Manager ou um Gerente de Projetos está com um feature em Contas Correntes em disponibilizar um extrato mais usual e facil entendimento com +90 dias de transações, por mais que essa pessoa que está tocando essa frente de melhoria saiba ou tenha uma ideia do que melhorar, ela não sabe exatamente se está atendendo uma dor real dos clientes Santander ou está melhorando o que ela ou a equipe entenda que seja a melhoria, surgindo assim a necessidade de buscar a visão do clientes com base no que já tem disponibilizado, sem precisar fazer uma pesquisa de campo ou realizar um levantamento que pode custar mais tempo para o projeto. Nesse cenário podemos ajudar não somente uma equipe, mas todas as equipes de projetos do Banco Santander a melhorar os seus serviços e produtos com dores reais dos seus clientes, ajudando o banco a buscar e consquistar o seu principio que é a `principalidade`, onde faz o Banco Santander ser o banco principal dos seus clientes.
 
 
-![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/arquitetura_compass.png?raw=true)
+![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/arquitetura.png)
 
 #### 2.2 Modelo Arquitetural da Solução
 
