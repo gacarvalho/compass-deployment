@@ -1,2 +1,5 @@
 services/batch_layer/.env
 mnt/mongodb/
+mnt/certs/
+mnt/elastic_password.txt
+mnt/es_data/

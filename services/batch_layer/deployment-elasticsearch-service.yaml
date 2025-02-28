@@ -9,12 +9,12 @@ services:
       - discovery.seed_hosts=elasticsearch
       - cluster.initial_master_nodes=es-node
       - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ES_JAVA_OPTS=-Xms4g -Xmx4g
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=false
       - xpack.security.transport.ssl.enabled=true
-      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node/es-node.key
-      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node/es-node.crt
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node.key
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node.crt
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
       - ELASTIC_PASSWORD=data-@a1
     volumes:
@@ -24,7 +24,9 @@ services:
       - "9200:9200"
       - "9300:9300"
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - elasticsearch
     deploy:
       replicas: 1
       restart_policy:
@@ -40,7 +42,6 @@ services:
         soft: -1
         hard: -1
 
-
   kibana:
     image: docker.elastic.co/kibana/kibana:8.16.1
     environment:
@@ -49,6 +50,8 @@ services:
       - ELASTICSEARCH_PASSWORD=data-@a1
     ports:
       - "5601:5601"
+    networks:
+      - hadoop_network
     deploy:
       replicas: 1
       placement:
@@ -56,13 +59,11 @@ services:
           - node.role == manager
       restart_policy:
         condition: on-failure
-    networks:
-      - hadoop_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5601"]
+      test: [ "CMD", "curl", "-f", "http://localhost:5601" ]
       interval: 30s
-      timeout: 10s
       retries: 3
+      timeout: 10s
 
 
 volumes:
@@ -77,3 +78,4 @@ networks:
   hadoop_network:
     external: true
     driver: overlay
+
