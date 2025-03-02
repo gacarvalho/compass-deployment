@@ -46,27 +46,34 @@ services:
     logging: *default-logging
     ports:
       - "9861:9864"
+    deploy:
+      replicas: 1
     volumes:
-      - ../../mnt/hadoop/datanode-1:/data/hdfs/data
+      - ../../mnt/hadoop/datanode-1:/data/hdfs/data1
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
       DATANODE_PORT: 9864
+      HDFS_CONF_DFS_DATANODE_DATA_DIR: file:///data/hdfs/datanode1
+
 
   infra-datanode-2:
-    image: iamgacarvalho/hadoop-datanode-data-in-compass:3.0.0
+    image: iamgacarvalho/hadoop-datanode2-data-in-compass:3.0.0
     container_name: datanode-2
     networks:
       hadoop_network:
         aliases:
           - datanode-2
     logging: *default-logging
+    deploy:
+      replicas: 1
     ports:
-      - "9862:9865"
+      - "9862:9866"
     volumes:
-      - ../../mnt/hadoop/datanode-2:/data/hdfs/data
+      - ../../mnt/hadoop/datanode-2:/data/hdfs/data2
     environment:
       SERVICE_PRECONDITION: infra-namenode:9870
-      DATANODE_PORT: 9865
+      DATANODE_PORT: 9866
+      HDFS_CONF_DFS_DATANODE_DATA_DIR: file:///data/hdfs/datanode2
 
 
   # Serviço do infra-history-server
@@ -138,5 +145,3 @@ networks:
   hadoop_network:
     external: true
     driver: overlay
-
-
