@@ -26,6 +26,7 @@ def run_docker_run(image, param1, param2=None, config_env="prod"):
             "-e", f"CONFIG_ENV={config_env}",
             "-e", f"PARAM1={param1}",
             "-e", f"PARAM2={param2}",
+            "-e", f"PARAM3={param3}",
             "-v", f"{host_volume_path}:{container_volume_path}:ro",
             "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
             "-v", "/var/run/docker.sock:/var/run/docker.sock",
@@ -84,10 +85,10 @@ with DAG(
         # Grupo de tarefas do MongoDB
         with TaskGroup("group_jobs_mongo", tooltip="Ingestão MongoDB") as group_jobs_mongo:
             mongo_tasks = []
-            for image, param1 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-select-global"),
+            for image, param1, param2, param3 in [
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-way", "sim", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "banco-santander-br", "sim", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-select-global", "sim", "pf"),
             ]:
                 task = PythonOperator(
                     task_id=f"MONGO_INGESTION_{param1.upper()}",
@@ -95,10 +96,11 @@ with DAG(
                     op_kwargs={
                         "config_env": 'prod',
                         "param1": param1,
-                        "param2": 'sim',
+                        "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
-                    task_concurrency=1,  
+                    task_concurrency=1,
                 )
                 mongo_tasks.append(task)
 
@@ -109,10 +111,10 @@ with DAG(
         # Grupo de tarefas do Apple Store
         with TaskGroup("group_jobs_apple", tooltip="Ingestão Apple Store") as group_jobs_apple:
             apple_tasks = []
-            for param1, param2, image in [
-                ("1154266372", "santander-way", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-                ("613365711", "banco-santander-br", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-                ("6462515499", "santander-select-global", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+            for param1, param2, param3, image in [
+                ("1154266372", "santander-way", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("613365711", "banco-santander-br", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("6462515499", "santander-select-global", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
             ]:
                 task = PythonOperator(
                     task_id=f"APPLE_INGESTION_{param2.upper()}",
@@ -121,6 +123,7 @@ with DAG(
                         "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
                     task_concurrency=1,
@@ -139,10 +142,10 @@ with DAG(
         # Grupo de tarefas do Google Play
         with TaskGroup("group_jobs_google", tooltip="Ingestão Google Play") as group_jobs_google:
             google_tasks = []
-            for image, param1, param2 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "br.com.santander.way", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.app", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.selectglobal", "santander-select-global"),
+            for image, param1, param2, param3 in [
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "br.com.santander.way", "santander-way", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.app", "banco-santander-br", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.selectglobal", "santander-select-global", "pf"),
             ]:
                 task = PythonOperator(
                     task_id=f"GOOGLE_INGESTION_{param1.upper()}",
@@ -151,6 +154,7 @@ with DAG(
                         "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
                     task_concurrency=1,
@@ -269,3 +273,4 @@ with DAG(
     group_jobs_silver >> dm_init_gold
     
     dm_init_gold >> group_jobs_gold
+
