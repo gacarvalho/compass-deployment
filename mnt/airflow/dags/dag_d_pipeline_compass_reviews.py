@@ -74,7 +74,6 @@ with DAG(
 
     # Dummy inicial e final
     dm_init_bronze = DummyOperator(task_id="dm_init_bronze")
-    dm_init_gold = DummyOperator(task_id="dm_init_gold")
 
     ###################################################################################################################
     # DAG PIPELINE: INGESTAO - Grupo principal para ingestão
@@ -208,28 +207,6 @@ with DAG(
         silver_task_mongo.set_upstream(group_jobs_mongo)
         silver_tasks.append(silver_task_mongo)
 
-    ###################################################################################################################
-    # DAG PIPELINE: GOLD - Grupo de tarefas da camada GOLD
-    ###################################################################################################################
-    
-    with TaskGroup("group_jobs_gold", tooltip="Camada Gold") as group_jobs_gold:
-        gold_tasks = []
-        
-        # Task Silver para Apple Store - Depende de pelo menos 1 ingestão da Apple Store
-        gold_task_aggregate = PythonOperator(
-            task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
-            python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.1", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
-            op_kwargs={"config_env": "prod"},
-            task_concurrency=1,
-            trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
-        )
-
-        dm_init_gold.set_upstream(silver_task_apple)
-        dm_init_gold.set_upstream(silver_task_google)
-        dm_init_gold.set_upstream(silver_task_mongo)
-        gold_tasks.append(gold_task_aggregate)
-        dm_init_gold.trigger_rule = "all_success" 
 
     ###################################################################################################################
     # DAG PIPELINE: QUALITY - Grupo de tarefas da camada QUALITY
@@ -264,13 +241,37 @@ with DAG(
         # Dependências
         quality_task_pipeline_s.set_upstream(group_jobs_silver)
         quality_task_pipeline_s.trigger_rule = "all_success" 
+
+    ###################################################################################################################
+    # DAG PIPELINE: GOLD - Grupo de tarefas da camada GOLD
+    ###################################################################################################################
+    
+    with TaskGroup("group_jobs_gold", tooltip="Camada Gold") as group_jobs_gold:
+        gold_tasks = []
+        
+        # Task Silver para Apple Store - Depende de pelo menos 1 ingestão da Apple Store
+        gold_task_aggregate = PythonOperator(
+            task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
+            python_callable=run_docker_run,
+            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.1", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
+            op_kwargs={"config_env": "prod"},
+            task_concurrency=1,
+            trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
+        )
+
+        quality_task_pipeline_s.set_upstream(silver_task_apple)
+        quality_task_pipeline_s.set_upstream(silver_task_google)
+        quality_task_pipeline_s.set_upstream(silver_task_mongo)
+        gold_tasks.append(gold_task_aggregate)
+        quality_task_pipeline_s.trigger_rule = "all_success" 
+
         
     ###################################################################################################################
     # Dependências entre as DAGs
     ###################################################################################################################
     dm_init_bronze >> group_ingestion 
     
-    group_jobs_silver >> dm_init_gold
+    group_jobs_silver >> quality_task_pipeline_s
     
-    dm_init_gold >> group_jobs_gold
+    quality_task_pipeline_s >> group_jobs_gold
 
