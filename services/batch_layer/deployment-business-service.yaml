@@ -16,11 +16,11 @@ services:
         aliases:
           - metabase
     restart: always
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:3000/"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
+      #healthcheck:
+      #test: ["CMD", "curl", "--fail", "http://localhost:3000/"]
+      #interval: 10s
+      #timeout: 10s
+      #retries: 3
 
 volumes:
   business-metabase:

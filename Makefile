@@ -83,3 +83,6 @@ deployment-grafana-service:
 deployment-elasticsearch-service:
 	docker stack deploy -c services/batch_layer/deployment-elasticsearch-service.yaml deployment-elasticsearch
 
+deployment-update-service:
+	docker service update --force deployment-elasticsearch_kibana
+	docker service update --force deployment-hadoop_infra-nodemanager 
