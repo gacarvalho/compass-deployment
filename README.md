@@ -69,7 +69,7 @@ graph LR;
         D["Loja (Apple Store, Google Play)"]
     end
 
-    subgraph Aplicações
+    subgraph Aplicações e Base de Dados Funcionais
         B["Apps Santander"]
         C["MongoDB (Base Interna)"]
     end
@@ -80,7 +80,7 @@ graph LR;
         H["Spark Gold"]
     end
 
-    subgraph Armazenamento
+    subgraph Armazenamento Historico e Técnico
         F["HDFS (Bronze, Silver, Gold)"]
         J["Elasticsearch"]
     end
