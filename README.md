@@ -90,6 +90,11 @@ graph LR;
         K["Grafana"]
     end
 
+    subgraph Consumidores
+        L["Time de Negócios, Gerência"]
+        M["Dev, Sustentação"]
+    end
+
     %% Fluxo de Dados
     A -->|Interação de feedback| B
     A -->|Interação de feedback| D
@@ -111,6 +116,11 @@ graph LR;
 
     I -->|Consulta Dados| C
     K -->|Consulta Dados| J
+
+    L -->|Consulta| I
+    M -->|Consulta| K
+
+
 
 ```
 
