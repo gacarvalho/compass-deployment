@@ -59,18 +59,60 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
 
 ---
 
-#### 2.2.4 Fluxo de Dados e Integrações
+#### 2.2.4 Jornada do Cliente e Fluxo de Dados
 
-- **Aplicativos Santander → Spark Ingestion**: Ingestão de dados.
-- **SerpApi → Spark Ingestion**: Coleta de avaliações.
-- **Spark Ingestion → MongoDB, Hadoop, Elasticsearch**: Armazenamento e indexação.
-- **Spark Silver Histórico → Spark Gold (agg)**: Processamento e agregação.
-- **Spark Gold (agg) → Metabase, Grafana**: Disponibilização de métricas.
+```mermaid
+graph LR;
+    
+    subgraph Clientes
+        A["Cliente Santander"] 
+        D["Loja (Apple Store, Google Play)"]
+    end
 
+    subgraph Aplicações
+        B["Apps Santander"]
+        C["MongoDB (Base Interna)"]
+    end
 
----
+    subgraph Processamento de Dados
+        E["Spark Ingestor"]
+        G["Spark Silver"]
+        H["Spark Gold"]
+    end
 
-### 2.3 Elementos da Arquitetura
+    subgraph Armazenamento
+        F["HDFS (Bronze, Silver, Gold)"]
+        J["Elasticsearch"]
+    end
+
+    subgraph Visualização
+        I["Metabase"]
+        K["Grafana"]
+    end
+
+    %% Fluxo de Dados
+    A -->|Interação de feedback| B
+    A -->|Interação de feedback| D
+    B -->|Armazena dados| C
+    D -->|Ingestão de Dados| E
+    C -->|Ingestão de Dados| E
+    E -->|Armazena Bronze| F
+    E -->|Depende de| G
+    E -->|Envia Dados| J
+
+    G -->|Armazena Silver| F
+    G -->|Depende de| H
+    G -->|Envia Dados| J
+
+    H -->|Armazena Gold| F
+    H -->|Cria Visão Silver| C
+    H -->|Cria Visão Gold| C
+    H -->|Envia Dados| J
+
+    I -->|Consulta Dados| C
+    K -->|Consulta Dados| J
+
+```
 
 A arquitetura do Compass é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
