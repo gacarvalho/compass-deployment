@@ -31,35 +31,48 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
 
 ![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/arquitetura.png)
 
-#### 2.2.1 Origens de Dados
+#### 2.1.1 Origens de Dados
 
-- **Santander Way**: Aplicação móvel do Santander utilizada pelos clientes.
-- **Santander BR**: Plataforma do Santander para operações bancárias.
-- **Santander Select Global**: Aplicação voltada para clientes premium do Santander.
-- **Outros Aplicativos Santander**: Diversos aplicativos que fornecem dados transacionais.
-- **SerpApi**: API utilizada para coletar avaliações do **Google Play**.
+- **BASE INTERNA SANTANDER**:
+    - `Collections (MongoDB) Santander Way`: Aplicação móvel do Santander utilizada pelos clientes.
+    - `Collections (MongoDB) Santander BR`: Aplicação móvel do Santander para operações bancárias.
+    - `Collections (MongoDB) Santander Select Global`: Aplicação móvel de conta em dólar do Santander.
+    - `Collections (MongoDB) Outros Aplicativos Santander`: Diversos aplicativos que fornecem dados transacionais.
+    
+- **EXTENO SANTANDER**:
+    - `SerpApi`: API utilizada para coletar avaliações do **Google Play**.
+    - `itunes.apple.com`: API utilizada para coletar avaliações da **Apple Store**.
 
+#### 2.1.2 Camada de Processamento e Armazenamento
+
+- **ARMAZENAMENTO**:
+    - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
+    - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
+    - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
+      
+- **PROCESSAMENTO**:
+    - `Spark Bronze - Ingestion`: Responsável pela ingestão e pré-processamento de dados.
+    - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
+    - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
+
+#### 2.1.3 Camada de Visualização e Monitoramento
+
+- `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
+- `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
+
+#### 2.1.4 Jornada do Cliente e Arquitetura
+
+A arquitetura do Compass é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
+
+| **Componente**         | **Descrição**                                                                 |
+|-------------------------|-------------------------------------------------------------------------------|
+| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. |
+| Storage                 | Armazenamento de dados operacionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB (versão 7). <br> - Métricas aplicacionais: Armazenadas no Elasticsearch (versão 8.16.1). |
+| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 |
+| Visualization           | - Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> - Métricas funcionais: Analisadas no Metabase. |
+| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
 ---
 
-#### 2.2.2 Camada de Processamento e Armazenamento
-
-- **MongoDB (COMPASS)**: Banco de dados NoSQL para armazenamento estruturado.
-- **Hadoop (COMPASS)**: Sistema distribuído para armazenamento e processamento de dados.
-- **Elasticsearch (COMPASS)**: Banco de dados NoSQL voltado para indexação e busca de dados.
-- **Spark Ingestion (COMPASS)**: Responsável pela ingestão e pré-processamento de dados.
-- **Spark Silver Histórico (COMPASS)**: Camada intermediária de processamento, armazenando dados históricos.
-- **Spark Gold (agg) (COMPASS)**: Camada de agregação e enriquecimento dos dados processados.
-
----
-
-#### 2.2.3 Camada de Visualização e Monitoramento
-
-- **Metabase (COMPASS)**: Ferramenta de Business Intelligence (BI) para análise de dados.
-- **Grafana (COMPASS)**: Plataforma para monitoramento e visualização de métricas operacionais.
-
----
-
-#### 2.2.4 Jornada do Cliente e Fluxo de Dados
 
 ```mermaid
 graph LR;
@@ -124,16 +137,8 @@ graph LR;
 
 ```
 
-A arquitetura do Compass é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
-| **Componente**         | **Descrição**                                                                 |
-|-------------------------|-------------------------------------------------------------------------------|
-| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. |
-| Storage                 | Armazenamento de dados operacionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB (versão 7). <br> - Métricas aplicacionais: Armazenadas no Elasticsearch (versão 8.16.1). |
-| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 |
-| Visualization           | - Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> - Métricas funcionais: Analisadas no Metabase. |
-| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
----
+
 
 
 
