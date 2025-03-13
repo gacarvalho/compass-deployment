@@ -80,35 +80,56 @@ A solução foi projetada para atender ao time de negócios do Santander, propor
 
 ```mermaid
 graph LR;
-    A[Cliente Santander] -->|Necessidade Bancária| B[Apple Store]
-    A -->|Necessidade Bancária| C[Google Play]
-    B -->|Download e Uso| D[App Santander Way]
-    C -->|Download e Uso| D
-    D -->|Uso do Aplicativo| E[Interação do Cliente]
-    E -->|Feedback Coletado| F[Armazenamento e Processamento]
-    F -->|Geração de Insights| G[Dashboards e Métricas]
-    G -->|Análise de Dados| H[Time de Negócios]
-    H -->|Tomada de Decisão| I[Melhoria nos Canais]
+    subgraph "Cliente e Loja"
+        A[Cliente Santander] --> B[Apple Store];
+        A --> C[Google Play];
+    end
+
+    subgraph "Uso do Aplicativo"
+        B --> D[App Santander Way];
+        C --> D;
+        D --> E[Interação do Cliente];
+    end
+
+    subgraph "Coleta e Análise"
+        E --> F[Feedback Coletado];
+        F --> G[Armazenamento e Processamento];
+        G --> H[Dashboards e Métricas];
+        H --> I[Time de Negócios];
+        I --> J[Melhoria nos Canais];
+    end
+
 
 ```
 
-📌 Fluxo Técnico
+📌 Fluxo Técnico:
 
 ```mermaid
 graph LR;
-    A[Cliente Santander] -->|Feedback| B[Apps Santander]
-    A -->|Feedback| C[Loja Apple Store, Google Play]
-    B -->|Armazena dados| D[MongoDB]
-    C -->|Coleta dados| E[Spark Ingestor]
-    D -->|Coleta dados| E[Spark Ingestor]
-    E -->|Processa dados| F[Spark Silver]
-    F -->|Processa dados| G[Spark Gold]
-    G -->|Armazena dados| H["HDFS (Bronze, Silver, Gold)"]
-    G -->|Indexação| I[Elasticsearch]
-    H -->|Visualização| J[Metabase]
-    I -->|Monitoramento| K[Grafana]
-    J -->|Consulta| L[Time de Negócios]
-    K -->|Consulta| M[Dev, Sustentação]
+    subgraph "Fontes de Feedback"
+        A[Cliente Santander] --> B[Apps Santander];
+        A --> C[Loja Apple Store, Google Play];
+    end
+
+    subgraph "Processamento"
+        B --> D[MongoDB];
+        C --> E[Spark Ingestor];
+        D --> E;
+        E --> F[Spark Silver];
+        F --> G[Spark Gold];
+        G --> H["HDFS (Bronze, Silver, Gold)"];
+    end
+
+    subgraph "Visualização e Monitoramento"
+        E --> I[Elasticsearch];
+        F --> I[Elasticsearch];
+        G --> I[Elasticsearch];
+        D --> J[Metabase];
+        G --> D;
+        I --> K[Grafana];
+        J --> L[Time de Negócios];
+        K --> M[Dev, Sustentação];
+    end
 
 ```
 
