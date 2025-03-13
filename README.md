@@ -3,17 +3,16 @@
 
 O repositório **compass-deployment** é uma solução desenvolvida para o programa **Data Master**, organizado pela **F1rst Tecnologia**, com o objetivo de fornecer uma plataforma robusta para captura, processamento e análise de feedbacks de clientes do Banco Santander.
 
-![<data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/header.png)
+![<data-master-compass>](https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true)
 
----
 
 ## 1. Objetivo do Projeto
-
+ ---
 O **Projeto Data Master Compass** é uma iniciativa de Engenharia de Dados projetada para capturar e analisar feedbacks de clientes sobre produtos e serviços do Banco Santander. O nome **Compass** reflete seu propósito: orientar o time de negócios na melhoria contínua de processos e produtos, com base em dados reais.
 
 Ao coletar e interpretar avaliações dos clientes, o projeto identifica necessidades e oportunidades de aprimoramento, fortalecendo o compromisso do Santander com a satisfação e fidelização. Essa abordagem não só refina a experiência do cliente, mas também consolida o banco como referência no mercado, contribuindo para a **principalidade** — ser o banco principal de seus clientes.
 
-A solução centraliza as informações em um **data lake**, categorizando e segmentando os dados por origem. Isso proporciona insights valiosos para **Product Owners**, **Product Managers** e **Gerentes de Projetos**, permitindo decisões baseadas em evidências e alinhadas às necessidades reais dos clientes.
+A solução centraliza as informações em um **Data Lake** no HDFS, categorizando por data de referencia e segmento (PF e PJ). Isso proporciona insights valiosos para **Product Owners**, **Product Managers** e **Gerentes de Projetos**, permitindo decisões baseadas em evidências e alinhadas às necessidades reais dos clientes.
 
 ### 🧭 Exemplo Prático
 
@@ -21,17 +20,30 @@ Imagine uma equipe desenvolvendo uma nova funcionalidade para contas correntes, 
 
 Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha desenvolvimento de produtos às necessidades dos clientes, impulsionando a excelência operacional a experiência do usuário.
 
----
 
 ## 2. Arquitetura da Solução
-
-### 2.1 Visão Geral da Arquitetura
+---
 
 A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tecnologias modernas para armazenamento, processamento e visualização de dados. A solução é composta por várias camadas, cada uma com um papel específico no fluxo de dados.
 
-![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/main/img/arquitetura.png)
+![<arquitetura-data-master-compass>](https://raw.githubusercontent.com/gacarvalho/repo-spark-delta-iceberg/refs/heads/main/arquitetura.png)
 
-#### 2.1.1 Origens de Dados
+Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
+
+| **Componente**         | **Descrição**                                                                 |
+|-------------------------|-------------------------------------------------------------------------------|
+| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. |
+| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB (versão 7). <br> - Métricas aplicacionais: Armazenadas no Elasticsearch (versão 8.16.1). |
+| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 |
+| Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. |
+| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
+
+
+
+### 2.1 Visão Geral da Arquitetura Técnica
+---
+
+#### 2.1.1 Origens de Dados (extração)
 
 - **BASE INTERNA SANTANDER**:
     - `Collections (MongoDB) Santander Way`: Aplicação móvel do Santander utilizada pelos clientes.
@@ -43,7 +55,7 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
     - `SerpApi`: API utilizada para coletar avaliações do **Google Play**.
     - `itunes.apple.com`: API utilizada para coletar avaliações da **Apple Store**.
 
-#### 2.1.2 Camada de Processamento e Armazenamento
+#### 2.1.2 Camada de Processamento e Armazenamento (transformação e carga)
 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
@@ -55,87 +67,52 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
     - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
     - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
 
-#### 2.1.3 Camada de Visualização e Monitoramento
+#### 2.1.3 Camada de Visualização e Monitoramento (monitação)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
 
-#### 2.1.4 Jornada do Cliente e Arquitetura
+## 3. Arquitetura Geral da Arquitetura Funcional e Jornada do Cliente
 
-A arquitetura do Compass é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
+A solução foi projetada para atender ao time de negócios do Santander, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
 
-| **Componente**         | **Descrição**                                                                 |
-|-------------------------|-------------------------------------------------------------------------------|
-| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. |
-| Storage                 | Armazenamento de dados operacionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB (versão 7). <br> - Métricas aplicacionais: Armazenadas no Elasticsearch (versão 8.16.1). |
-| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 |
-| Visualization           | - Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> - Métricas funcionais: Analisadas no Metabase. |
-| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
----
-
+📌 Fluxo Funcional:
 
 ```mermaid
 graph LR;
-    
-    subgraph Clientes
-        A["Cliente Santander"] 
-        D["Loja (Apple Store, Google Play)"]
-    end
-
-    subgraph Aplicações e Base de Dados Funcionais
-        B["Apps Santander"]
-        C["MongoDB (Base Interna)"]
-    end
-
-    subgraph Processamento de Dados
-        E["Spark Ingestor"]
-        G["Spark Silver"]
-        H["Spark Gold"]
-    end
-
-    subgraph Armazenamento Historico e Técnico
-        F["HDFS (Bronze, Silver, Gold)"]
-        J["Elasticsearch"]
-    end
-
-    subgraph Visualização
-        I["Metabase"]
-        K["Grafana"]
-    end
-
-    subgraph Consumidores
-        L["Time de Negócios, Gerência"]
-        M["Dev, Sustentação"]
-    end
-
-    %% Fluxo de Dados
-    A -->|Interação de feedback| B
-    A -->|Interação de feedback| D
-    B -->|Armazena dados| C
-    D -->|Ingestão de Dados| E
-    C -->|Ingestão de Dados| E
-    E -->|Armazena Bronze| F
-    E -->|Depende de| G
-    E -->|Envia Dados| J
-
-    G -->|Armazena Silver| F
-    G -->|Depende de| H
-    G -->|Envia Dados| J
-
-    H -->|Armazena Gold| F
-    H -->|Cria Visão Silver| C
-    H -->|Cria Visão Gold| C
-    H -->|Envia Dados| J
-
-    I -->|Consulta Dados| C
-    K -->|Consulta Dados| J
-
-    L -->|Consulta| I
-    M -->|Consulta| K
-
-
+    A[Cliente Santander] -->|Necessidade Bancária| B[Apple Store]
+    A -->|Necessidade Bancária| C[Google Play]
+    B -->|Download e Uso| D[App Santander Way]
+    C -->|Download e Uso| D
+    D -->|Uso do Aplicativo| E[Interação do Cliente]
+    E -->|Feedback Coletado| F[Armazenamento e Processamento]
+    F -->|Geração de Insights| G[Dashboards e Métricas]
+    G -->|Análise de Dados| H[Time de Negócios]
+    H -->|Tomada de Decisão| I[Melhoria nos Canais]
 
 ```
+
+📌 Fluxo Técnico
+
+```mermaid
+graph LR;
+    A[Cliente Santander] -->|Feedback| B[Apps Santander]
+    A -->|Feedback| C[Loja Apple Store, Google Play]
+    B -->|Armazena dados| D[MongoDB]
+    C -->|Coleta dados| E[Spark Ingestor]
+    D -->|Coleta dados| E[Spark Ingestor]
+    E -->|Processa dados| F[Spark Silver]
+    F -->|Processa dados| G[Spark Gold]
+    G -->|Armazena dados| H["HDFS (Bronze, Silver, Gold)"]
+    G -->|Indexação| I[Elasticsearch]
+    H -->|Visualização| J[Metabase]
+    I -->|Monitoramento| K[Grafana]
+    J -->|Consulta| L[Time de Negócios]
+    K -->|Consulta| M[Dev, Sustentação]
+
+```
+
+
 
 
 
