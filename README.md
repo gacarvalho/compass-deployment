@@ -38,6 +38,10 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 | Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. |
 | Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
 
+> [!NOTE]
+> O repositório da infraestrutura do Hadoop segue no link:
+> https://github.com/gacarvalho/infra-data-master-compass
+
 
 
 ### 2.1 Visão Geral da Arquitetura Técnica
