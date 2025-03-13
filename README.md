@@ -137,9 +137,22 @@ graph LR;
 
 ```
 
+## 4. Compass como produto analytics Santander
 
 
+O projeto Compass como Produto tem como objetivo fornecer uma solução robusta e escalável para o Santander, utilizando Engenharia de Dados para desenvolver um fluxo que permita identificar as principais necessidades e desafios dos seus clientes. Esse fluxo busca não apenas atender as demandas internas do banco, mas também possui o potencial de expandir sua abrangência, permitindo escalar a busca para entender as "dores" dos concorrentes do Santander no mercado.
 
+🧭 Dashboard Funcional - Gerência
+
+🧭 Dashboard Técnico - Aplicações
+
+🧭 Dashboard Técnico - Sustentação
+
+## 5. Aspectos técnicos do Projeto Compass
+
+## 6. Instruções para Configuração e Execução do Projeto Compass
+
+## 7. Melhorias do projeto e Considerações Finais
 
 
 
