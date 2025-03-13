@@ -144,6 +144,8 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
 
 🧭 Dashboard Funcional - Gerência
 
+![<metabase-metricas-funcionais>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-metricas-funcionais.gif?raw=true)
+
 🧭 Dashboard Técnico - Aplicações
 
 🧭 Dashboard Técnico - Sustentação
