@@ -177,9 +177,10 @@ A camada **Quality** contém dados relacionados à qualidade dos dados, como pad
    - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
 
 | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
-|-------------------------------------|-----------------------------------------------|------------------------------|
-| **compass_dt_datametrics**          | Contém dados técnicos de métricas de performance | DAG: dag_d_pipeline_compass_review <br> JOB: ALL JOBS SPARK (group_ingestion, group_jobs_silver e group_jobs_gold)          |
-| **compass_dt_datametrics_fail**     | Contém dados de falhas nas métricas de performance | DAG: dag_d_pipeline_compass_reviews <br> JOB: ALL JOBS SPARK (group_ingestion, group_jobs_silver e group_jobs_gold)           |
+|-------------------------------------|-----------------------------------------------|-------------------|
+| **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | - DAG: `dag_d_pipeline_compass_review` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+| **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | - DAG: `dag_d_pipeline_compass_reviews` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+
 
 
 #### 3.1.4 Camada de Visualização e Telemetria (monitação)
