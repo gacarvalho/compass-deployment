@@ -6,6 +6,9 @@ O repositório **compass-deployment** é uma solução desenvolvida para o progr
 ![<data-master-compass>](https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true)
 
 
+
+
+
 ## 1. Objetivo do Projeto
  ---
 
@@ -24,7 +27,7 @@ A solução centraliza as informações em um **Data Lake** no HDFS, categorizan
 
 Imagine uma equipe desenvolvendo uma nova funcionalidade para contas correntes, como extratos detalhados com mais de 90 dias de transações. Sem feedbacks reais, as melhorias podem ser implementadas com base em suposições internas. O Projeto Compass elimina essa incerteza, fornecendo acesso rápido às avaliações dos clientes, substituindo pesquisas demoradas e garantindo que as melhorias atendam às expectativas reais.
 
-Agora, imagine que o Banco Santander deseja lançar um novo canal de investimentos para jovens do ensino médio. Como é um produto inédito para o banco, é essencial entender como esse modelo funciona no mercado. O Projeto Compass possibilita a análise das principais reclamações e elogios dos clientes da concorrência, oferecendo insights estratégicos para um lançamento mais assertivo.
+Agora, imagine que o Banco Santander deseja lançar um novo canal de investimentos para jovens do ensino médio. Como é um produto novo para o banco, é essencial entender como esse modelo funciona no mercado. O Projeto Compass possibilita a análise das principais reclamações e elogios dos clientes da concorrência, oferecendo insights estratégicos para um lançamento mais assertivo.
 
 Além disso, times responsáveis por produtos como PIX, Consórcio e Contas Correntes podem monitorar continuamente a evolução de suas funcionalidades, acompanhando a satisfação dos clientes por segmento e canal, com avaliações de 1 a 5 estrelas.
 
@@ -34,19 +37,20 @@ Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha o desenvo
 ## 2. Arquitetura da Solução
 ---
 
-A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tecnologias modernas para armazenamento, processamento e visualização de dados. A solução é composta por várias camadas, cada uma com um papel específico no fluxo de dados.
+A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tecnologias para armazenamento, processamento e visualização de dados. A solução é composta por várias camadas, cada uma com um papel específico no fluxo de dados.
 
 ![<arquitetura-data-master-compass>](https://raw.githubusercontent.com/gacarvalho/repo-spark-delta-iceberg/refs/heads/main/arquitetura.png)
 
 Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
-| **Componente**         | **Descrição**                                                                 |
-|-------------------------|-------------------------------------------------------------------------------|
-| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. |
-| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB (versão 7). <br> - Métricas aplicacionais: Armazenadas no Elasticsearch (versão 8.16.1). |
-| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 |
-| Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. |
-| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. |
+| **Componente**          | **Descrição**                                                                 | **Versão**  |
+|-------------------------|-------------------------------------------------------------------------------|---------------------------------|
+| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | Apache Hadoop 3.1.1 |
+| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. | MongoDB 7 <br>  Elasticsearch 8.16.1 |
+| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 | Apache Spark 3.5.0 |
+| Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. | Grafana, Metabase |
+| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. | Apache Airflow 2.7.2 |
+| Other                   | A SerpApi é uma API que permite automatizar buscas e extrair dados de mecanismos de pesquisa como Google, Bing, Yahoo, Yandex, entre outros. Seu principal objetivo é fornecer resultados estruturados em JSON, eliminando a necessidade de scraping manual e facilitando a extração de informações relevantes.  | Latest               |
 
 > [!NOTE]
 > O repositório da infraestrutura do Hadoop segue no link:
@@ -78,25 +82,32 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
     - `Collections (MongoDB) Outros Aplicativos Santander`: Diversos aplicativos que fornecem dados transacionais.
     
 - **EXTENO SANTANDER**:
-    - `SerpApi`: API utilizada para coletar avaliações do **Google Play**.
+    - `SerpApi`: API utilizada para coletar avaliações do **Google Play** (opcional).
     - `itunes.apple.com`: API utilizada para coletar avaliações da **Apple Store**.
 
-#### 2.1.2 Camada de Processamento e Armazenamento (transformação e carga)
+#### 2.1.2 Camada de Processamento 
+
+- **PROCESSAMENTO**:
+    - `Spark Bronze - Ingestion`: Responsável pela ingestão e pré-processamento de dados.
+    - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
+    - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
+ 
+#### 2.1.3 Camada de Armazenamento
 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
     - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
     - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
-      
-- **PROCESSAMENTO**:
-    - `Spark Bronze - Ingestion`: Responsável pela ingestão e pré-processamento de dados.
-    - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
-    - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
 
-#### 2.1.3 Camada de Visualização e Monitoramento (monitação)
+
+#### 2.1.4 Camada de Visualização e Telemetria (monitação)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
+
+### 2.2 Aspectos Técnicos do Projeto Compass
+---
+
 
 ## 3. Arquitetura Geral da Arquitetura Funcional e Jornada do Cliente
 
@@ -175,8 +186,6 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
   <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_sustentacao.png?raw=true" width="49%">
 </p>
 
-
-## 5. Aspectos técnicos do Projeto Compass
 
 ## 6. Instruções para Configuração e Execução do Projeto Compass
 
