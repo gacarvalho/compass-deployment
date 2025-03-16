@@ -155,7 +155,7 @@ A camada **Silver** contém dados processados e transformados a partir da camada
 ---
 
 A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
-> Caminho Base Silver: `/santander/gold/compass/reviews/`
+> Caminho Base Gold: `/santander/gold/compass/reviews/`
 
 | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
 |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
@@ -166,7 +166,7 @@ A camada **Gold** contém dados agregados e prontos para consumo final. Esses da
 
 
 A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
-> Caminho Base Silver: `/santander/quality/compass/reviews/`
+> Caminho Base Quality: `/santander/quality/compass/reviews/`
 
 | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
 |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
@@ -174,7 +174,12 @@ A camada **Quality** contém dados relacionados à qualidade dos dados, como pad
 
 
 
-   - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
+   - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
+
+| **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
+|-------------------------------------|-----------------------------------------------|------------------------------|
+| **compass_dt_datametrics**          | Contém dados técnicos de métricas de performance | DAG: dag_d_pipeline_compass_review <br> JOB: ALL JOBS SPARK (group_ingestion, group_jobs_silver e group_jobs_gold)          |
+| **compass_dt_datametrics_fail**     | Contém dados de falhas nas métricas de performance | DAG: dag_d_pipeline_compass_reviews <br> JOB: ALL JOBS SPARK (group_ingestion, group_jobs_silver e group_jobs_gold)           |
 
 
 #### 3.1.4 Camada de Visualização e Telemetria (monitação)
