@@ -114,72 +114,91 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
 
-| **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
-|-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
-| banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal |
-| santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
-| santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
-| dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  | Processos de agregação e análise do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    |
-| dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | Processos de pré-processamento e agregação do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE |
+   <details>
+     <summary>Informações Detalhada do Armazenamento: MONGODB</summary>
+   
+   
+     | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
+     |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
+     | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
+     | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
+     | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
+     | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  | Processos de agregação e análise do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    |
+     | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | Processos de pré-processamento e agregação do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE |
+   
+   </details>
+
 
 
 
    - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
 
-A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:
-
-> Caminho Base Bronze: `/santander/bronze/compass/reviews/`
 
 
-| **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
-|--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-| **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+  <details>
+     <summary>Informações Detalhada do Armazenamento: HADOOP</summary>
 
----
+     <p>A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:</p>
+ 
+     > Caminho Base Bronze: `/santander/bronze/compass/reviews/`
+    
+    
+    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
+    |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+    | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
-A camada **Silver** contém dados processados e transformados a partir da camada Bronze. Esses dados são mais estruturados e prontos para análise.
-
-> Caminho Base Silver: `/santander/silver/compass/reviews/`
-
-
-
-| **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
-|--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-| **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.                                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.                                                           | Subdiretórios por data (`odate=YYYYMMDD`)      |
-
----
-
-A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
-> Caminho Base Gold: `/santander/gold/compass/reviews/`
-
-| **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
-|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-| **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
-| **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-
----
-
-
-A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
-> Caminho Base Quality: `/santander/quality/compass/reviews/`
-
-| **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
-|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-| **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
-
-
+    ---
+    
+    A camada **Silver** contém dados processados e transformados a partir da camada Bronze. Esses dados são mais estruturados e prontos para análise.
+    
+    > Caminho Base Silver: `/santander/silver/compass/reviews/`
+    
+    
+    
+    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
+    |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+    | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.                                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.                                                           | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    
+    ---
+    
+    A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
+    > Caminho Base Gold: `/santander/gold/compass/reviews/`
+    
+    | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+    |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+    | **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    
+    ---
+    
+    
+    A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
+    > Caminho Base Quality: `/santander/quality/compass/reviews/`
+    
+    | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+    |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+    | **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
+    
+   
+   </details>
 
    - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
 
-| **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
-|-------------------------------------|-----------------------------------------------|-------------------|
-| **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | - DAG: `dag_d_pipeline_compass_review` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
-| **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | - DAG: `dag_d_pipeline_compass_reviews` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+   <details>
+      <summary>Informações Detalhada do Armazenamento: ELASTICSEARCH</summary>
+    
+    
+     | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
+     |-------------------------------------|-----------------------------------------------|-------------------|
+     | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | - DAG: `dag_d_pipeline_compass_review` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+     | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | - DAG: `dag_d_pipeline_compass_reviews` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+    
+   </details>
 
 
 
@@ -264,6 +283,7 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
 ## 6. Instruções para Configuração e Execução do Projeto Compass
 
 ## 7. Melhorias do projeto e Considerações Finais
+
 
 
 
