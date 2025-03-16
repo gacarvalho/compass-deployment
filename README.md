@@ -113,8 +113,50 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
-    - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
-    - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
+
+| **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
+|-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
+| banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal |
+| santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
+| santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
+| dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  | Processos de agregação e análise do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    |
+| dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | Processos de pré-processamento e agregação do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE |
+
+
+
+   - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
+
+Caminho Base: `/santander/bronze/compass/reviews/`
+A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:
+
+
+#### **Estrutura Detalhada**
+
+| **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
+|--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+| **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+
+
+---
+
+#### **Resumo**
+- **Camada Bronze**: Dados brutos coletados das plataformas **Apple Store**, **Google Play** e **MongoDB**.
+- **Organização**: Dados são armazenados por aplicativo e organizados por data (`odate=YYYYMMDD`).
+- **Formato**: Arquivos **Parquet** compactados com **Snappy**.
+
+---
+
+#### **Exemplos de Caminhos**
+| **Plataforma** | **Exemplo de Caminho**                                                                 |
+|----------------|---------------------------------------------------------------------------------------|
+| **Apple Store** | `/santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/odate=20250304/`  |
+| **Google Play** | `/santander/bronze/compass/reviews/googlePlay/santander-select-global_pf/odate=20250305/` |
+| **MongoDB**    | `/santander/bronze/compass/reviews/mongodb/santander-way_pf/odate=20250307/`          |
+
+
+   - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
 
 
 #### 3.1.4 Camada de Visualização e Telemetria (monitação)
