@@ -58,10 +58,10 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 
 
 
-### 2.1 Visão Geral da Arquitetura Técnica
+## 3. Visão Geral da Arquitetura Técnica
 ---
 
-Como base da arquitetura, o projeto Compass utiliza alguns recursos para realizar ingestão, processamento, armazenamento e consulta de dados. O ambiente onde o projeto está em execução é on-premisses e foram divididas em algumas camadas, como:
+Como base da arquitetura, o projeto Compass utiliza alguns recursos para realizar o processo desde a extração dos dados até a disponibilização. O ambiente onde o projeto está em execução é on-premisses e foram divididas em algumas camadas, como:
 
 - **Arquitetura Batch**: Serviços referente a arquitetura de big data on-premisse.
   
@@ -73,26 +73,43 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
 
 
 
-#### 2.1.1 Origens de Dados (extração)
+### 3.1 Descrição do Fluxo de Dados
+---
+
+Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dados, Transformação de Dados e Carga de Dados.
+
+#### 3.1.1 Origens de Dados (fontes)
+
+As coleções do MongoDB representam o armazenamento interno do Santander, utilizado para armazenar os feedbacks provenientes de diversos canais, refletindo a jornada do cliente dentro do aplicativo Santander. Essas coleções são alimentadas conforme o canal responsável por cada interação.
+
 
 - **BASE INTERNA SANTANDER**:
     - `Collections (MongoDB) Santander Way`: Aplicação móvel do Santander utilizada pelos clientes.
     - `Collections (MongoDB) Santander BR`: Aplicação móvel do Santander para operações bancárias.
     - `Collections (MongoDB) Santander Select Global`: Aplicação móvel de conta em dólar do Santander.
     - `Collections (MongoDB) Outros Aplicativos Santander`: Diversos aplicativos que fornecem dados transacionais.
-    
+
+As APIs externas são responsáveis pela captura de dados provenientes de fontes fora do ecossistema Santander, utilizando duas APIs distintas. A SERPAPI, uma solução paga, foi escolhida como alternativa devido a uma limitação no acesso direto aos dados do Google Play. Como não somos proprietários do aplicativo Santander na plataforma, não podemos acessar essas informações diretamente. Para realizar a extração dos dados, seria necessário ser proprietário do aplicativo na Google Play Store e possuir uma conta de serviço com permissões de desenvolvedor. Diante dessa restrição, a SERPAPI foi adotada como uma solução viável.
+
+Por outro lado, a API do iTunes está disponível sem custos, mas sua utilização requer uma liberação de firewall e a colaboração com um time responsável pela extração de dados externos do Santander. Vale destacar que, ao utilizar essa API, há uma limitação no número de avaliações que podem ser acessadas, sendo possível buscar apenas as últimas 500 avaliações.
+
 - **EXTENO SANTANDER**:
     - `SerpApi`: API utilizada para coletar avaliações do **Google Play** (opcional).
     - `itunes.apple.com`: API utilizada para coletar avaliações da **Apple Store**.
 
-#### 2.1.2 Camada de Processamento 
+#### 3.1.2 Camada de Processamento 
+
+A Camada de Processamento é uma das principais responsáveis pelo tratamento e transformação dos dados dentro do projeto Compass, composta por três camadas distintas de processamento utilizando o Apache Spark. Cada camada tem um papel específico no fluxo de dados, desde a ingestão até o enriquecimento final.
 
 - **PROCESSAMENTO**:
     - `Spark Bronze - Ingestion`: Responsável pela ingestão e pré-processamento de dados.
     - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
     - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
+
+> [!NOTE]
+> A regra de negócios está detalhado no item `4. Fluxo Funcional e Jornada do Cliente`!
  
-#### 2.1.3 Camada de Armazenamento
+#### 3.1.3 Camada de Armazenamento
 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
@@ -100,16 +117,23 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
     - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
 
 
-#### 2.1.4 Camada de Visualização e Telemetria (monitação)
+#### 3.1.4 Camada de Visualização e Telemetria (monitação)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
 
-### 2.2 Aspectos Técnicos do Projeto Compass
+### 3.2 Aspectos Técnicos do Projeto Compass
 ---
+Nesta seção, será apresentada a arquitetura técnica do Projeto Compass, detalhando seu funcionamento desde a infraestrutura até a camada aplicacional. O objetivo é fornecer uma visão abrangente do que está sendo executado, como os processos acontecem e as razões por trás das escolhas feitas, garantindo uma compreensão clara sobre a operação e a arquitetura do sistema.
 
 
-## 3. Arquitetura Geral da Arquitetura Funcional e Jornada do Cliente
+
+
+
+
+
+
+## 4. Fluxo Funcional e Jornada do Cliente
 
 A solução foi projetada para atender ao time de negócios do Santander, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
 
@@ -139,38 +163,22 @@ graph LR;
 
 ```
 
-📌 Fluxo Técnico:
+📌 Conceito base de regra de negócio:
 
-```mermaid
-graph LR;
-    subgraph "Fontes de Feedback"
-        A[Cliente Santander] --> B[Apps Santander];
-        A --> C[Loja Apple Store, Google Play];
-    end
+  <details>
+  <summary>Regra de Negócio: Ingestão (fonte destino: bronze) </summary>
+  
+  Este é o conteúdo que estará escondido até que o usuário clique para expandir.
 
-    subgraph "Processamento"
-        B --> D[MongoDB];
-        C --> E[Spark Ingestor];
-        D --> E;
-        E --> F[Spark Silver];
-        F --> G[Spark Gold];
-        G --> H["HDFS (Bronze, Silver, Gold)"];
-    end
+  Você pode adicionar mais informações aqui, como texto, listas ou imagens.
 
-    subgraph "Visualização e Monitoramento"
-        E --> I[Elasticsearch];
-        F --> I[Elasticsearch];
-        G --> I[Elasticsearch];
-        D --> J[Metabase];
-        G --> D;
-        I --> K[Grafana];
-        J --> L[Time de Negócios];
-        K --> M[Dev, Sustentação];
-    end
+  - Item 1
+  - Item 2
+  - Item 3
 
-```
+</details>
 
-## 4. Compass como produto analytics Santander
+## 5. Compass como produto analytics Santander
 
 
 O projeto Compass como Produto tem como objetivo fornecer uma solução robusta e escalável para o Santander, utilizando Engenharia de Dados para desenvolver um fluxo que permita identificar as principais necessidades e desafios dos seus clientes. Esse fluxo busca não apenas atender as demandas internas do banco, mas também possui o potencial de expandir sua abrangência, permitindo escalar a busca para entender as "dores" dos concorrentes do Santander no mercado.
