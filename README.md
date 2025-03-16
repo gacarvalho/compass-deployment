@@ -146,9 +146,13 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
 
 ![<metabase-metricas-funcionais>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-metricas-funcionais.gif?raw=true)
 
-🧭 Dashboard Técnico - Aplicações
+🧭 Dashboard Técnico - Aplicações e Dashboard Técnico - Sustentação  
 
-🧭 Dashboard Técnico - Sustentação
+<p align="center">
+  <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_apps.png?raw=true" width="49%">
+  <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_sustentacao.png?raw=true" width="49%">
+</p>
+
 
 ## 5. Aspectos técnicos do Projeto Compass
 
