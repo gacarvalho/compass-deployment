@@ -50,7 +50,7 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 | Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 | Apache Spark 3.5.0 |
 | Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. | Grafana, Metabase |
 | Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. | Apache Airflow 2.7.2 |
-| Other                   | A SerpApi é uma API que permite automatizar buscas e extrair dados de mecanismos de pesquisa como Google, Bing, Yahoo, Yandex, entre outros. Seu principal objetivo é fornecer resultados estruturados em JSON, eliminando a necessidade de scraping manual e facilitando a extração de informações relevantes.  | Latest               |
+
 
 > [!NOTE]
 > O repositório da infraestrutura do Hadoop segue no link:
