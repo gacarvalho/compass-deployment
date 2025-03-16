@@ -126,11 +126,10 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
    - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
 
-Caminho Base: `/santander/bronze/compass/reviews/`
 A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:
 
+> Caminho Base Bronze: `/santander/bronze/compass/reviews/`
 
-#### **Estrutura Detalhada**
 
 | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
 |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
@@ -138,22 +137,41 @@ A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dado
 | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
+---
+
+A camada **Silver** contém dados processados e transformados a partir da camada Bronze. Esses dados são mais estruturados e prontos para análise.
+
+> Caminho Base Silver: `/santander/silver/compass/reviews/`
+
+
+
+| **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
+|--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+| **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.                                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.                                                           | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
 ---
 
-#### **Resumo**
-- **Camada Bronze**: Dados brutos coletados das plataformas **Apple Store**, **Google Play** e **MongoDB**.
-- **Organização**: Dados são armazenados por aplicativo e organizados por data (`odate=YYYYMMDD`).
-- **Formato**: Arquivos **Parquet** compactados com **Snappy**.
+A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
+> Caminho Base Silver: `/santander/gold/compass/reviews/`
+
+| **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+| **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
+| **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
 ---
 
-#### **Exemplos de Caminhos**
-| **Plataforma** | **Exemplo de Caminho**                                                                 |
-|----------------|---------------------------------------------------------------------------------------|
-| **Apple Store** | `/santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/odate=20250304/`  |
-| **Google Play** | `/santander/bronze/compass/reviews/googlePlay/santander-select-global_pf/odate=20250305/` |
-| **MongoDB**    | `/santander/bronze/compass/reviews/mongodb/santander-way_pf/odate=20250307/`          |
+
+A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
+> Caminho Base Silver: `/santander/quality/compass/reviews/`
+
+| **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+|---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+| **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
+
 
 
    - `Elasticsearch`: Banco de dados NoSQL voltado para indexação e busca de dados para dados técnicos.
