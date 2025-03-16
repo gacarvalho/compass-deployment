@@ -20,7 +20,7 @@ Ao coletar e interpretar avaliações dos clientes, o projeto identifica necessi
 
 A solução centraliza as informações em um **Data Lake** no HDFS, categorizando por data de referencia e segmento (PF e PJ). Isso proporciona insights valiosos para **Product Owners**, **Product Managers** e **Gerentes de Projetos**, permitindo decisões baseadas em evidências e alinhadas às necessidades reais dos clientes.
 
-🧭 Exemplo Prático
+🧭 **Exemplo Prático**
 
 Imagine uma equipe desenvolvendo uma nova funcionalidade para contas correntes, como extratos detalhados com mais de 90 dias de transações. Sem feedbacks reais, as melhorias podem ser implementadas com base em suposições internas. O Projeto Compass elimina essa incerteza, fornecendo acesso rápido às avaliações dos clientes, substituindo pesquisas demoradas e garantindo que as melhorias atendam às expectativas reais.
 
@@ -56,6 +56,18 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 
 ### 2.1 Visão Geral da Arquitetura Técnica
 ---
+
+Como base da arquitetura, o projeto Compass utiliza alguns recursos para realizar ingestão, processamento, armazenamento e consulta de dados. O ambiente onde o projeto está em execução é on-premisses e foram divididas em algumas camadas, como:
+
+- **Arquitetura Batch**: Serviços referente a arquitetura de big data on-premisse.
+  
+| **Arquitetura** | **Camada**                   | **Descrição**                                                                                   | **Público alvo**        |
+|-----------------|------------------------------|-------------------------------------------------------------------------------------------------|-------------------------|
+| Batch           | Camada de Observabilidade     | Serviços responsáveis por coletar e monitorar dados de telemetria, fornecendo visibilidade sobre o desempenho e a integridade dos recursos das aplicações. | Time Dev, Sustentação   |
+| Batch           | Camada de Business Service    | Serviços focados em análise e inteligência de negócios, fornecendo insights estratégicos para decisões organizacionais por meio de BI e relatórios analíticos. | Plataforma, Gerência    |
+| Batch           | Camada de Aplicações          | Aplicações desenvolvidas em PySpark (Python), com artefatos implementados em containers, oferecendo uma abordagem escalável e modular para processamento de dados. | Time Dev                |
+
+
 
 #### 2.1.1 Origens de Dados (extração)
 
