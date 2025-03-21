@@ -233,36 +233,36 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
     A visão (1) é dedicada para a visão gerencial estruturado com visões gráficas estraturada em:
 
-    - Média da experiência do cliente atual
-    - Segmentação do(s) canais Santander PF e PJ 
-    - Nota média do(s) aplicativos Santander - histórico
-    - Volumetria de avaliações dos apps Santander - total
-    - Volume por canais e segmento
-    - Volumetria de avaliações nos canais Santander por ano-mes
-    - Volume por origem extração e segmento
-    - Volumetria de avaliações dos canais Santander por origem
+      - Média da experiência do cliente atual
+      - Segmentação do(s) canais Santander PF e PJ 
+      - Nota média do(s) aplicativos Santander - histórico
+      - Volumetria de avaliações dos apps Santander - total
+      - Volume por canais e segmento
+      - Volumetria de avaliações nos canais Santander por ano-mes
+      - Volume por origem extração e segmento
+      - Volumetria de avaliações dos canais Santander por origem
 
     Já a visão (2) é dedicada para a visão macro gerencial estruturado em tabela com visões das seguintes informações:
 
-    - App nome
-    - App Source
-    - Periodo Referencia
-    - Segmento
-    - Nota Média
-    - Avaliações Totais
-    - Comentários Positivos
-    - Comentários Negativos
+      - App nome
+      - App Source
+      - Periodo Referencia
+      - Segmento
+      - Nota Média
+      - Avaliações Totais
+      - Comentários Positivos
+      - Comentários Negativos
 
-   E a visão (3) é menor granularidade, já sendo o evento de feedback dos clientes, estruturado em tabela nas seguintes visões:
-
-    - Titulo
-    - Snippet (conteúdo da avaliação)
-    - App Source
-    - App
-    - Segmento
-    - Nota
-    - Timestamp da avaliação
-    - Periodo Rereferencia 
+    E a visão (3) já é com a menor granularidade, sendo os eventos de feedbacks dos clientes, estruturado em tabela nas seguintes visões:
+  
+      - Titulo
+      - Snippet (conteúdo da avaliação)
+      - App Source
+      - App
+      - Segmento
+      - Nota
+      - Timestamp da avaliação
+      - Periodo Rereferencia 
 
   - **Tabela de métricas utilizadas:**
  
