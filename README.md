@@ -76,6 +76,9 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
 ### 3.1 Descrição do Fluxo de Dados
 ---
 
+> [!IMPORTANT]
+> Descrição das collections e armazenamento estão descritos para **v1 do Projeto Compass**!
+
 Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dados, Transformação de Dados e Carga de Dados.
 
 #### 3.1.1 Origens de Dados (fontes)
@@ -123,8 +126,8 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
      | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
      | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
      | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
-     | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  | Processos de agregação e análise do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    |
-     | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | Processos de pré-processamento e agregação do Compass <br> DAG: dag_d_pipeline_compass_reviews. JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE |
+     | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
+     | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
    
    </details>
 
@@ -145,9 +148,9 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
     
     | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
     |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-    | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | `banco-santander-br_pf/`, `santander-select-global_pf/`, `santander-way_pf/`                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | <ul><li> `banco-santander-br_pf/`</li> <li>`santander-select-global_pf/`</li> <li>`santander-way_pf/`</li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
     ---
     
@@ -195,8 +198,8 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
     
      | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
      |-------------------------------------|-----------------------------------------------|-------------------|
-     | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | - DAG: `dag_d_pipeline_compass_review` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
-     | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | - DAG: `dag_d_pipeline_compass_reviews` <br> - JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) |
+     | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | <ul><li> DAG: `dag_d_pipeline_compass_review` </li> <li>JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold)</li></ul> |
+     | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | <ul><li> DAG: `dag_d_pipeline_compass_reviews` </li> <li> JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) </li></ul> |
     
    </details>
 
@@ -205,7 +208,83 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 #### 3.1.4 Camada de Visualização e Telemetria (monitação)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
+  <details>
+     <summary>Informações Detalhada do Dashboard: METABASE </summary>
+
+     O Metabase é uma ferramenta de Business Intelligence (BI) que permite a análise de dados de forma intuitiva e visual. Ele facilita a criação de dashboards interativos e relatórios sem a necessidade de conhecimento avançado em queries.
+
+     - **Objetivo do Metabase:**  O principal objetivo do Metabase é fornecer uma interface amigável para que usuários de negócio possam acessar, visualizar e analisar dados sem dependência de equipes técnicas. Ele permite a tomada de decisões baseada em dados de forma ágil e eficiente.
+
+     - **Por que utilizar o Metabase?** 
+         - Interface intuitiva: Não requer conhecimento avançado em queries.
+         - Open-source e extensível: Pode ser personalizado conforme necessidade.
+         - Integração com diversas fontes de dados: Suporte para bancos SQL e NoSQL.
+         - Criação rápida de dashboards: Permite visualizar KPIs e métricas facilmente.
+         - Automatização de relatórios: Geração automática de relatórios e alertas por e-mail.       
+
+     - **Dashboards  (link de acesso):** Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
+ 
+     | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
+     |-----------------------------------|--------------------------|--------------|----------------------
+     | Observabilidade Aplicação         | Aplicação (negócio)      | Pro-Produção | [Dashboard Compass - PRO - Data - Metabase](http://00.000.000.00:8085/setup)
+
+
+  - **Metodologia e boas práticas:** Utilizndo as boas práticas, o dashboard foi dividido em 3 visões: (1) visão gerencial, (2) visão macro por ano-mes e (3) visão granular.
+
+    A visão (1) é dedicada para a visão gerencial estruturado com visões gráficas estraturada em:
+
+    - Média da experiência do cliente atual
+    - Segmentação do(s) canais Santander PF e PJ 
+    - Nota média do(s) aplicativos Santander - histórico
+    - Volumetria de avaliações dos apps Santander - total
+    - Volume por canais e segmento
+    - Volumetria de avaliações nos canais Santander por ano-mes
+    - Volume por origem extração e segmento
+    - Volumetria de avaliações dos canais Santander por origem
+
+    Já a visão (2) é dedicada para a visão macro gerencial estruturado em tabela com visões das seguintes informações:
+
+    - App nome
+    - App Source
+    - Periodo Referencia
+    - Segmento
+    - Nota Média
+    - Avaliações Totais
+    - Comentários Positivos
+    - Comentários Negativos
+
+   E a visão (3) é menor granularidade, já sendo o evento de feedback dos clientes, estruturado em tabela nas seguintes visões:
+
+    - Titulo
+    - Snippet (conteúdo da avaliação)
+    - App Source
+    - App
+    - Segmento
+    - Nota
+    - Timestamp da avaliação
+    - Periodo Rereferencia 
+
+  - **Tabela de métricas utilizadas:**
+ 
+    | **Componente**                    | **Categoria**            | **Tipo de Painel** | **Nome da métrica** | **Unidade** | **Descrição** | **Query Metrica**
+    |-----------------------------------|--------------------------|--------------------|---------------------|-------------|---------------|----------------------
+    | *************************         | *******************      | **************     | *************       | ****        | **************| ******************** 
+
+     
+     
+  </details>
+   
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
+  <details>
+     <summary>Informações Detalhada do Dashboard: GRAFANA </summary>
+
+     | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
+     |-----------------------------------|--------------------------|--------------|----------------------
+     | Observabilidade Aplicação         | Aplicação (negócio)      | Pré-Produção | 
+     | Observabilidade Aplicação         | Aplicação (negócio)      | Pro-Produção | [Dashboard Compass - PRO - Data - Metabase](http://00.000.000.00:4000/d/aef6eps590mpsb/compass-comece-aqui?orgId=1&from=now-6h&to=now&timezone=browser&kiosk)
+
+  
+  </details>
 
 ### 3.2 Aspectos Técnicos do Projeto Compass
 ---
