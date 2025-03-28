@@ -45,15 +45,15 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 
 | **Componente**          | **Descrição**                                                                 | **Versão**  |
 |-------------------------|-------------------------------------------------------------------------------|---------------------------------|
-| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | Apache Hadoop 3.1.1 |
-| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. | MongoDB 7 <br>  Elasticsearch 8.16.1 |
+| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | Apache Hadoop: 3.1.1 |
+| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. | MongoDB: 7 <br>  Elasticsearch: 8.16.1 |
 | Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 | Apache Spark 3.5.0 |
-| Visualization           | Métricas técnicas: Visualizadas em dashboards no Grafana Cloud. <br> Métricas funcionais: Analisadas no Metabase. | Grafana, Metabase |
+| Visualization           | Métricas técnicas: Grafana. <br> Métricas funcionais: Metabase. | Grafana, Metabase |
 | Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. | Apache Airflow 2.7.2 |
 
 
 > [!NOTE]
-> O repositório da infraestrutura do Hadoop segue no link:
+> O repositório da infraestrutura do Hadoop foi desenvolvida em:
 > https://github.com/gacarvalho/infra-data-master-compass
 
 
@@ -160,12 +160,12 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
     
     
     
-    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
-    |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-    | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.                                                              | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.                                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.                                                           | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**           | **Organização**                                 |
+    |--------------------|---------------------------------------------------|--------------------------------------------|------------------------------------------------|
+    | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.             | Subdiretórios por data (`odate=YYYYMMDD`)      |
+    | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.      | Subdiretórios por data (`odate=YYYYMMDD`)      |
     
     ---
     
@@ -266,12 +266,12 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
   - **Tabela de métricas utilizadas:**
  
-    | **Componente**                    | **Categoria**            | **Tipo de Painel** | **Nome da métrica** | **Unidade** | **Descrição** | **Query Metrica**
-    |-----------------------------------|--------------------------|--------------------|---------------------|-------------|---------------|----------------------
-    | *************************         | *******************      | **************     | *************       | ****        | **************| ******************** 
+    | **Componente**              | **Categoria**            | **Tipo de Painel**        | **Nome da métrica**                         | **Unidade**  | **Descrição** | **Query Metrica** |
+    |-----------------------------|--------------------------|---------------------------|---------------------------------------------|--------------|---------------|----------------------
+    | Nota média das avaliações   | Indicador                | Dashboard / visão (1)     | Média da experiência do cliente atual       | 1 a 5        | Nota média das avaliações dos clientes de 1 a 5| `[ {"$sort":{"periodo_referencia":-1}}, {"$project":{"app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":{"$round":["$nota_media",0]},"avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":1,"app_nome":1,"app_source":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento"},"avg_nota_media":{"$avg":"$nota_media"},"app_nome":{"$first":"$app_nome"},"app_source":{"$first":"$app_source"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","avg":"$avg_nota_media","app_nome":1,"app_source":1}}, { "$match": { "$expr": { "$eq": [ "$periodo_referencia", { "$max": "$periodo_referencia" } ] } } }, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "avg": "$avg" } }, { "$limit": 1 } ]`
+     
 
-     
-     
+
   </details>
    
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
