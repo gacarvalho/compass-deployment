@@ -298,7 +298,8 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
      - Dashboards altamente personalizáveis – Suporte a painéis interativos, gráficos avançados e filtros dinâmicos.
      - Alertas inteligentes – Configuração de notificações automáticas via Slack, PagerDuty, e-mail, entre outros.
    
-
+   - Dashboards (link de acesso): Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
+     
      | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
      |-----------------------------------|--------------------------|--------------|----------------------
      | Observabilidade Aplicação         | Aplicação (dev)      | Pro-Produção | [Dashboard Compass - PRO - Data - Grafana](http://00.000.000.00:4000/d/eeex6c5w2x9fkb/compass-operacao-aplicacional?orgId=1&from=now-30d&to=now&timezone=browser))
@@ -310,11 +311,26 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
      A visão do Grafana foi dividida em 2 (duas) categorias, Dashboard de Aplicações e Dashboard de Sustentação - **Dashboard de Aplicações**
 
-    - dedede
+     O Dashboard de Aplicações foram separados em alguns componentes para entender a volumetria de apps que rodaram e falharam nas últimas 24 horas e indicadores historicos de acordo com o filtro de timestamp selecionado, sendo composto por:
+    
+     - App Finish per layer
+     - Valid Data Percentage
+     - Applications Fail per layer
+     - Invalid Data Percentage
+     - Event Count of the Bronze Layer [historical]
+     - Applications Completed per layer [historical]
+     - Applications Fail per layer [historical]
+     - Event Quality of the Bronze Layer [historical]
+     - Event Quality of the Silver Layer [historical]
+     - Event Quality of the Gold Layer [historical]
 
     **Dashboard Sustentação**
 
-    - dedede
+    Já o Dashboard de Sustentação foi estruturado para ter poucos componentes e sendo composto com apenas indicadores necessários para entender se há problemas e qual problema, ajudando em uma análise prévia:
+    
+     - Applications Fail per Priority [total]
+     - Applications Fail per Prioruty [historical]
+     - Application fail Table [historical]
  
   
 
