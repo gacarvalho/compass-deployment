@@ -390,11 +390,34 @@ A escolha também considerou a necessidade de baixa sobrecarga computacional, j�
 
 **Infraestrutura do Projeto Compass**
 
+Nessa sessão, será descrito a infraestrutura para atender a demanda do projeto Compass, utilizada para gerenciar um ambiente Hadoop distribuído. A configuração permite a orquestração dos serviços essenciais do Hadoop, incluindo Namenode, Datanode, History Server, Resource Manager e Node Manager.
 
 
 
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Namenode**            | `iamgacarvalho/hadoop-namenode-data-in-compass:2.0.0`        | `32763:9870`         | `/mnt/hadoop/namenode:/data/hdfs/name`    | `CLUSTER_NAME: hadoop_cluster`  | 1            | `nc -z localhost 9870`                                    |
+| **Datanode**            | `iamgacarvalho/hadoop-datanode-data-in-compass:2.0.0`        | `9854-9864:9864`     | `/mnt/hadoop/datanode:/data/hdfs/data`    | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 9864`                                    |
+| **History Server**      | `iamgacarvalho/hadoop-historyserver-data-in-compass:2.0.0`   | `8188:8188`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8188`                                    |
+| **Resource Manager**    | `iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0` | `8088:8088`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8088`                                    |
+| **Node Manager**        | `iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0`     | `8032-8042:8042`     | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 3            | `nc -z localhost 8042`                                    |
 
+**Configuração de Rede:** A infraestrutura utiliza uma rede **overlay externa** para comunicação entre os contêineres:
 
+```yaml
+networks:
+  hadoop_network:
+    external: true
+    driver: overlay
+```
+
+**Persistência de Dados:** Volumes persistentes para o Namenode e Datanode:
+
+```yaml
+volumes:
+  infra-namenode:
+  infra-datanode:
+```
 
 
 ## 4. Fluxo Funcional e Jornada do Cliente
