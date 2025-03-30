@@ -388,11 +388,12 @@ O Docker Swarm foi escolhido como ferramenta de orquestração no projeto Compas
 A escolha também considerou a necessidade de baixa sobrecarga computacional, já que o Swarm é mais leve e não exige um alto consumo de recursos, tornando-se uma alternativa viável para infraestrutura local. Além disso, seu mecanismo de balanceamento de carga automático e alta disponibilidade garante a distribuição eficiente das cargas de trabalho, melhorando a resiliência dos serviços sem a necessidade de configurações avançadas.
 
 
-**Infraestrutura do Projeto Compass**
+#### 3.2.2.1 **Infraestrutura do Projeto Compass**
 
 Nessa sessão, será descrito a infraestrutura para atender a demanda do projeto Compass, utilizada para gerenciar um ambiente Hadoop distribuído. A configuração permite a orquestração dos serviços essenciais do Hadoop, incluindo Namenode, Datanode, History Server, Resource Manager e Node Manager.
 
 
+Configuração Hadoop
 
 | **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
 |------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
@@ -402,7 +403,53 @@ Nessa sessão, será descrito a infraestrutura para atender a demanda do projeto
 | **Resource Manager**    | `iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0` | `8088:8088`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8088`                                    |
 | **Node Manager**        | `iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0`     | `8032-8042:8042`     | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 3            | `nc -z localhost 8042`                                    |
 
-**Configuração de Rede:** A infraestrutura utiliza uma rede **overlay externa** para comunicação entre os contêineres:
+---
+
+Configuração Spark
+
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Spark Master**        | `iamgacarvalho/spark-master-data-in-compass:3.0.0`           | `8084:8082`<br>`7077:7077` | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data` | -                             | 1            | `nc -z localhost 8082`                                    |
+| **Spark Worker**        | `iamgacarvalho/spark-worker-data-in-compass:3.0.0`           | `8090-8100:8081`     | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data`<br>`/mnt/spark/worker-logs:/opt/spark/logs` | `WORKER_PORT=8081`            | 2            | `nc -z localhost 8081`                                    |
+
+---
+
+Configuração Grafana
+
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Grafana**            | `grafana/grafana:latest`                                     | `4000:3000`          | `/mnt/grafana_data:/var/lib/grafana`      | `GF_SECURITY_ADMIN_USER=admin`<br>`GF_SECURITY_ADMIN_PASSWORD=admin123`<br>`GF_INSTALL_PLUGINS=grafana-mongodb-datasource`<br>`GF_PLUGINS_PREINSTALL=grafana-clock-panel` | 2            | Não configurado, mas a disponibilidade pode ser verificada pela porta `3000` |
+
+---
+
+Configuração Elasticsearch e Kibana
+
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Elasticsearch**       | `docker.elastic.co/elasticsearch/elasticsearch:8.16.1`       | `9200:9200`<br>`9300:9300` | `/mnt/es_data:/usr/share/elasticsearch/data`<br>`/mnt/certs:/usr/share/elasticsearch/config/certs` | `ES_JAVA_OPTS=-Xms4g -Xmx4g`<br>`ELASTIC_PASSWORD=data-@a1`<br>`xpack.security.enabled=true`<br>`xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node.key`<br>`xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node.crt`<br>`xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt` | 1            | Não configurado, mas pode ser monitorado na porta `9200` |
+| **Kibana**             | `docker.elastic.co/kibana/kibana:8.16.1`                    | `5601:5601`          | -                                         | `ELASTICSEARCH_HOSTS=http://elasticsearch:9200`<br>`ELASTICSEARCH_USERNAME=kibana_user_service`<br>`ELASTICSEARCH_PASSWORD=data-@a1`<br>`XPACK_SECURITY_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_REPORTING_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=` | 1            | `curl -f http://localhost:5601` (intervalo: 30s, 3 tentativas) |
+
+---
+
+Configuração MongoDB
+
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **MongoDB**             | `mongo:7`                                                    | `27017:27017`        | `/mnt/mongodb:/data/db`<br>`/mnt/mongodb_configData:/data/configdb`<br>`/mnt/mongodb_init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js` | `MONGO_INITDB_ROOT_USERNAME=${MONGO_USER_ADMIN}`<br>`MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS_ADMIN}` | 1            | Não configurado, mas pode ser monitorado na porta `27017` |
+
+---
+
+Configuração Metabase
+
+| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Metabase**            | `metabase/metabase:latest`                                    | `8085:3000`          | `/mnt/metabase:/metabase.db`             | `MB_PASSWORD_RESET=true`      | 1            | Não configurado, mas pode ser monitorado na porta `3000` |
+
+---
+
+Configuração de Rede
+
+A infraestrutura utiliza uma rede **overlay externa** para comunicação entre os contêineres:
 
 ```yaml
 networks:
@@ -417,6 +464,16 @@ networks:
 volumes:
   infra-namenode:
   infra-datanode:
+  infra-spark-master:
+  infra-spark-worker:
+  infra-spark-worker-logs:
+  grafana_data:
+  elasticsearch_yml:
+  certs:
+  es_data:
+  mongodb_data:
+  mongodb_configdb_data:
+  business-metabase:
 ```
 
 
