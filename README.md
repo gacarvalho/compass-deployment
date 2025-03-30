@@ -473,7 +473,9 @@ volumes:
   mongodb_configdb_data:
   business-metabase:
 ```
-
+> [!IMPORTANT]
+> 🧭 Repositório do código fonte da infraestrutura: https://github.com/gacarvalho/infra-data-master-compass. <br>
+> 🧭 YAML do Docker Swarm das tecnologias citadas acima: https://github.com/gacarvalho/compass-deployment/tree/compass/infra-3.0.0/services/batch_layer
 
 ## 4. Fluxo Funcional e Jornada do Cliente
 
