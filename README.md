@@ -447,9 +447,7 @@ Configuração Metabase
 
 ---
 
-Configuração de Rede
-
-A infraestrutura utiliza uma rede **overlay externa** para comunicação entre os contêineres:
+**Configuração de Rede:** A infraestrutura utiliza uma rede **overlay externa** para comunicação entre os contêineres:
 
 ```yaml
 networks:
