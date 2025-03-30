@@ -41,12 +41,11 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
 
 ![<arquitetura-data-master-compass>](https://raw.githubusercontent.com/gacarvalho/repo-spark-delta-iceberg/refs/heads/main/arquitetura.png)
 
-Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por cinco componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
+Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por quatro componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
 | **Componente**          | **Descrição**                                                                 | **Versão**  |
 |-------------------------|-------------------------------------------------------------------------------|---------------------------------|
-| Storage Historical      | Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | Apache Hadoop: 3.1.1 |
-| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. | MongoDB: 7 <br>  Elasticsearch: 8.16.1 |
+| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. <br> Armazenamento de dados historico: <br> - Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | MongoDB: 7 <br>  Elasticsearch: 8.16.1 <br> Apache Hadoop: 3.1.1  |
 | Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 | Apache Spark 3.5.0 |
 | Visualization           | Métricas técnicas: Grafana. <br> Métricas funcionais: Metabase. | Grafana, Metabase |
 | Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. | Apache Airflow 2.7.2 |
@@ -63,7 +62,7 @@ Separando a arquitetura do Compass por compoentes, é posśivel entender que é 
 
 Como base da arquitetura, o projeto Compass utiliza alguns recursos para realizar o processo desde a extração dos dados até a disponibilização. O ambiente onde o projeto está em execução é on-premisses e foram divididas em algumas camadas, como:
 
-- **Arquitetura Batch**: Serviços referente a arquitetura de big data on-premisse.
+- **Arquitetura Batch**: Serviços e produtos finais referente a arquitetura de big data on-premisse.
   
 | **Arquitetura** | **Camada**                   | **Descrição**                                                                                   | **Público alvo**        |
 |-----------------|------------------------------|-------------------------------------------------------------------------------------------------|-------------------------|
@@ -76,10 +75,11 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
 ### 3.1 Descrição do Fluxo de Dados
 ---
 
+Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dados, Transformação de Dados e Carga de Dados.
+
 > [!IMPORTANT]
 > Descrição das collections e armazenamento estão descritos para **v1 do Projeto Compass**!
 
-Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dados, Transformação de Dados e Carga de Dados.
 
 #### 3.1.1 Origens de Dados (fontes)
 
@@ -205,7 +205,7 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
 
 
-#### 3.1.4 Camada de Visualização e Telemetria (monitação)
+#### 3.1.4 Camada de Visualização e Telemetria (observabilidade)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
   <details>
@@ -356,6 +356,39 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 ### 3.2 Aspectos Técnicos do Projeto Compass
 ---
 Nesta seção, será apresentada a arquitetura técnica do Projeto Compass, detalhando seu funcionamento desde a infraestrutura até a camada aplicacional. O objetivo é fornecer uma visão abrangente do que está sendo executado, como os processos acontecem e as razões por trás das escolhas feitas, garantindo uma compreensão clara sobre a operação e a arquitetura do sistema.
+
+#### 3.2.1 Tecnologias Utilizadas
+
+Como base principal, as tecnologias utilizadas foram necessárias para atender o fluxo de dados, desde a coleta até a disponibilização das informações.
+
+ - **MongoDB:** Utilizado para duas finalidades principais:
+    - Armazenamento de coleções contendo dados brutos provenientes dos Canais Santander.
+    - Manutenção de coleções estruturadas nas camadas silver e gold, que servem como base para análises no Metabase.
+ - **Hadoop HDFS:** Responsável pelo armazenamento histórico dos dados, abrangendo desde a camada bronze (ingestão) até a gold, além de suportar serviços de data quality.
+ - **ElasticSearch:** Utilizado para armazenamento de métricas técnicas e dados relacionados ao desempenho das aplicações.
+ - **Apache Spark:** Ferramenta principal para processamento distribuído de dados em larga escala.
+ - **Apache Airflow:** Responsável pela orquestração das execuções dos contêineres Spark, garantindo o fluxo automatizado das cargas de trabalho.
+ - **Metabase:** Ferramenta de Business Intelligence utilizada pelo time de negócios para análise de dados e geração de insights.
+ - **Grafana:** Solução dedicada à observabilidade técnica, permitindo o monitoramento detalhado dos sistemas e métricas operacionais.
+ - **SerpApi:** API opcional na arquitetura, utilizada para extração de dados de avaliações da Google Play Store.
+ - **iTunes API:** API externa utilizada para coleta de informações da Apple Store.
+ - **GitHub Actions:** Empregado para automação de testes unitários, build de imagens e publicação no Docker Hub.
+ - **Docker Hub:** Repositório utilizado para armazenamento e versionamento das imagens Docker das aplicações Spark e da infraestrutura.
+
+> [!NOTE]
+> O projeto Compass foi concebido para ser executado inicialmente em um ambiente on-premises. Embora soluções em nuvem, como Azure e AWS, ofereçam vantagens significativas, como escalabilidade e alta disponibilidade, sua adoção exclusiva pode gerar dependência de fornecedores específicos. Para mitigar esse risco, a escolha por tecnologias open-source proporciona maior flexibilidade, permitindo a execução local e facilitando a migração para a nuvem quando necessário, sem comprometer a autonomia do sistema.
+
+
+#### 3.2.2 Caracteristicas da Execução do Projeto
+
+O projeto Compass é executado em uma infraestrutura on-premises, onde os serviços são instanciados localmente em contêineres baseados em imagens Docker. Para garantir a gestão eficiente da execução desses contêineres, foi necessária a adoção de uma ferramenta de orquestração, sendo o Docker Swarm a solução escolhida para este ambiente.
+
+O Docker Swarm foi escolhido como ferramenta de orquestração no projeto Compass devido à sua simplicidade operacional, integração nativa com Docker e adequação ao ambiente on-premises. Diferente de soluções mais complexas, como Kubernetes, o Swarm permite a criação e o gerenciamento de clusters de forma mais direta, reduzindo o tempo de configuração e facilitando a administração dos serviços conteinerizados.
+
+A escolha também considerou a necessidade de baixa sobrecarga computacional, já que o Swarm é mais leve e não exige um alto consumo de recursos, tornando-se uma alternativa viável para infraestrutura local. Além disso, seu mecanismo de balanceamento de carga automático e alta disponibilidade garante a distribuição eficiente das cargas de trabalho, melhorando a resiliência dos serviços sem a necessidade de configurações avançadas.
+
+
+**Infraestrutura do Projeto Compass**
 
 
 
