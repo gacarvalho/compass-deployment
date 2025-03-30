@@ -474,8 +474,16 @@ volumes:
   business-metabase:
 ```
 > [!IMPORTANT]
-> 🧭 Repositório do código fonte da infraestrutura: https://github.com/gacarvalho/infra-data-master-compass. <br>
-> 🧭 YAML do Docker Swarm das tecnologias citadas acima: https://github.com/gacarvalho/compass-deployment/tree/compass/infra-3.0.0/services/batch_layer
+> [*] Repositório do código fonte da infraestrutura: https://github.com/gacarvalho/infra-data-master-compass. <br>
+> [*] YAML do Docker Swarm das tecnologias citadas acima: https://github.com/gacarvalho/compass-deployment/tree/compass/infra-3.0.0/services/batch_layer
+
+
+#### 3.2.2.2 **Aplicações do Projeto Compass**
+
+As aplicações responsáveis por realizar as ingestões, transformações e carga das informações estão desenvolvidas na tecnologia Apache Spark voltadas para arquitetura Batch. O Apache Spark foi escolhido devido à sua alta performance e escalabilidade, características essenciais para lidar com grandes volumes de dados no ambiente do Projeto Compass. 
+
+
+
 
 ## 4. Fluxo Funcional e Jornada do Cliente
 
