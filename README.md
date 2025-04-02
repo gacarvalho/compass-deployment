@@ -488,6 +488,36 @@ A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilid
 
 As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
 
+
+> [!IMPORTANT]
+> As imagens foram desenvolvidas utilizando um método dinâmico e flexível, permitindo a parametrização do ID do canal para a extração automatizada das informações.
+
+```python
+ # Grupo de tarefas do Apple Store
+ with TaskGroup("group_jobs_apple", tooltip="Ingestão Apple Store") as group_jobs_apple:
+   apple_tasks = []
+   for param1, param2, param3, image in [
+       ("1154266372", "santander-way", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+       ("613365711", "banco-santander-br", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+       ("6462515499", "santander-select-global", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+   ]:
+       task = PythonOperator(
+           task_id=f"APPLE_INGESTION_{param2.upper()}",
+           python_callable=run_docker_run,
+           op_kwargs={
+               "config_env": 'prod',
+               "param1": param1,
+               "param2": param2,
+               "param3": param3,
+               "image": image 
+           },
+           task_concurrency=1,
+       )
+
+       apple_tasks.append(task)
+
+```
+
 ---
 
 `📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass` `⏱️ schedule: diario`
