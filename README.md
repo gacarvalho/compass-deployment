@@ -484,9 +484,108 @@ As aplicações responsáveis por realizar as ingestões, transformações e car
 
 A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilidade e eficiência no processamento de grandes volumes de dados, executando em um schedule diário. Embora o processamento em tempo real (Streaming) seja uma alternativa viável para outros cenários, o foco do projeto é consolidar dados de forma estruturada, assegurando a consistência necessária para que os times de negócios possam acompanhar e analisar as necessidades e desafios dos clientes de forma precisa e estratégica.
 
+**Aplicações - Ingestões de dados**
+
+As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
+
+---
+
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass </summary> 
+  
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/mongodb/)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass/tags/1.0.1/sha256-4b406055b4cabd7b2b2e5395eb6f7f1062f104f8080a2bef5d25f2c350bdf43f)  
+  - **Descrição:**  Coleta avaliações de clientes do Banco Santander armazenadas no **MongoDB**, processa os dados e os armazena no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_extc_mongodb.py $CONFIG_ENV $PARAM1 $PARAM2 $PARAM3
+    ```
+
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+      - `$PARAM1` (`nome-do-canal-ou-app`). → Nome do canal/app no MongoDB. Para novos, use hífen (-).
+      - `$PARAM2` (`pf`,`pj`). → Indicador do segmento do cliente. `PF` (Pessoa Física), `PJ` (Pessoa Juridica)
+</details>
+
+---
+
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass </summary> 
+  
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass/tags/1.0.1/sha256-8a038d0998e0cb11267936b87cb277f10dc210a928571feb14ccba20c8cd807b)  
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store**, realizando a ingestão e os armazenando no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_extc_apple_store.py $CONFIG_ENV $PARAM1 $PARAM2 $PARAM3
+    ```
+
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+      - `$PARAM1` (`id-review-localizado-na-url-do-app`). → Identificado (número) do aplicativo na Apple Store, podendo ser localizado na URL da loja Apple Store, exemplo: `https://apps.apple.com/br/app/santander-way/id1154266372`, nesse caso, o ID que vai no parametro é: `1154266372`.
+      - `$PARAM2` (`nome-do-canal-ou-app`). → Nome do canal/app na Apple Store. Para novos, use hífen (-).
+      - `$PARAM3` (`pf`,`pj`). → Indicador do segmento do cliente. `PF` (Pessoa Física), `PJ` (Pessoa Juridica)
+
+</details>
+
+---
+
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass </summary> 
+  
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/google-play)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass/tags/1.0.1/sha256-df992cb185f7a17ed0d40306e91d50139553e17e5c2a4d900579a0d42b804d9e)  
+  - **Descrição:**  Coleta avaliações de clientes do Banco Santander armazenadas no  **Google Play**, processa os dados e os armazena no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_extc_google_play.py $CONFIG_ENV $PARAM1 $PARAM2 $PARAM3
+    ```
+
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+      - `$PARAM1` (`name-review-localizado-na-url-do-app`). → Identificado (string) do aplicativo do Google Play, podendo ser localizado na URL na loja do Google Play, exemplo: `https://play.google.com/store/apps/details?id=br.com.santander.way&hl=pt_BR&pli=1`, nesse caso, o ID que vai no parametro é: `br.com.santander.way`.
+      - `$PARAM2` (`nome-do-canal-ou-app`). → Nome do canal/app no Google Play. Para novos, use hífen (-).
+      - `$PARAM3` (`pf`,`pj`). → Indicador do segmento do cliente. `PF` (Pessoa Física), `PJ` (Pessoa Juridica)
+
+</details>
+
+---
+
+**Aplicações - Transformações de dados**
+
+As aplicações responsáveis pela transformação dos dados realizarão a leitura conforme a fonte de extração. No caso do motor que alimenta a silver da Apple Store, ele processará apenas as ingestões relacionadas a essa plataforma. Por exemplo, suponha que haja 15 aplicativos sendo ingeridos e armazenados na bronze, 5 aplicativos da Apple Store, 5 provenientes do MongoDB (base interna) e 5 do Google Play. Nesse cenário, a silver da Apple Store consumirá exclusivamente os dados ingeridos da Apple Store, garantindo que apenas informações relevantes dessa fonte sejam processadas. 
+
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-apple-store` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-apple-store </summary> 
+  
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store-processing-historical)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-apple-store/tags/1.0.1/sha256-a35d88d3c69b78abcecfff0a53906201fab48bdd8b2e5579057e935f58b6fe41)  
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake `/santander/bronze/compass/reviews/appleStore/*_pf/` e/ou `/santander/bronze/compass/reviews/appleStore/*_pj/`, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_trfmation_apple_store.py $CONFIG_ENV 
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+  - **Tratamento:** 
+</details>
+
+---
 
 
-
+---
 
 ## 4. Fluxo Funcional e Jornada do Cliente
 
