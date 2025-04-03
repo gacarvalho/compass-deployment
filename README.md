@@ -488,36 +488,6 @@ A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilid
 
 As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
 
-
-> [!IMPORTANT]
-> As imagens foram desenvolvidas utilizando um método dinâmico e flexível, permitindo a parametrização do ID do canal para a extração automatizada das informações.
-
-```python
- # Grupo de tarefas do Apple Store
- with TaskGroup("group_jobs_apple", tooltip="Ingestão Apple Store") as group_jobs_apple:
-   apple_tasks = []
-   for param1, param2, param3, image in [
-       ("1154266372", "santander-way", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-       ("613365711", "banco-santander-br", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-       ("6462515499", "santander-select-global", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-   ]:
-       task = PythonOperator(
-           task_id=f"APPLE_INGESTION_{param2.upper()}",
-           python_callable=run_docker_run,
-           op_kwargs={
-               "config_env": 'prod',
-               "param1": param1,
-               "param2": param2,
-               "param3": param3,
-               "image": image 
-           },
-           task_concurrency=1,
-       )
-
-       apple_tasks.append(task)
-
-```
-
 ---
 
 `📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass` `⏱️ schedule: diario`
@@ -597,19 +567,109 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 `📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-apple-store` `⏱️ schedule: diario`
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-apple-store </summary> 
-  
-  - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
+
   - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-apple-store/tags/1.0.1/sha256-a35d88d3c69b78abcecfff0a53906201fab48bdd8b2e5579057e935f58b6fe41)  
-  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake `/santander/bronze/compass/reviews/appleStore/*_pf/` e/ou `/santander/bronze/compass/reviews/appleStore/*_pj/`, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
   - **Parâmetros:** 
 
     ```shell
       /app/repo_trfmation_apple_store.py $CONFIG_ENV 
     ```
       - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
-  - **Tratamento:** 
+  - **Pipeline:**
+    - **Descrição:** Processar avaliações de clientes da Apple Store (camada Bronze → Silver), garantindo: filtro específico para dados Apple Store, normalização e enriquecimento de metadados, validação de qualidade conforme regras de negócio e rastreabilidade completa dos dados
+    - **Fonte de Dados:** <br> `/santander/bronze/compass/reviews/appleStore/*_pf` 
+                          <br> `/santander/bronze/compass/reviews/appleStore/*_pj`
+                          <br> `/santander/silver/compass/reviews/appleStore/`
+    - **Filtro:** Apenas dados com appleStore no path e terminados em _pf ou _pj.                   
+    - **Destino:** `/santander/silver/compass/reviews/appleStore/` 
+    - **Tipo de processo:** Batch (diário)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Transformação e Funções:** PySpark <br> 
+      1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
+
+        ```python
+        remove_accents(s: str) -> str
+        ```
+
+        No exemplo abaixo é possível ver como a funcionalidade se aplica em um caso real:
+
+        ```python
+        Exemplo: remove_accents("São Paulo") # Retorna: "Sao Paulo"
+        ```
+
+      2.  `processing_reviews(df: DataFrame)`: Realiza transformações no DataFrame de reviews, selecionando colunas específicas, converte nomes para maiúsculas e removendo acentos. Renomeia colunas para um formato consistente. **Parâmetros:** `df` (DataFrame): O DataFrame de reviews a ser processado. **Retorno:** (DataFrame): O DataFrame transformado.
+
+          ```python
+          processed_df = processing_reviews(df)
+          processed_df.show()
+          ```
+
+      3.  `get_schema(df, schema)`: Assegura que o DataFrame esteja em conformidade com um esquema predefinido, convertendo os tipos das colunas para os tipos especificados no esquema. **Parâmetros:** `df` (DataFrame): O DataFrame a ser ajustado. `schema` (StructType): O esquema de destino. **Retorno:** (DataFrame): O DataFrame em conformidade com o esquema.
+
+          ```python
+          aligned_df = get_schema(df, schema)
+          aligned_df.printSchema()
+          ```
+
+      4.  `processing_old_new(spark: SparkSession, df: DataFrame)`: Compara os dados de reviews novos com os dados históricos, identificando e registrando mudanças nas avaliações ao longo do tempo. Cria uma coluna chamada `historical_data` para armazenar o histórico de mudanças. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `df` (DataFrame): O DataFrame com os novos dados de reviews. **Retorno:** (DataFrame): O DataFrame com o histórico de mudanças.
+
+          ```python
+          historical_df = processing_old_new(spark, df)
+          historical_df.show()
+          ```
+
+      5.  `read_source_parquet(spark, path)`: Lê um arquivo Parquet do caminho especificado, extraindo informações de "app" e "segmento" do nome do arquivo. Retorna `None` se o arquivo não existir ou se não houver dados. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `path` (str): O caminho para o arquivo Parquet. **Retorno:** (DataFrame | None): O DataFrame lido ou `None` em caso de falha.
+
+          ```python
+          source_df = read_source_parquet(spark, file_path)
+          if source_df:
+              source_df.show()
+          ```
+
+      6.  `save_dataframe(df, path, label)`: Salva um DataFrame no formato Parquet no caminho especificado. Verifica se o DataFrame possui dados antes de salvar, e caso não possua, envia um log de warning. Verifica e cria o diretório de destino se necessário. Lida com possíveis erros durante o processo de salvamento. **Parâmetros:** `df` (DataFrame): O DataFrame a ser salvo. `path` (str): O caminho para salvar o DataFrame. `label` (str): Uma etiqueta para os logs. **Retorno:** None.
+
+          ```python
+          save_dataframe(df, save_path, data_label)
+          ```
+
+      7.  `path_exists() -> bool`: Verifica se um determinado caminho existe no HDFS. Verifica se o caminho possui partições no formato "odate=\*". **Retorno:** (bool): True caso o caminho exista, e false caso não exista.
+
+          ```python
+          if path_exists():
+              print("O caminho existe")
+          else:
+              print("O caminho não existe")
+          ```
+
+      8.  `save_metrics(metrics_json, df)`: Salva métricas no Elasticsearch. Conecta-se ao Elasticsearch usando variáveis de ambiente. Lida com erros de decodificação JSON e erros de conexão. **Parâmetros:** `metrics_json` (str): As métricas no formato JSON. `df` (DataFrame): O DataFrame associado às métricas. **Retorno:** None.
+
+          ```python
+          save_metrics(metrics, data_df)
+          ```
+
+      9.  `save_metrics_job_fail(metrics_json)`: Salva métricas de falhas de jobs no Elasticsearch. Similar a `save_metrics`, mas para um índice diferente. **Parâmetros:** `metrics_json` (str): As métricas de falha no formato JSON. **Retorno:** None.
+
+          ```python
+          save_metrics_job_fail(failure_metrics)
+          ```
+
+      10. `log_error(e, df)`: Gera e salva métricas de erro no Elasticsearch. Extrai informações de segmento do DataFrame. Formata informações de erro e as envia para `save_metrics_job_fail`. **Parâmetros:** `e` (Exception): A exceção que ocorreu. `df` (DataFrame): O DataFrame associado ao erro. **Retorno:** None.
+
+          ```python
+          try:
+              # Código que pode gerar um erro
+          except Exception as error:
+              log_error(error, df)
+          ```
+
+    - **Validação:** Checagem de schema e qualidade	
+    - **Carga:** Escrita em HDFS (Parquet): <br> → Caminho principal (dados válidos) <br> → Caminho de falha
+
+
 </details>
 
 ---
