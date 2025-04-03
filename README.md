@@ -666,9 +666,92 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
               log_error(error, df)
           ```
 
-    - **Validação:** Checagem de schema e qualidade	
-    - **Carga:** Escrita em HDFS (Parquet): <br> → Caminho principal (dados válidos) <br> → Caminho de falha
+    - **Validação:** 
+    
+        1.  `validate_ingest(spark: SparkSession, df: DataFrame) -> tuple`: Valida dados de ingestão, comparando com histórico e verificando qualidade. **Retorna** DataFrames de dados válidos e inválidos, e resultados da validação. 
+    
+            - **Duplicatas:** Identifica registros duplicados por "id".
+            - **Nulos:** Verifica nulos em colunas críticas.
+            - **Tipos:** Garante consistência de tipos.
 
+            Código de retorno na validação:
+
+            > `200`: Sucesso (Nenhum problema encontrado) <br>
+            > `400`: Erro nos dados (Valores nulos ou tipos inválidos) <br>
+            > `409`: Conflito de dados (Registros duplicados encontrados)
+
+
+
+    - **Carga:** Escrita em HDFS (Parquet):
+    
+      1. Caminho principal (dados válidos) `/santander/silver/compass/reviews/appleStore/odate={datePath}/` 
+      2. Caminho de falha `/santander/silver/compass/reviews_fail/appleStore/odate={datePath}/`
+
+    - **Métricas:** A função `collect_metrics` coleta um conjunto abrangente de métricas para fornecer uma visão detalhada do processo de ingestão e validação de dados. As métricas são estruturadas em um objeto JSON, facilitando o consumo por sistemas de monitoramento e análise.
+
+
+      * **Informações da Aplicação:**
+          * `application_id`: Identificador único da aplicação Spark.
+          * `owner`: Detalhes do proprietário da aplicação (sigla, projeto, camada do Lake).
+          * `source`: Detalhes sobre a fonte dos dados (`app`, `search`).
+      * **Contagem de Registros:**
+          * `valid_data`: Contagem e porcentagem de registros válidos.
+          * `invalid_data`: Contagem e porcentagem de registros inválidos.
+          * `total_records`: Contagem total de registros processados.
+      * **Desempenho do Processamento:**
+          * `total_processing_time`: Tempo total de processamento em minutos.
+          * `memory_used`: Uso de memória em megabytes.
+          * `stages`: Métricas detalhadas dos estágios de execução do Spark.
+      * **Resultados da Validação:**
+          * `validation_results`: Resultados detalhados de cada validação (duplicatas, nulos, tipos).
+          * `success_count`: Número de validações bem-sucedidas.
+          * `error_count`: Número de validações com erros.
+          * `type_client`: Lista de segmentos únicos dos clientes.
+      * **Timestamps:**
+          * `_ts`: Timestamps de início e término do processamento.
+          * `timestamp`: Timestamp da geração das métricas.
+
+      **Formato do JSON:**
+
+      As métricas são estruturadas em um objeto JSON com a seguinte estrutura geral:
+
+      ```json
+      {
+        "application_id": "...",
+        "owner": {
+          "sigla": "...",
+          "projeto": "...",
+          "layer_lake": "..."
+        },
+        "valid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "invalid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "total_records": ...,
+        "total_processing_time": "...",
+        "memory_used": ...,
+        "stages": { ... },
+        "validation_results": { ... },
+        "success_count": ...,
+        "error_count": ...,
+        "type_client": "...",
+        "source": {
+          "app": "...",
+          "search": "..."
+        },
+        "_ts": {
+          "compass_start_ts": "...",
+          "compass_end_ts": "..."
+        },
+        "timestamp": "..."
+      }
+      ```
+
+    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão.
 
 </details>
 
@@ -743,10 +826,4 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
 
 ## 7. Melhorias do projeto e Considerações Finais
 
-
-
-
-
 ---
-
-
