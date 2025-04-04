@@ -751,12 +751,443 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
       }
       ```
 
-    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão.
+    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+
+      ```json
+        {
+            "timestamp": "...",
+            "layer": "silver",
+            "project": "compass",
+            "job": "apple_store_reviews",
+            "priority": "0",
+            "tower": "SBBR_COMPASS",
+            "client": "[...]",
+            "error": "..."
+        }
+      ```
 
 </details>
 
 ---
 
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-google-play` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-google-play </summary> 
+
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/google-play-processing-historical)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-google-play/tags/1.0.1/sha256-3b68861761c0059f6ecb60253086b0f9bef78fa079ea8e5b1a5f44b9da82b252)  
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API SERAPI que busca no **Google Play** e ingeri os dados no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados e os armazenando no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_trfmation_google_play.py.py $CONFIG_ENV 
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+  - **Pipeline:**
+    - **Descrição:** Processar avaliações de clientes dao Google Play (camada Bronze → Silver), garantindo: filtro específico para dados Google Play, normalização e enriquecimento de metadados, validação de qualidade conforme regras de negócio e rastreabilidade completa dos dados
+    - **Fonte de Dados:** <br> `/santander/bronze/compass/reviews/googlePlay/*_pf` 
+                          <br> `/santander/bronze/compass/reviews/googlePlay/*_pj`
+                          <br> `/santander/silver/compass/reviews/googlePlay/`
+    - **Filtro:** Apenas dados com google Play no path e terminados em _pf ou _pj.                   
+    - **Destino:** `/santander/silver/compass/reviews/googlePlay/` 
+    - **Tipo de processo:** Batch (diário)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Transformação e Funções:** PySpark <br> 
+      1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
+
+        ```python
+        remove_accents(s: str) -> str
+        ```
+
+        No exemplo abaixo é possível ver como a funcionalidade se aplica em um caso real:
+
+        ```python
+        Exemplo: remove_accents("São Paulo") # Retorna: "Sao Paulo"
+        ```
+
+      2.  `processing_reviews(df: DataFrame)`: Realiza transformações no DataFrame de reviews, selecionando colunas específicas, converte nomes para maiúsculas e removendo acentos. Renomeia colunas para um formato consistente. **Parâmetros:** `df` (DataFrame): O DataFrame de reviews a ser processado. **Retorno:** (DataFrame): O DataFrame transformado.
+
+          ```python
+          processed_df = processing_reviews(df)
+          processed_df.show()
+          ```
+
+      3.  `get_schema(df, schema)`: Assegura que o DataFrame esteja em conformidade com um esquema predefinido, convertendo os tipos das colunas para os tipos especificados no esquema. **Parâmetros:** `df` (DataFrame): O DataFrame a ser ajustado. `schema` (StructType): O esquema de destino. **Retorno:** (DataFrame): O DataFrame em conformidade com o esquema.
+
+          ```python
+          aligned_df = get_schema(df, schema)
+          aligned_df.printSchema()
+          ```
+
+      4.  `processing_old_new(spark: SparkSession, df: DataFrame)`: Compara os dados de reviews novos com os dados históricos, identificando e registrando mudanças nas avaliações ao longo do tempo. Cria uma coluna chamada `historical_data` para armazenar o histórico de mudanças. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `df` (DataFrame): O DataFrame com os novos dados de reviews. **Retorno:** (DataFrame): O DataFrame com o histórico de mudanças.
+
+          ```python
+          historical_df = processing_old_new(spark, df)
+          historical_df.show()
+          ```
+
+      5.  `read_source_parquet(spark, path)`: Lê um arquivo Parquet do caminho especificado, extraindo informações de "app" e "segmento" do nome do arquivo. Retorna `None` se o arquivo não existir ou se não houver dados. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `path` (str): O caminho para o arquivo Parquet. **Retorno:** (DataFrame | None): O DataFrame lido ou `None` em caso de falha.
+
+          ```python
+          source_df = read_source_parquet(spark, file_path)
+          if source_df:
+              source_df.show()
+          ```
+
+      6.  `save_dataframe(df, path, label)`: Salva um DataFrame no formato Parquet no caminho especificado. Verifica se o DataFrame possui dados antes de salvar, e caso não possua, envia um log de warning. Verifica e cria o diretório de destino se necessário. Lida com possíveis erros durante o processo de salvamento. Um tratamento adicional que a função realiza é verificar se o dataframe tem a coluna `historical_data`, se não tiver, a função cria a coluna com o schema correto com dado nulo.
+      ```python
+        if "historical_data" not in df.columns:
+            df = df.withColumn(
+                "historical_data",
+                lit(None).cast("array<struct<title:string,snippet:string,app:string,rating:string,iso_date:string>>")
+            )
+      ```
+      
+      **Parâmetros:** `df` (DataFrame): O DataFrame a ser salvo. `path` (str): O caminho para salvar o DataFrame. `label` (str): Uma etiqueta para os logs. **Retorno:** None.
+
+          ```python
+          save_dataframe(df, save_path, data_label)
+          ```
+
+      7.  `path_exists() -> bool`: Verifica se um determinado caminho existe no HDFS. Verifica se o caminho possui partições no formato "odate=\*". **Retorno:** (bool): True caso o caminho exista, e false caso não exista.
+
+          ```python
+          if path_exists():
+              print("O caminho existe")
+          else:
+              print("O caminho não existe")
+          ```
+
+      8.  `save_metrics(metrics_json, df)`: Salva métricas no Elasticsearch. Conecta-se ao Elasticsearch usando variáveis de ambiente. Lida com erros de decodificação JSON e erros de conexão. **Parâmetros:** `metrics_json` (str): As métricas no formato JSON. `df` (DataFrame): O DataFrame associado às métricas. **Retorno:** None.
+
+          ```python
+          save_metrics(metrics, data_df)
+          ```
+
+      9.  `save_metrics_job_fail(metrics_json)`: Salva métricas de falhas de jobs no Elasticsearch. Similar a `save_metrics`, mas para um índice diferente. **Parâmetros:** `metrics_json` (str): As métricas de falha no formato JSON. **Retorno:** None.
+
+          ```python
+          save_metrics_job_fail(failure_metrics)
+          ```
+
+      10. `log_error(e, df)`: Gera e salva métricas de erro no Elasticsearch. Extrai informações de segmento do DataFrame. Formata informações de erro e as envia para `save_metrics_job_fail`. **Parâmetros:** `e` (Exception): A exceção que ocorreu. `df` (DataFrame): O DataFrame associado ao erro. **Retorno:** None.
+
+          ```python
+          try:
+              # Código que pode gerar um erro
+          except Exception as error:
+              log_error(error, df)
+          ```
+
+    - **Validação:** 
+    
+        1.  `validate_ingest(spark: SparkSession, df: DataFrame) -> tuple`: Valida dados de ingestão, comparando com histórico e verificando qualidade. **Retorna** DataFrames de dados válidos e inválidos, e resultados da validação. 
+    
+            - **Duplicatas:** Identifica registros duplicados por "id".
+            - **Nulos:** Verifica nulos em colunas críticas.
+            - **Tipos:** Garante consistência de tipos.
+
+            Código de retorno na validação:
+
+            > `200`: Sucesso (Nenhum problema encontrado) <br>
+            > `400`: Erro nos dados (Valores nulos ou tipos inválidos) <br>
+            > `409`: Conflito de dados (Registros duplicados encontrados)
+
+
+
+    - **Carga:** Escrita em HDFS (Parquet):
+    
+      1. Caminho principal (dados válidos) `/santander/silver/compass/reviews/appleStore/odate={datePath}/` 
+      2. Caminho de falha `/santander/silver/compass/reviews_fail/appleStore/odate={datePath}/`
+
+    - **Métricas:** A função `collect_metrics` coleta um conjunto abrangente de métricas para fornecer uma visão detalhada do processo de ingestão e validação de dados. As métricas são estruturadas em um objeto JSON, facilitando o consumo por sistemas de monitoramento e análise.
+
+
+      * **Informações da Aplicação:**
+          * `application_id`: Identificador único da aplicação Spark.
+          * `owner`: Detalhes do proprietário da aplicação (sigla, projeto, camada do Lake).
+          * `source`: Detalhes sobre a fonte dos dados (`app`, `search`).
+      * **Contagem de Registros:**
+          * `valid_data`: Contagem e porcentagem de registros válidos.
+          * `invalid_data`: Contagem e porcentagem de registros inválidos.
+          * `total_records`: Contagem total de registros processados.
+      * **Desempenho do Processamento:**
+          * `total_processing_time`: Tempo total de processamento em minutos.
+          * `memory_used`: Uso de memória em megabytes.
+          * `stages`: Métricas detalhadas dos estágios de execução do Spark.
+      * **Resultados da Validação:**
+          * `validation_results`: Resultados detalhados de cada validação (duplicatas, nulos, tipos).
+          * `success_count`: Número de validações bem-sucedidas.
+          * `error_count`: Número de validações com erros.
+          * `type_client`: Lista de segmentos únicos dos clientes.
+      * **Timestamps:**
+          * `_ts`: Timestamps de início e término do processamento.
+          * `timestamp`: Timestamp da geração das métricas.
+
+      **Formato do JSON:**
+
+      As métricas são estruturadas em um objeto JSON com a seguinte estrutura geral:
+
+      ```json
+      {
+        "application_id": "...",
+        "owner": {
+          "sigla": "...",
+          "projeto": "...",
+          "layer_lake": "..."
+        },
+        "valid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "invalid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "total_records": ...,
+        "total_processing_time": "...",
+        "memory_used": ...,
+        "stages": { ... },
+        "validation_results": { ... },
+        "success_count": ...,
+        "error_count": ...,
+        "type_client": "...",
+        "source": {
+          "app": "...",
+          "search": "..."
+        },
+        "_ts": {
+          "compass_start_ts": "...",
+          "compass_end_ts": "..."
+        },
+        "timestamp": "..."
+      }
+      ```
+
+    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+
+      ```json
+        {
+            "timestamp": "...",
+            "layer": "silver",
+            "project": "compass",
+            "job": "google_play_reviews",
+            "priority": "0",
+            "tower": "SBBR_COMPASS",
+            "client": "[...]",
+            "error": "..."
+        }
+      ```
+
+</details>
+
+---
+
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-mongodb` `⏱️ schedule: diario`
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-mongodb </summary> 
+
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/mongodb-processing-historical)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-mongodb/tags/1.0.1/sha256-6138a44faa031c50a8f8b7b4e75db092a8d03a62a0124b9e4414f999788e0d69)  
+  - **Descrição:**  Coleta avaliações de clientes nos canais via base de dados **MongoDB** ingeridos no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
+  - **Parâmetros:** 
+
+    ```shell
+      /app/repo_trfmation_mongodb.py $CONFIG_ENV 
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+  - **Pipeline:**
+    - **Descrição:** Processar avaliações de clientes dos canais Santander que será armazenados na base interna Santander (camada Bronze → Silver), garantindo: filtro específico para dados da base interna Santander (MongoDB), normalização e enriquecimento de metadados, validação de qualidade conforme regras de negócio e rastreabilidade completa dos dados
+    - **Fonte de Dados:** <br> `/santander/bronze/compass/reviews/mongodb/*_pf` 
+                          <br> `/santander/bronze/compass/reviews/mongodb/*_pj`
+                          <br> `/santander/silver/compass/reviews/mongodb/`
+    - **Filtro:** Apenas dados com mongodb no path e terminados em _pf ou _pj.                   
+    - **Destino:** `/santander/silver/compass/reviews/mongodb/` 
+    - **Tipo de processo:** Batch (diário)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Transformação e Funções:** PySpark <br> 
+      1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
+
+        ```python
+        remove_accents(s: str) -> str
+        ```
+
+        No exemplo abaixo é possível ver como a funcionalidade se aplica em um caso real:
+
+        ```python
+        Exemplo: remove_accents("São Paulo") # Retorna: "Sao Paulo"
+        ```
+
+      2.  `processing_reviews(df: DataFrame)`: Realiza transformações no DataFrame de reviews, selecionando colunas específicas, converte nomes para maiúsculas e removendo acentos. Renomeia colunas para um formato consistente. **Parâmetros:** `df` (DataFrame): O DataFrame de reviews a ser processado. **Retorno:** (DataFrame): O DataFrame transformado.
+
+          ```python
+          processed_df = processing_reviews(df)
+          processed_df.show()
+          ```
+
+      3.  `get_schema(df, schema)`: Assegura que o DataFrame esteja em conformidade com um esquema predefinido, convertendo os tipos das colunas para os tipos especificados no esquema. **Parâmetros:** `df` (DataFrame): O DataFrame a ser ajustado. `schema` (StructType): O esquema de destino. **Retorno:** (DataFrame): O DataFrame em conformidade com o esquema.
+
+          ```python
+          aligned_df = get_schema(df, schema)
+          aligned_df.printSchema()
+          ```
+
+      4.  `processing_old_new(spark: SparkSession, df: DataFrame)`: Compara os dados de reviews novos com os dados históricos, identificando e registrando mudanças nas avaliações ao longo do tempo. Cria uma coluna chamada `historical_data` para armazenar o histórico de mudanças. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `df` (DataFrame): O DataFrame com os novos dados de reviews. **Retorno:** (DataFrame): O DataFrame com o histórico de mudanças.
+
+          ```python
+          historical_df = processing_old_new(spark, df)
+          historical_df.show()
+          ```
+
+      5.  `read_source_parquet(spark, path)`: Lê um arquivo Parquet do caminho especificado, extraindo informações de "app" e "segmento" do nome do arquivo. Retorna `None` se o arquivo não existir ou se não houver dados. **Parâmetros:** `spark` (SparkSession): A sessão Spark ativa. `path` (str): O caminho para o arquivo Parquet. **Retorno:** (DataFrame | None): O DataFrame lido ou `None` em caso de falha.
+
+          ```python
+          source_df = read_source_parquet(spark, file_path)
+          if source_df:
+              source_df.show()
+          ```
+
+      6.  `save_dataframe(df, path, label)`: Salva um DataFrame no formato Parquet no caminho especificado. Verifica se o DataFrame possui dados antes de salvar, e caso não possua, envia um log de warning. Verifica e cria o diretório de destino se necessário. Lida com possíveis erros durante o processo de salvamento. **Parâmetros:** `df` (DataFrame): O DataFrame a ser salvo. `path` (str): O caminho para salvar o DataFrame. `label` (str): Uma etiqueta para os logs. **Retorno:** None.
+
+          ```python
+          save_dataframe(df, save_path, data_label)
+          ```
+
+      7.  `path_exists() -> bool`: Verifica se um determinado caminho existe no HDFS. Verifica se o caminho possui partições no formato "odate=\*". **Retorno:** (bool): True caso o caminho exista, e false caso não exista.
+
+          ```python
+          if path_exists():
+              print("O caminho existe")
+          else:
+              print("O caminho não existe")
+          ```
+
+      8.  `save_metrics(metrics_json, df)`: Salva métricas no Elasticsearch. Conecta-se ao Elasticsearch usando variáveis de ambiente. Lida com erros de decodificação JSON e erros de conexão. **Parâmetros:** `metrics_json` (str): As métricas no formato JSON. `df` (DataFrame): O DataFrame associado às métricas. **Retorno:** None.
+
+          ```python
+          save_metrics(metrics, data_df)
+          ```
+
+      9.  `save_metrics_job_fail(metrics_json)`: Salva métricas de falhas de jobs no Elasticsearch. Similar a `save_metrics`, mas para um índice diferente. **Parâmetros:** `metrics_json` (str): As métricas de falha no formato JSON. **Retorno:** None.
+
+          ```python
+          save_metrics_job_fail(failure_metrics)
+          ```
+
+      10. `log_error(e, df)`: Gera e salva métricas de erro no Elasticsearch. Extrai informações de segmento do DataFrame. Formata informações de erro e as envia para `save_metrics_job_fail`. **Parâmetros:** `e` (Exception): A exceção que ocorreu. `df` (DataFrame): O DataFrame associado ao erro. **Retorno:** None.
+
+          ```python
+          try:
+              # Código que pode gerar um erro
+          except Exception as error:
+              log_error(error, df)
+          ```
+
+    - **Validação:** 
+    
+        1.  `validate_ingest(spark: SparkSession, df: DataFrame) -> tuple`: Valida dados de ingestão, comparando com histórico e verificando qualidade. **Retorna** DataFrames de dados válidos e inválidos, e resultados da validação. 
+    
+            - **Duplicatas:** Identifica registros duplicados por "id".
+            - **Nulos:** Verifica nulos em colunas críticas.
+            - **Tipos:** Garante consistência de tipos.
+
+            Código de retorno na validação:
+
+            > `200`: Sucesso (Nenhum problema encontrado) <br>
+            > `400`: Erro nos dados (Valores nulos ou tipos inválidos) <br>
+            > `409`: Conflito de dados (Registros duplicados encontrados)
+
+
+
+    - **Carga:** Escrita em HDFS (Parquet):
+    
+      1. Caminho principal (dados válidos) `/santander/silver/compass/reviews/mongodb/odate={datePath}/` 
+      2. Caminho de falha `/santander/silver/compass/reviews_fail/mongodb/odate={datePath}/`
+
+    - **Métricas:** A função `collect_metrics` coleta um conjunto abrangente de métricas para fornecer uma visão detalhada do processo de ingestão e validação de dados. As métricas são estruturadas em um objeto JSON, facilitando o consumo por sistemas de monitoramento e análise.
+
+
+      * **Informações da Aplicação:**
+          * `application_id`: Identificador único da aplicação Spark.
+          * `owner`: Detalhes do proprietário da aplicação (sigla, projeto, camada do Lake).
+          * `source`: Detalhes sobre a fonte dos dados (`app`, `search`).
+      * **Contagem de Registros:**
+          * `valid_data`: Contagem e porcentagem de registros válidos.
+          * `invalid_data`: Contagem e porcentagem de registros inválidos.
+          * `total_records`: Contagem total de registros processados.
+      * **Desempenho do Processamento:**
+          * `total_processing_time`: Tempo total de processamento em minutos.
+          * `memory_used`: Uso de memória em megabytes.
+          * `stages`: Métricas detalhadas dos estágios de execução do Spark.
+      * **Resultados da Validação:**
+          * `validation_results`: Resultados detalhados de cada validação (duplicatas, nulos, tipos).
+          * `success_count`: Número de validações bem-sucedidas.
+          * `error_count`: Número de validações com erros.
+          * `type_client`: Lista de segmentos únicos dos clientes.
+      * **Timestamps:**
+          * `_ts`: Timestamps de início e término do processamento.
+          * `timestamp`: Timestamp da geração das métricas.
+
+      **Formato do JSON:**
+
+      As métricas são estruturadas em um objeto JSON com a seguinte estrutura geral:
+
+      ```json
+      {
+        "application_id": "...",
+        "owner": {
+          "sigla": "...",
+          "projeto": "...",
+          "layer_lake": "..."
+        },
+        "valid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "invalid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "total_records": ...,
+        "total_processing_time": "...",
+        "memory_used": ...,
+        "stages": { ... },
+        "validation_results": { ... },
+        "success_count": ...,
+        "error_count": ...,
+        "type_client": "...",
+        "source": {
+          "app": "...",
+          "search": "..."
+        },
+        "_ts": {
+          "compass_start_ts": "...",
+          "compass_end_ts": "..."
+        },
+        "timestamp": "..."
+      }
+      ```
+
+    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+
+      ```json
+        {
+            "timestamp": "...",
+            "layer": "silver",
+            "project": "compass",
+            "job": "mongodb_reviews",
+            "priority": "0",
+            "tower": "SBBR_COMPASS",
+            "client": "[...]",
+            "error": "..."
+        }
+      ```
+
+</details>
 
 ---
 
@@ -826,4 +1257,10 @@ O projeto Compass como Produto tem como objetivo fornecer uma solução robusta 
 
 ## 7. Melhorias do projeto e Considerações Finais
 
+
+
+
+
 ---
+
+
