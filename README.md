@@ -29,8 +29,9 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
   * [3.2 Aspectos Técnicos do Projeto Compass](#32-aspectos-técnicos-do-projeto-compass)
     + [3.2.1 Tecnologias Utilizadas](#321-tecnologias-utilizadas)
     + [3.2.2 Caracteristicas da Execução do Projeto](#322-caracteristicas-da-execução-do-projeto)
-    + [3.2.2.1 **Infraestrutura do Projeto Compass**](#3221-infraestrutura-do-projeto-compass)
-    + [3.2.2.2 **Aplicações do Projeto Compass**](#3222-aplicações-do-projeto-compass)
+    + [3.2.2.1 Infraestrutura do Projeto Compass](#3221-infraestrutura-do-projeto-compass)
+    + [3.2.2.2 Aplicações do Projeto Compass](#3222-aplicações-do-projeto-compass)
+    + [3.2.2.3  Malha do Projeto Compass](#3223-malha-do-projeto-compass)
 - [4. Fluxo Funcional e Jornada do Cliente](#4-fluxo-funcional-e-jornada-do-cliente)
 - [5. Compass como produto analytics Santander](#5-compass-como-produto-analytics-santander)
 - [6. Instruções para Configuração e Execução do Projeto Compass](#6-instruções-para-configuração-e-execução-do-projeto-compass)
@@ -1928,6 +1929,16 @@ A aplicação responsável por realizar o expurgo dos dados é uma aplicação S
 </details>
 
 ---
+#### 3.2.2.3 **Malha do Projeto Compass**
+
+A orquestração dos fluxos de ingestão, transformação e carga das informações é realizada por meio do Apache Airflow, ferramenta escolhida pela sua flexibilidade, escalabilidade e capacidade de monitoramento de pipelines de dados. A malha desenvolvida no Airflow permite o agendamento e controle dos jobs Spark, garantindo a execução ordenada e confiável das etapas do processo de dados dentro do Projeto Compass.
+
+Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio, contendo tarefas interdependentes que asseguram o tratamento correto dos dados desde a origem até os destinos finais, como o Data Lake ou sistemas consumidores. Essa abordagem permite maior governança, rastreabilidade e facilidade de manutenção da arquitetura de dados, além de suportar a integração com outras ferramentas e sistemas do ecossistema Big Data.
+
+| Nome da DAG                              | Descrição                                                                                                                                          | JOBS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+|------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dag_d_pipeline_compass_reviews`         | Pipeline diária responsável por manter a malha principal do Projeto Compass, garantindo que a ingestão até a disponibilização da carga final seja entregue ao cliente final. | `MONGO_INGESTION_SANTANDER-WAY`<br>`MONGO_INGESTION_BANCO-SANTANDER-BR`<br>`MONGO_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`APPLE_INGESTION_SANTANDER-WAY`<br>`APPLE_INGESTION_BANCO-SANTANDER-BR`<br>`APPLE_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`GOOGLE_INGESTION_BR.COM.SANTANDER.WAY`<br>`GOOGLE_INGESTION_COM.SANTANDER.APP`<br>`GOOGLE_INGESTION_COM.SANTANDER.SELECTGLOBAL`<br>`SILVER_APP_SILVER_APPLE_STORE`<br>`SILVER_APP_SILVER_GOOGLE_PLAY`<br>`SILVER_APP_SILVER_INTERNAL_BASE`<br>`GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER`<br>`B_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER`<br>`S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER` |
+| `dag_s_pipeline_expurge_compass_reviews` | Pipeline semanal responsável por realizar expurgo dos dados nas camadas Bronze, Silver e Gold.                                                      | `B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_BR`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_WAY`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_BR`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_WAY`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_BR`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_WAY`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_SELECT_GLOBAL`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_APPLE_STORE`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_GOOGLE_PLAY`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_INTERNAL_BASE`<br>`G_EXPURGE_APP_HDFS_HISTORY_GOLD_AGGREGATE` |
 
 
 ## 4. Fluxo Funcional e Jornada do Cliente
