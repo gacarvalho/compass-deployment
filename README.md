@@ -6,6 +6,25 @@ O repositório **compass-deployment** é uma solução desenvolvida para o progr
 ![<data-master-compass>](https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true)
 
 
+- [1. Objetivo do Projeto](#1-objetivo-do-projeto)
+  * [1.1 O Projeto Compass](#11-o-projeto-compass)
+- [2. Arquitetura da Solução](#2-arquitetura-da-solução)
+- [3. Visão Geral da Arquitetura Técnica](#3-visão-geral-da-arquitetura-técnica)
+  * [3.1 Descrição do Fluxo de Dados](#31-descrição-do-fluxo-de-dados)
+    + [3.1.1 Origens de Dados (fontes)](#311-origens-de-dados-fontes)
+    + [3.1.2 Camada de Processamento](#312-camada-de-processamento)
+    + [3.1.3 Camada de Armazenamento](#313-camada-de-armazenamento)
+    + [3.1.4 Camada de Visualização e Telemetria (observabilidade)](#314-camada-de-visualização-e-telemetria-observabilidade)
+  * [3.2 Aspectos Técnicos do Projeto Compass](#32-aspectos-técnicos-do-projeto-compass)
+    + [3.2.1 Tecnologias Utilizadas](#321-tecnologias-utilizadas)
+    + [3.2.2 Caracteristicas da Execução do Projeto](#322-caracteristicas-da-execução-do-projeto)
+    + [3.2.2.1 **Infraestrutura do Projeto Compass**](#3221-infraestrutura-do-projeto-compass)
+    + [3.2.2.2 **Aplicações do Projeto Compass**](#3222-aplicações-do-projeto-compass)
+- [4. Fluxo Funcional e Jornada do Cliente](#4-fluxo-funcional-e-jornada-do-cliente)
+- [5. Compass como produto analytics Santander](#5-compass-como-produto-analytics-santander)
+- [6. Instruções para Configuração e Execução do Projeto Compass](#6-instruções-para-configuração-e-execução-do-projeto-compass)
+- [7. Melhorias do projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
+
 
 
 
