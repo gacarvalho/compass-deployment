@@ -1,9 +1,20 @@
 🧭 ♨️ COMPASS
 ---
 
-O repositório **compass-deployment** é uma solução desenvolvida para o programa **Data Master**, organizado pela **F1rst Tecnologia**, com o objetivo de fornecer uma plataforma robusta para captura, processamento e análise de feedbacks de clientes do Banco Santander.
+<p align="left">
+  <img src="https://img.shields.io/badge/projeto-Compass-blue?style=flat-square" alt="Projeto">
+  <img src="https://img.shields.io/badge/versão-1.0.0-blue?style=flat-square" alt="Versão">
+  <img src="https://img.shields.io/badge/status-Finalizado-green?style=flat-square" alt="Status">
+  <img src="https://img.shields.io/badge/autor-Gabriel_Carvalho-lightgrey?style=flat-square" alt="Autor">
+</p>
+
+O repositório **compass-deployment** é uma solução desenvolvida no contexto do programa Data Master, promovido pela F1rst Tecnologia, com o objetivo de disponibilizar uma plataforma robusta e escalável para captura, processamento e análise de feedbacks de clientes do Banco Santander.
+
 
 ![<data-master-compass>](https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true)
+
+Este documento apresenta a visão geral do projeto, abrangendo desde os objetivos iniciais até a descrição técnica da arquitetura, fluxos funcionais, tecnologias empregadas, instruções para execução e considerações finais. A proposta é oferecer um panorama completo sobre o funcionamento do Compass como produto de analytics voltado à experiência do cliente.
+
 
 
 - [1. Objetivo do Projeto](#1-objetivo-do-projeto)
@@ -1726,6 +1737,193 @@ No exemplo abaixo, é possível observar que a validação de volumetria foi rea
           ```python
           Exemplo: save_metrics_job_fail('{"error": "message"}')
           ```
+
+</details>
+
+---
+
+♨️ **Aplicação - Rentenção/expurgo de dados**
+
+
+A aplicação responsável por realizar o expurgo dos dados é uma aplicação Spark que realiza a limpeza automática de partições antigas no HDFS com base em uma data limite configurável. Ele identifica partições no formato odate=YYYYMMDD e remove aquelas fora do intervalo de dias desejado. Em caso de erro durante qualquer etapa (Spark, HDFS ou MongoDB), o script envia métricas detalhadas de falha para uma base MongoDB, incluindo timestamp, contexto e mensagem do erro.
+
+
+`📦 artefato` `iamgacarvalho/iamgacarvalho/dmc-expurge-partitions-hdfs` 
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/iamgacarvalho/dmc-expurge-partitions-hdfs </summary> 
+
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/expurge-partitions-hdfs-compass)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-expurge-partitions-hdfs/tags/1.0.0/sha256-e78cdb9d002ec2273ef464606b8b7e7d6d6a7dc4136a66868be703315201cac4)  
+
+    ```shell
+      /app/app-code-compass-expurge-partitions-hdfs.py $CONFIG_ENV $PARAM1 $PARAM2"
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+      - `$PARAM1` (`/santander/bronze/compass/reviews/appleStore/banco-santander-br/`, <br> `/santander/gold/compass/reviews/apps_santander_aggregate/`) → Define o path que terá o expurgo dos dados. 
+      - `$PARAM2` (`7`, `1825`) → Define o número de dias que manterá os dados dentro do Data Lake.
+
+  - **Pipeline:**
+    - **Descrição:** A aplicação em Spark, foi desenvolvido com o propósito de realizar o expurgo automatizado de partições antigas armazenadas em um diretório HDFS. Sua função é identificar e remover partições que estejam fora de um intervalo de datas definido pelo usuário, com o objetivo de liberar espaço e manter a estrutura do HDFS organizada e eficiente. A aplicação inicia criando uma sessão Spark configurada para suportar leitura de arquivos Parquet e a inclusão de dependências externas. Em seguida, ela valida os parâmetros de entrada fornecidos via linha de comando, que incluem o ambiente de execução, o diretório base no HDFS e a quantidade de dias cujos dados devem ser preservados. Com essas informações, o script calcula a data limite com base na data atual e no número de dias a manter, e utiliza comandos HDFS para listar todas as partições existentes dentro do diretório especificado. Cada partição é avaliada de acordo com seu nome, que deve seguir o padrão odate=YYYYMMDD. Se a data extraída estiver fora do intervalo permitido, a partição é removida do HDFS por meio de um comando hdfs dfs -rm -r, sempre com tratamento de exceções para garantir a estabilidade da execução. Além disso, em caso de qualquer erro durante o processo — seja na criação da sessão Spark, na leitura das partições ou na tentativa de remoção —, o script registra a falha em uma estrutura de métricas com informações detalhadas, como timestamp, nome do job, grupo responsável e mensagem do erro. Esses dados são salvos em uma coleção específica dentro do MongoDB, cuja conexão é configurada por variáveis de ambiente seguras, com usuário, senha, host, porta e nome do banco. Ao final da execução, o HDFS permanece apenas com as partições desejadas, e qualquer falha ocorrida durante o processo é devidamente registrada para rastreabilidade e monitoramento operacional.
+
+
+    - **Fonte de Dados:** 
+    Pode ser definido pelo parâmetro `$PARM1`
+
+      - `/santander/bronze/compass/reviews/appleStore/banco-santander-br/`
+      - `/santander/bronze/compass/reviews/appleStore/santander-way/`
+      - `/santander/bronze/compass/reviews/appleStore/santander-selectglobal/`
+      - `/santander/bronze/compass/reviews/googlePlay/banco-santander-br/`
+      - `/santander/bronze/compass/reviews/googlePlay/santander-way/`
+      - `/santander/bronze/compass/reviews/googlePlay/santander-selectglobal/`
+      - `/santander/bronze/compass/reviews/mongodb/banco-santander-br/`
+      - `/santander/bronze/compass/reviews/mongodb/reviews-santander-way/`
+      - `/santander/bronze/compass/reviews/mongodb/santander-selectGlobal/`
+      - ` /santander/silver/compass/reviews/appleStore/`
+      - `/santander/silver/compass/reviews/googlePlay/`
+      - `/santander/silver/compass/reviews/mongodb/`
+      - `/santander/gold/compass/reviews/apps_santander_aggregate/`
+
+
+    - **Tipo de processo:** Batch (Semanal)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Validação leitura da origem e carga:** PySpark
+
+      1. `read_parquet_data(spark, path)`
+
+      Lê dados de um diretório Parquet e trata falhas de leitura.
+
+      ```python
+      read_parquet_data(spark: SparkSession, path: str) -> DataFrame
+      ```
+
+      **Parâmetros:**
+
+      - `spark` (SparkSession): Sessão Spark usada para processar os dados.
+      - `path` (str): Caminho no HDFS para leitura do diretório particionado.
+
+      **Retorno:**
+
+      - (DataFrame): Retorna um DataFrame com os dados do diretório informado.
+
+      **Exceções:**
+
+      - Lança uma `Exception` em caso de falha na leitura.
+
+      ```python
+      Exemplo: df = read_parquet_data(spark, "/santander/bronze/compass/reviews/appleStore/")
+      ```
+
+      2. `get_partition_folders(path)`
+
+      Retorna a lista de partições válidas dentro de um diretório do HDFS.
+
+      ```python
+      get_partition_folders(path: str) -> List[str]
+      ```
+
+      **Parâmetros:**
+
+      - `path` (str): Caminho base do diretório particionado.
+
+      **Retorno:**
+
+      - (List[str]): Lista de partições no formato `odate=YYYYMMDD`.
+
+      **Exceções:**
+
+      - Retorna lista vazia se ocorrer erro ao listar partições.
+
+      ```python
+      Exemplo: partitions = get_partition_folders("/santander/bronze/compass/reviews/googlePlay/")
+      ```
+
+      3. `filter_old_partitions(partitions, days_to_keep)`
+
+      Filtra partições com data anterior à data limite.
+
+      ```python
+      filter_old_partitions(partitions: List[str], days_to_keep: int) -> List[str]
+      ```
+
+      **Parâmetros:**
+
+      - `partitions` (List[str]): Lista de partições no formato `odate=YYYYMMDD`.
+      - `days_to_keep` (int): Quantidade de dias a serem mantidos.
+
+      **Retorno:**
+
+      - (List[str]): Lista de partições que devem ser expurgadas.
+
+      ```python
+      Exemplo: expired = filter_old_partitions(partitions, 7)
+      ```
+
+      4. `delete_partition(partition_path)`
+
+      Deleta partições expiradas diretamente do HDFS.
+
+      ```python
+      delete_partition(partition_path: str) -> bool
+      ```
+
+      **Parâmetros:**
+
+      - `partition_path` (str): Caminho completo da partição a ser removida.
+
+      **Retorno:**
+
+      - (bool): Retorna `True` se a remoção for bem-sucedida, `False` caso contrário.
+
+      **Exceções:**
+
+      - Erros são capturados e logados, mas não interrompem o processo.
+
+      ```python
+      Exemplo: delete_partition("/santander/bronze/compass/reviews/appleStore/odate=20230101")
+      ```
+
+
+      5. `log_error_to_mongo(data)`
+
+      Persiste erro ocorrido durante o processo no MongoDB.
+
+      ```python
+      log_error_to_mongo(data: Dict[str, Any]) -> None
+      ```
+
+      **Parâmetros:**
+
+      - `data` (dict): Estrutura contendo o erro, nome do job, timestamp, grupo e outros metadados.
+
+      **Retorno:**
+
+      - None. O erro é salvo na coleção Mongo definida pelas variáveis de ambiente.
+
+      ```python
+      Exemplo:
+      log_error_to_mongo({
+          "timestamp": "2024-09-08T23:45:00",
+          "job_name": "EXPURGE_BRONZE",
+          "path": "/santander/bronze/compass/reviews/appleStore/",
+          "message": "Erro ao ler Parquet",
+          "status": "FAIL"
+      })
+      ```
+
+
+      **Fluxo:**
+
+      - Lê argumentos (`env`, `path`, `days_to_keep`) via `sys.argv`.
+      - Cria uma sessão Spark.
+      - Lê os dados do diretório informado.
+      - Identifica partições a serem expurgadas.
+      - Remove partições expiradas.
+      - Em caso de erro, registra no MongoDB com metadados.
+
 
 </details>
 
