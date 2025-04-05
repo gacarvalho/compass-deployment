@@ -1456,6 +1456,9 @@ A aplicação responsável por realizar as qualidade de dados operam como um age
   - Schema
   - Pattern
 
+
+No exemplo abaixo, é possível observar que a validação de volumetria foi realizada com sucesso, porém, caiu em rejeitados no schema, exibindo o schema atual e o schema que deveria ser estruturado, além de apontar o caminho no HDFS que o dado foi rejeitado por odate.
+
 ![<data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/validador_data_quality.png?raw=true)
 
 `📦 artefato` `iamgacarvalho/dmc-quality-pipeline-compass` 
