@@ -10,7 +10,7 @@ O repositório **compass-deployment** é uma solução desenvolvida para o progr
 
 
 ## 1. Objetivo do Projeto
- ---
+---
 
 A idealização deste case surgiu da necessidade de conectar as dores do time de negócios ao potencial da Engenharia de Dados para resolvê-las. O objetivo foi explorar como a extração, transformação e disponibilização de informações podem gerar insights valiosos sobre a experiência dos clientes do Santander ao utilizarem seus produtos e serviços. Além disso, a solução tem o potencial de analisar as dores dos clientes da concorrência, permitindo uma visão estratégica ainda mais ampla.
 
@@ -111,39 +111,39 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
 > [!NOTE]
 > A regra de negócios está detalhado no item `4. Fluxo Funcional e Jornada do Cliente`!
- 
+
 #### 3.1.3 Camada de Armazenamento
 
 - **ARMAZENAMENTO**:
     - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
 
-   <details>
-     <summary>Informações Detalhada do Armazenamento: MONGODB</summary>
-   
-   
-     | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
-     |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
-     | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
-     | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
-     | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
-     | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
-     | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
-   
-   </details>
+  <details>
+    <summary>Informações Detalhada do Armazenamento: MONGODB</summary>
+  
+  
+    | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
+    |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
+    | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
+    | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
+    | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
+    | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
+    | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
+  
+  </details>
 
 
 
 
-   - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
+  - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
 
 
 
   <details>
-     <summary>Informações Detalhada do Armazenamento: HADOOP</summary>
+    <summary>Informações Detalhada do Armazenamento: HADOOP</summary>
 
-     <p>A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:</p>
- 
-     > Caminho Base Bronze: `/santander/bronze/compass/reviews/`
+    <p>A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:</p>
+
+    > Caminho Base Bronze: `/santander/bronze/compass/reviews/`
     
     
     | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
@@ -187,21 +187,21 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
     |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
     | **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
     
-   
-   </details>
+  
+  </details>
 
-   - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
+  - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
 
-   <details>
+  <details>
       <summary>Informações Detalhada do Armazenamento: ELASTICSEARCH</summary>
     
     
-     | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
-     |-------------------------------------|-----------------------------------------------|-------------------|
-     | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | <ul><li> DAG: `dag_d_pipeline_compass_review` </li> <li>JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold)</li></ul> |
-     | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | <ul><li> DAG: `dag_d_pipeline_compass_reviews` </li> <li> JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) </li></ul> |
+    | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
+    |-------------------------------------|-----------------------------------------------|-------------------|
+    | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | <ul><li> DAG: `dag_d_pipeline_compass_review` </li> <li>JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold)</li></ul> |
+    | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | <ul><li> DAG: `dag_d_pipeline_compass_reviews` </li> <li> JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) </li></ul> |
     
-   </details>
+  </details>
 
 
 
@@ -209,24 +209,24 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
   <details>
-     <summary>Informações Detalhada do Dashboard: METABASE </summary>
+    <summary>Informações Detalhada do Dashboard: METABASE </summary>
 
-     O Metabase é uma ferramenta de Business Intelligence (BI) que permite a análise de dados de forma intuitiva e visual. Ele facilita a criação de dashboards interativos e relatórios sem a necessidade de conhecimento avançado em queries.
+    O Metabase é uma ferramenta de Business Intelligence (BI) que permite a análise de dados de forma intuitiva e visual. Ele facilita a criação de dashboards interativos e relatórios sem a necessidade de conhecimento avançado em queries.
 
-     - **Objetivo do Metabase:**  O principal objetivo do Metabase é fornecer uma interface amigável para que usuários de negócio possam acessar, visualizar e analisar dados sem dependência de equipes técnicas. Ele permite a tomada de decisões baseada em dados de forma ágil e eficiente.
+    - **Objetivo do Metabase:**  O principal objetivo do Metabase é fornecer uma interface amigável para que usuários de negócio possam acessar, visualizar e analisar dados sem dependência de equipes técnicas. Ele permite a tomada de decisões baseada em dados de forma ágil e eficiente.
 
-     - **Por que utilizar o Metabase?** 
-         - Interface intuitiva: Não requer conhecimento avançado em queries.
-         - Open-source e extensível: Pode ser personalizado conforme necessidade.
-         - Integração com diversas fontes de dados: Suporte para bancos SQL e NoSQL.
-         - Criação rápida de dashboards: Permite visualizar KPIs e métricas facilmente.
-         - Automatização de relatórios: Geração automática de relatórios e alertas por e-mail.       
+    - **Por que utilizar o Metabase?** 
+        - Interface intuitiva: Não requer conhecimento avançado em queries.
+        - Open-source e extensível: Pode ser personalizado conforme necessidade.
+        - Integração com diversas fontes de dados: Suporte para bancos SQL e NoSQL.
+        - Criação rápida de dashboards: Permite visualizar KPIs e métricas facilmente.
+        - Automatização de relatórios: Geração automática de relatórios e alertas por e-mail.       
 
-     - **Dashboards  (link de acesso):** Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
- 
-     | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
-     |-----------------------------------|--------------------------|--------------|----------------------
-     | Observabilidade Aplicação         | Aplicação (negócio)      | Pro-Produção | [Dashboard Compass - PRO - Data - Metabase](http://00.000.000.00:8085/setup)
+    - **Dashboards  (link de acesso):** Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
+
+    | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
+    |-----------------------------------|--------------------------|--------------|----------------------
+    | Observabilidade Aplicação         | Aplicação (negócio)      | Pro-Produção | [Dashboard Compass - PRO - Data - Metabase](http://00.000.000.00:8085/setup)
 
 
   - **Metodologia e boas práticas:** Utilizando as boas práticas, o dashboard foi dividido em 3 visões: (1) visão gerencial, (2) visão macro por ano-mes e (3) visão granular.
@@ -264,7 +264,7 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
       - Timestamp da avaliação
       - Periodo Rereferencia 
   - **Tabela de métricas utilizadas:**
- 
+
     | **Componente**              | **Categoria**            | Visão | **Tipo de Painel**        | **Nome da métrica**                         | **Unidade**  | **Descrição** | **Query Metrica** | **Fonte**
     |-----------------------------|--------------------------|-------|-------------------|---------------------------------------------|--------------|---------------|-----------------------------------|----------------------------
     | Nota média das avaliações   | Indicador                | Display: Progresso  | Dashboard     | Média da experiência do cliente atual       | 1 a 5        | Nota média das avaliações dos clientes de 1 a 5 de acordo filtro selecionado| `[ {"$sort":{"periodo_referencia":-1}}, {"$project":{"app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":{"$round":["$nota_media",0]},"avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":1,"app_nome":1,"app_source":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento"},"avg_nota_media":{"$avg":"$nota_media"},"app_nome":{"$first":"$app_nome"},"app_source":{"$first":"$app_source"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","avg":"$avg_nota_media","app_nome":1,"app_source":1}}, { "$match": { "$expr": { "$eq": [ "$periodo_referencia", { "$max": "$periodo_referencia" } ] } } }, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "avg": "$avg" } }, { "$limit": 1 } ]` | MongoDB
@@ -273,57 +273,57 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
     | Volumetria de avaliações totais   | Indicador   | Display: Indicador  |Dashboard     | Volumetria de avaliações dos apps Santander total ~ | Volumetria totais de avaliações      | Volumetria totais de avaliações de acordo filtro selecionado| `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, { "$group": { "_id": null, "sum": { "$sum": "$total_avaliacoes" } } }, { "$sort": { "_id": 1 } }, { "$project": { "_id": false, "sum": true } } ]` | MongoDB
     | Volumetria de avaliações totais agregados por canais e segmento   | Indicador   | Display: Pizza  |Dashboard     | Volume por canais e segmento ~ | Volumetria totais de avaliações agregado por cenais e segmento    | Volumetria totais de avaliações agregado de acordo filtro selecionado | `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "app_nome": "$app_nome", "app_source": "$app_source", "total_avaliacoes": "$total_avaliacoes" } }, { "$limit": 1048575 } ]` | MongoDB
     | Volumetria de avaliações totais agregados por canais e segmento   | Indicador   | Display: Barra  |Dashboard     | Volumetria de avaliações nos Canais Santander por ano-mes ~ | Volumetria totais de avaliações agregado por cenais e segmento    | Volumetria totais de avaliações agregado de acordo filtro selecionado selecionado | `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "app_nome": "$app_nome", "app_source": "$app_source", "total_avaliacoes": "$total_avaliacoes" } }, { "$limit": 1048575 } ]` | MongoDB
-     | Volumetria agregada por origem de extração e segmento PF/PJ   | Indicador   | Display: Pizza  |Dashboard     | Volume por Origem Extracao e Segmento ~ | Volumetria agregada por origem e segmento dos clientes    | Volumetria agregada por origem e segmento de acordo filtro selecionado | `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "app_nome": "$app_nome", "app_source": "$app_source", "total_avaliacoes": "$total_avaliacoes" } }, { "$limit": 1048575 } ]` | MongoDB
+    | Volumetria agregada por origem de extração e segmento PF/PJ   | Indicador   | Display: Pizza  |Dashboard     | Volume por Origem Extracao e Segmento ~ | Volumetria agregada por origem e segmento dos clientes    | Volumetria agregada por origem e segmento de acordo filtro selecionado | `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, { "$sort": { "periodo_referencia": -1 } }, { "$project": { "_id": false, "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "app_nome": "$app_nome", "app_source": "$app_source", "total_avaliacoes": "$total_avaliacoes" } }, { "$limit": 1048575 } ]` | MongoDB
     | Volumetria agregada por canais vs origem   | Indicador   | Display: Linha  |Dashboard     | Volumetria de avaliações dos Canais Santander por Origem ~ | Volumetria agregada por canal e origem de extração   | Volumetria agregada por canal e origem de acordo com filtro selecionado | `[ {"$sort":{"periodo_referencia":1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$match":{"$and":[{"nota_media":{"$gte":1}},{"nota_media":{"$lte":5}}]}}, {"$sort":{"periodo_referencia":-1}}, {"$project":{"_id":"$_id","app_nome":"$app_nome","app_source":"$app_source","periodo_referencia":"$periodo_referencia","nota_media":"$nota_media","nota_tendencia":"$nota_tendencia","avaliacoes_total":"$avaliacoes_total","comentarios_positivos":"$comentarios_positivos","comentarios_negativos":"$comentarios_negativos","segmento":"$segmento"}}, {"$limit":1048575}, {"$group":{"_id":{"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source"},"avg_nota_media":{"$avg":"$nota_media"},"avg_nota_tendencia":{"$avg":"$nota_tendencia"},"total_avaliacoes":{"$sum":"$avaliacoes_total"}}}, {"$sort":{"_id":1}}, {"$project":{"_id":false,"periodo_referencia":"$_id.periodo_referencia","segmento":"$_id.segmento","app_nome":"$_id.app_nome","app_source":"$_id.app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, {"$project":{"_id":false,"periodo_referencia":"$periodo_referencia","segmento":"$segmento","app_nome":"$app_nome","app_source":"$app_source","avg_nota_media":"$avg_nota_media","avg_nota_tendencia":"$avg_nota_tendencia","total_avaliacoes":"$total_avaliacoes"}}, {"$limit":1048575}, { "$sort": { "periodo_referencia": -1, "app_source": 1 } }, { "$project": { "_id": false, "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "app_nome": "$app_nome", "app_source": "$app_source", "avg_nota_media": "$avg_nota_media", "avg_nota_tendencia": "$avg_nota_tendencia", "total_avaliacoes": "$total_avaliacoes" } }, { "$limit": 1048575 } ]` | MongoDB
     | Visão agregada (macro) por Fonte, Canal e Segmento   | Tabela Agregada   | Display: Tabela  |Agregada     | Dt D View Gold Agg Compass ~ | Agregada por ano mês, segmento e nota média.   | Visão agregada por Fonte de Origem, Canais, Segmento (PF, PJ) e quebrado por nota média, avaliações totais, comentários positivos e comentários negativos. | `[ { "$project": { "_id": "$_id", "app_nome": "$app_nome", "app_source": "$app_source", "periodo_referencia": "$periodo_referencia", "segmento": "$segmento", "nota_media": "$nota_media", "avaliacoes_total": "$avaliacoes_total", "comentarios_positivos": "$comentarios_positivos", "comentarios_negativos": "$comentarios_negativos" } }, { "$limit": 1048575 } ]` | MongoDB
     | Visão detalhada  | Tabela Analítica   | Display: Tabela  |Analítica     | Compass - Visao detalhada, Ordenado por iso_date descendente, segmento ascendente, app ascendente, e app_source ascendente | Visão granular das avaliações dos clientes.   | Visão detalhada na menor granulidade com as avaliações dos clientes, disponibilizando o TITULO (descritivo da avaliação ou nome do cliente), SNIPPET (corpo da avaliação), APP_SOURCE (fonte de origem), APP, SEGMENTO, RATING (nota da avaliação do cliente), ISO_DATE (timestamp da avaliação) e PERIODO_REFERENCIA (ano mês da avaliação) | `[ {"$match":{"$and":[{"rating":{"$gte":1}},{"rating":{"$lte":5}}]}}, {"$sort":{"iso_date":-1,"app_source":1,"app":1}}, {"$project":{"_id":"$_id","title":"$title","snippet":"$snippet","app_source":"$app_source","app":"$app","segmento":"$segmento","rating":"$rating","iso_date":"$iso_date"}}, {"$limit":1048575}, { "$sort": { "iso_date": -1, "segmento": 1, "app": 1, "app_source": 1 } }, { "$project": { "_id": false, "title": "$title", "snippet": "$snippet", "app_source": "$app_source", "app": "$app", "segmento": "$segmento", "rating": "$rating", "iso_date": "$iso_date", "periodo_referencia": { "$substrCP": [ "$iso_date", { "$subtract": [ 1, 1 ] }, 7 ] } } }, { "$limit": 1048575 } ]` | MongoDB
-     
-     
+    
+    
 
 
   </details>
-   
+  
 - `Grafana`: Plataforma para monitoramento e visualização de métricas operacionais.
   <details>
-     <summary>Informações Detalhada do Dashboard: GRAFANA </summary>
+    <summary>Informações Detalhada do Dashboard: GRAFANA </summary>
 
-     O Grafana é uma plataforma de monitoramento e observabilidade utilizada para visualizar métricas, logs e traces em tempo real. Ele permite a criação de dashboards dinâmicos, integrando diferentes fontes de dados para um acompanhamento eficiente da infraestrutura e aplicações.
+    O Grafana é uma plataforma de monitoramento e observabilidade utilizada para visualizar métricas, logs e traces em tempo real. Ele permite a criação de dashboards dinâmicos, integrando diferentes fontes de dados para um acompanhamento eficiente da infraestrutura e aplicações.
 
   - **Objetivo do Grafa:** O Grafana foi projetado para fornecer uma interface intuitiva e centralizada para monitoramento de sistemas e análise de métricas. Ele é ideal para equipes de SRE, DevOps e engenharia de dados, permitindo a detecção rápida de problemas e otimização do desempenho de aplicações e servidores.
 
   - **Por que utilizar o Grafana?**
- 
-     -  Monitoramento - Ideal para análise contínua de métricas e logs.
-     - Integração com diversas fontes de dados – Compatível com Prometheus, InfluxDB, Elasticsearch, MySQL, PostgreSQL, entre outros.
-     - Dashboards altamente personalizáveis – Suporte a painéis interativos, gráficos avançados e filtros dinâmicos.
-     - Alertas inteligentes – Configuração de notificações automáticas via Slack, PagerDuty, e-mail, entre outros.
-   
-   - Dashboards (link de acesso): Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
-     
-     | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
-     |-----------------------------------|--------------------------|--------------|----------------------
-     | Observabilidade Aplicação         | Aplicação (dev)      | Pro-Produção | [Dashboard Compass - PRO - Data - Grafana](http://00.000.000.00:4000/d/eeex6c5w2x9fkb/compass-operacao-aplicacional?orgId=1&from=now-30d&to=now&timezone=browser))
-     | Observabilidade Sustentação        | Sustentação         | Pro-Produção | [Dashboard Compass - PRO - Data - Grafana](http://00.000.000.00:4000/d/fef83ot67ctmoe/compass-sustentacao?orgId=1&from=now-30d&to=now&timezone=browser))
+
+    -  Monitoramento - Ideal para análise contínua de métricas e logs.
+    - Integração com diversas fontes de dados – Compatível com Prometheus, InfluxDB, Elasticsearch, MySQL, PostgreSQL, entre outros.
+    - Dashboards altamente personalizáveis – Suporte a painéis interativos, gráficos avançados e filtros dinâmicos.
+    - Alertas inteligentes – Configuração de notificações automáticas via Slack, PagerDuty, e-mail, entre outros.
+  
+  - Dashboards (link de acesso): Os dashboards criados no Metabase fornecem uma visão detalhada dos principais indicadores e métricas da organização.
+    
+    | **Categoria**                     | **Métricas**             | **Ambiente** | **Link de acesso**
+    |-----------------------------------|--------------------------|--------------|----------------------
+    | Observabilidade Aplicação         | Aplicação (dev)      | Pro-Produção | [Dashboard Compass - PRO - Data - Grafana](http://00.000.000.00:4000/d/eeex6c5w2x9fkb/compass-operacao-aplicacional?orgId=1&from=now-30d&to=now&timezone=browser))
+    | Observabilidade Sustentação        | Sustentação         | Pro-Produção | [Dashboard Compass - PRO - Data - Grafana](http://00.000.000.00:4000/d/fef83ot67ctmoe/compass-sustentacao?orgId=1&from=now-30d&to=now&timezone=browser))
 
     
 
   - **Metolodogia e boas práticas:** O dashboard está estruturado em um padrão que deverá ser mantido, garantindo a replicação, organização e adição de novas métricas e componentes, pertmindo que os painéis respondam as perguntas sobre a saúde dos sistemas que integram o projeto Compass.
 
-     A visão do Grafana foi dividida em 2 (duas) categorias, Dashboard de Aplicações e Dashboard de Sustentação - **Dashboard de Aplicações**
+    A visão do Grafana foi dividida em 2 (duas) categorias, Dashboard de Aplicações e Dashboard de Sustentação - **Dashboard de Aplicações**
 
-     O Dashboard de Aplicações foram separados em alguns componentes para entender a volumetria de apps que rodaram e falharam nas últimas 24 horas e indicadores historicos de acordo com o filtro de timestamp selecionado, sendo composto por:
+    O Dashboard de Aplicações foram separados em alguns componentes para entender a volumetria de apps que rodaram e falharam nas últimas 24 horas e indicadores historicos de acordo com o filtro de timestamp selecionado, sendo composto por:
     
-     - App Finish per layer
-     - Valid Data Percentage
-     - Applications Fail per layer
-     - Invalid Data Percentage
-     - Event Count of the Bronze Layer [historical]
-     - Applications Completed per layer [historical]
-     - Applications Fail per layer [historical]
-     - Event Quality of the Bronze Layer [historical]
-     - Event Quality of the Silver Layer [historical]
-     - Event Quality of the Gold Layer [historical]
-   
+    - App Finish per layer
+    - Valid Data Percentage
+    - Applications Fail per layer
+    - Invalid Data Percentage
+    - Event Count of the Bronze Layer [historical]
+    - Applications Completed per layer [historical]
+    - Applications Fail per layer [historical]
+    - Event Quality of the Bronze Layer [historical]
+    - Event Quality of the Silver Layer [historical]
+    - Event Quality of the Gold Layer [historical]
+  
     | **Componente**      | **Categoria**            | Visão                         | **Tipo de Painel**        | **Nome da métrica**                           | **Unidade**         | **Descrição**                                                                                                                                                             | **Query Metrica**                                                                                | **Fonte**
     |---------------------|--------------------------|-------------------------------|---------------------------|-----------------------------------------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------
     | Aplicações Spark    | Totais de Sucessos       | Display: Estado               | Dashboard                 | App Finish per layer                          | Numero Total        | Exibe total de aplicações que rodaram com sucesso nas últimas 24 horas, exibindo por camada Bronze, Silver e Gold                                                         | ``                                                                                               | ElasticSearch
@@ -340,16 +340,16 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
     Já o Dashboard de Sustentação foi estruturado para ter poucos componentes e sendo composto com apenas indicadores necessários para entender se há problemas e qual problema, ajudando em uma análise prévia:
     
-     - Applications Fail per Priority [total]
-     - Applications Fail per Prioruty [historical]
-     - Application fail Table [historical]
-       
+    - Applications Fail per Priority [total]
+    - Applications Fail per Prioruty [historical]
+    - Application fail Table [historical]
+      
 
-     | **Componente**                     | **Categoria**            | Visão                         | **Tipo de Painel**        | **Nome da métrica**                           | **Unidade**         | **Descrição**                                                                                                                                                             | **Query Metrica**                                                                                | **Fonte**
-     |------------------------------------|--------------------------|-------------------------------|---------------------------|-----------------------------------------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------
-     | Aplicações Spark por prioridade    | Totais de Falhas         | Display: Medidor de Barras    | Dashboard                 | Applications fail per priority [total]        | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha                                                         | ``                                                                                               | ElasticSearch
-     | Aplicações Spark por camada        | Totais de Falhas         | Display: Séries Temporais     | Dashboard                 | Applications fail per priority [historical]   | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha e de acordo com a camada (bronze, silver ou gold)                                                      | ``                                                                                               | ElasticSearch
-     | Tabela de Falhas das aplicações Spark | Detalhes das falhas   | Display: Tabela               | Dashboard                 | N/A                                           | Registro            | Tabela com os registros das aplicações que falharam, exibindo: Timestamp, Layer, JOB, Priority, Projeto. Tower e Error                                                      | ``                                                                                               | ElasticSearch
+    | **Componente**                     | **Categoria**            | Visão                         | **Tipo de Painel**        | **Nome da métrica**                           | **Unidade**         | **Descrição**                                                                                                                                                             | **Query Metrica**                                                                                | **Fonte**
+    |------------------------------------|--------------------------|-------------------------------|---------------------------|-----------------------------------------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------
+    | Aplicações Spark por prioridade    | Totais de Falhas         | Display: Medidor de Barras    | Dashboard                 | Applications fail per priority [total]        | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha                                                         | ``                                                                                               | ElasticSearch
+    | Aplicações Spark por camada        | Totais de Falhas         | Display: Séries Temporais     | Dashboard                 | Applications fail per priority [historical]   | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha e de acordo com a camada (bronze, silver ou gold)                                                      | ``                                                                                               | ElasticSearch
+    | Tabela de Falhas das aplicações Spark | Detalhes das falhas   | Display: Tabela               | Dashboard                 | N/A                                           | Registro            | Tabela com os registros das aplicações que falharam, exibindo: Timestamp, Layer, JOB, Priority, Projeto. Tower e Error                                                      | ``                                                                                               | ElasticSearch
 
   </details>
 
@@ -361,19 +361,19 @@ Nesta seção, será apresentada a arquitetura técnica do Projeto Compass, deta
 
 Como base principal, as tecnologias utilizadas foram necessárias para atender o fluxo de dados, desde a coleta até a disponibilização das informações.
 
- - **MongoDB:** Utilizado para duas finalidades principais:
+- **MongoDB:** Utilizado para duas finalidades principais:
     - Armazenamento de coleções contendo dados brutos provenientes dos Canais Santander.
     - Manutenção de coleções estruturadas nas camadas silver e gold, que servem como base para análises no Metabase.
- - **Hadoop HDFS:** Responsável pelo armazenamento histórico dos dados, abrangendo desde a camada bronze (ingestão) até a gold, além de suportar serviços de data quality.
- - **ElasticSearch:** Utilizado para armazenamento de métricas técnicas e dados relacionados ao desempenho das aplicações.
- - **Apache Spark:** Ferramenta principal para processamento distribuído de dados em larga escala.
- - **Apache Airflow:** Responsável pela orquestração das execuções dos contêineres Spark, garantindo o fluxo automatizado das cargas de trabalho.
- - **Metabase:** Ferramenta de Business Intelligence utilizada pelo time de negócios para análise de dados e geração de insights.
- - **Grafana:** Solução dedicada à observabilidade técnica, permitindo o monitoramento detalhado dos sistemas e métricas operacionais.
- - **SerpApi:** API opcional na arquitetura, utilizada para extração de dados de avaliações da Google Play Store.
- - **iTunes API:** API externa utilizada para coleta de informações da Apple Store.
- - **GitHub Actions:** Empregado para automação de testes unitários, build de imagens e publicação no Docker Hub.
- - **Docker Hub:** Repositório utilizado para armazenamento e versionamento das imagens Docker das aplicações Spark e da infraestrutura.
+- **Hadoop HDFS:** Responsável pelo armazenamento histórico dos dados, abrangendo desde a camada bronze (ingestão) até a gold, além de suportar serviços de data quality.
+- **ElasticSearch:** Utilizado para armazenamento de métricas técnicas e dados relacionados ao desempenho das aplicações.
+- **Apache Spark:** Ferramenta principal para processamento distribuído de dados em larga escala.
+- **Apache Airflow:** Responsável pela orquestração das execuções dos contêineres Spark, garantindo o fluxo automatizado das cargas de trabalho.
+- **Metabase:** Ferramenta de Business Intelligence utilizada pelo time de negócios para análise de dados e geração de insights.
+- **Grafana:** Solução dedicada à observabilidade técnica, permitindo o monitoramento detalhado dos sistemas e métricas operacionais.
+- **SerpApi:** API opcional na arquitetura, utilizada para extração de dados de avaliações da Google Play Store.
+- **iTunes API:** API externa utilizada para coleta de informações da Apple Store.
+- **GitHub Actions:** Empregado para automação de testes unitários, build de imagens e publicação no Docker Hub.
+- **Docker Hub:** Repositório utilizado para armazenamento e versionamento das imagens Docker das aplicações Spark e da infraestrutura.
 
 > [!NOTE]
 > O projeto Compass foi concebido para ser executado inicialmente em um ambiente on-premises. Embora soluções em nuvem, como Azure e AWS, ofereçam vantagens significativas, como escalabilidade e alta disponibilidade, sua adoção exclusiva pode gerar dependência de fornecedores específicos. Para mitigar esse risco, a escolha por tecnologias open-source proporciona maior flexibilidade, permitindo a execução local e facilitando a migração para a nuvem quando necessário, sem comprometer a autonomia do sistema.
@@ -484,13 +484,13 @@ As aplicações responsáveis por realizar as ingestões, transformações e car
 
 A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilidade e eficiência no processamento de grandes volumes de dados, executando em um schedule diário. Embora o processamento em tempo real (Streaming) seja uma alternativa viável para outros cenários, o foco do projeto é consolidar dados de forma estruturada, assegurando a consistência necessária para que os times de negócios possam acompanhar e analisar as necessidades e desafios dos clientes de forma precisa e estratégica.
 
-**Aplicações - Ingestões de dados**
+♨️ **Aplicações - Ingestões de dados**
 
-As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
+As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações em 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
 
 ---
 
-`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass`
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass </summary> 
   
@@ -512,7 +512,7 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
 
 ---
 
-`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass` 
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass </summary> 
   
@@ -536,7 +536,7 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
 
 ---
 
-`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass` 
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass </summary> 
   
@@ -560,19 +560,21 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
 
 ---
 
-**Aplicações - Transformações de dados**
+♨️ **Aplicações - Transformações de dados**
 
 As aplicações responsáveis pela transformação dos dados realizarão a leitura conforme a fonte de extração. No caso do motor que alimenta a silver da Apple Store, ele processará apenas as ingestões relacionadas a essa plataforma. Por exemplo, suponha que haja 15 aplicativos sendo ingeridos e armazenados na bronze, 5 aplicativos da Apple Store, 5 provenientes do MongoDB (base interna) e 5 do Google Play. Nesse cenário, a silver da Apple Store consumirá exclusivamente os dados ingeridos da Apple Store, garantindo que apenas informações relevantes dessa fonte sejam processadas. 
 
-`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-apple-store` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-apple-store` 
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-apple-store </summary> 
 
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-apple-store/tags/1.0.1/sha256-a35d88d3c69b78abcecfff0a53906201fab48bdd8b2e5579057e935f58b6fe41)  
-  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
-  - **Parâmetros:** 
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no **HDFS** em formato **Parquet**.
 
+  - **Parâmetros:** 
     ```shell
       /app/repo_trfmation_apple_store.py $CONFIG_ENV 
     ```
@@ -751,14 +753,25 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
       }
       ```
 
-    Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+  Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+
+  * **Informações do erro:**
+    * `timestamp`: Timestamp da geração das métricas.
+    * `layer`: Camada referencia onde ocorreu o erro.
+    * `project`: Projeto responsável pela aplicação com erro.
+    * `job`: Job da malha que está em execução e que falhou.
+    * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+    * `tower`: Torre da sigla responsável pelo alerta.
+    * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
+    * `error`: log do erro da aplicação.
+            
 
       ```json
         {
             "timestamp": "...",
             "layer": "silver",
             "project": "compass",
-            "job": "apple_store_reviews",
+            "job": "google_play_reviews",
             "priority": "0",
             "tower": "SBBR_COMPASS",
             "client": "[...]",
@@ -770,15 +783,17 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 
 ---
 
-`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-google-play` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-google-play` 
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-google-play </summary> 
-
+  
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/google-play-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-google-play/tags/1.0.1/sha256-3b68861761c0059f6ecb60253086b0f9bef78fa079ea8e5b1a5f44b9da82b252)  
-  - **Descrição:**  Coleta avaliações de clientes nos canais via API SERAPI que busca no **Google Play** e ingeri os dados no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados e os armazenando no **HDFS** em formato **Parquet**.
-  - **Parâmetros:** 
+  - **Descrição:**  Coleta avaliações de clientes nos canais via API SERAPI que se origina do **Google Play** que foi ingerido no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no HDFS em formato Parquet.
 
+  - **Parâmetros:** 
     ```shell
       /app/repo_trfmation_google_play.py.py $CONFIG_ENV 
     ```
@@ -968,6 +983,17 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 
     Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
 
+      * **Informações do erro:**
+        * `timestamp`: Timestamp da geração das métricas.
+        * `layer`: Camada referencia onde ocorreu o erro.
+        * `project`: Projeto responsável pela aplicação com erro.
+        * `job`: Job da malha que está em execução e que falhou.
+        * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+        * `tower`: Torre da sigla responsável pelo alerta.
+        * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
+        * `error`: log do erro da aplicação.
+            
+
       ```json
         {
             "timestamp": "...",
@@ -985,14 +1011,15 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 
 ---
 
-`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-mongodb` `⏱️ schedule: diario`
+`📦 artefato` `iamgacarvalho/dmc-app-silver-reviews-mongodb` 
 <details>
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-mongodb </summary> 
 
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/mongodb-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-mongodb/tags/1.0.1/sha256-6138a44faa031c50a8f8b7b4e75db092a8d03a62a0124b9e4414f999788e0d69)  
-  - **Descrição:**  Coleta avaliações de clientes nos canais via base de dados **MongoDB** ingeridos no Data Lake, realizando a ingestão da Bronze, processamento e aplicação de tratamento de dados   e os armazenando no **HDFS** em formato **Parquet**.
-  - **Parâmetros:** 
+  - **Descrição:**  Coleta avaliações de clientes nos canais via base de dados **MongoDB** ingeridos no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no HDFS em formato Parquet.
 
     ```shell
       /app/repo_trfmation_mongodb.py $CONFIG_ENV 
@@ -1174,6 +1201,18 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 
     Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
 
+      * **Informações do erro:**
+        * `timestamp`: Timestamp da geração das métricas.
+        * `layer`: Camada referencia onde ocorreu o erro.
+        * `project`: Projeto responsável pela aplicação com erro.
+        * `job`: Job da malha que está em execução e que falhou.
+        * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+        * `tower`: Torre da sigla responsável pelo alerta.
+        * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
+        * `error`: log do erro da aplicação.
+            
+
+
       ```json
         {
             "timestamp": "...",
@@ -1190,6 +1229,486 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 </details>
 
 ---
+
+♨️ **Aplicações - Dados Agregados**
+
+
+A aplicação responsável por realizar os dados agregados é a encarregada de alimentar a camada Gold do Data Lake. Seu principal objetivo é consumir os dados tratados da camada Silver, provenientes de diferentes origens de ingestão, como a Base Interna Santander (MongoDB), Google Play e Apple Store.
+
+A agregação tem como propósito oferecer ao time de negócio uma visão consolidada e estratégica que permita responder a perguntas-chave, tais como:
+
+  - Qual a média de experiência do cliente nos últimos 3 a 9 meses?
+  - Tivemos evoluções na experiência do cliente após a disponibilização de uma nova feature para o segmento X?
+  - Qual fonte de origem (Google Play, Apple Store, Base Interna) possui maior volume de reclamações?
+  - O volume de avaliações aumentou após uma ação de marketing ou lançamento de um novo canal?
+  - Como está o desempenho dos canais digitais (ex: Santander Way, Santander Select) em termos de avaliação?
+  - Qual segmento de cliente (PF ou PJ) está mais engajado nas avaliações?
+  - Houve melhora na nota média após ações corretivas ou atualizações específicas nos aplicativos?
+  - Em quais meses tivemos picos negativos de avaliação e o que pode ter causado isso?
+  - Qual canal apresenta maior volume de interações negativas e pode demandar atenção prioritária?
+  - A experiência do cliente está acima ou abaixo da meta institucional (ex: meta 5.0)?
+  - Qual foi o impacto de determinada campanha ou evento no volume e na nota das avaliações?
+  - Estamos evoluindo de forma consistente ou estagnada na percepção do cliente ao longo dos anos?
+  - A distribuição de avaliações por canal está equilibrada ou concentrada em poucos aplicativos?
+  - Existe correlação entre a origem da avaliação (ex: Google Play) e a nota atribuída?
+  - Quais são os períodos com baixa volumetria de avaliações que podem indicar falta de engajamento?
+  - Os clientes que avaliam via App Store tendem a dar notas mais baixas do que os do Google Play?
+  - Qual a tendência de crescimento do volume de avaliações nos últimos trimestres?
+  - Os dados internos (MongoDB) refletem a mesma percepção dos clientes que usam as plataformas externas?
+  - Existe sazonalidade nas avaliações que pode influenciar a análise (ex: final de ano, datas comerciais)?
+
+
+`📦 artefato` `iamgacarvalho/dmc-reviews-aggregate-apps-santander` 
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-reviews-aggregate-apps-santander </summary> 
+
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/reviews-aggregate-apps-santander)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-reviews-aggregate-apps-santander/tags/1.0.1/sha256-58173fc5e2bc379e19dc5496c1da79f1ccaac0535a5ab5ae27430f64050f98ac)  
+  - **Descrição:**  Coleta avaliações de clientes de diversos  canais ingeridos no Data Lake, realizando a ingestão a partir da camada Silver, processando, agregando as informações e armazenando no **HDFS** em formato **Parquet**.
+
+  - **Parâmetros:** 
+    ```shell
+      /app/repo_agg_all_apps_gold.py $CONFIG_ENV 
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+  - **Pipeline:**
+    - **Descrição:** Processar avaliações de clientes de diversos canais (camada Silver → Gold), garantindo: agregação dos dados conforme regras de negócio.
+
+    - **Fonte de Dados:** <br> `/santander/silver/compass/reviews/googlePlay` 
+                          <br> `/santander/silver/compass/reviews/mongodb`
+                          <br> `/santander/silver/compass/reviews/appleStore`
+    - **Destino:** `/santander/gold/compass/reviews/apps_santander_aggregate/` 
+    - **Tipo de processo:** Batch (diário)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados particionados por `odate` em Parquet
+    - **Transformação e Funções:** PySpark <br> 
+
+      1.  `processing_reviews(df)`: 
+      
+      Realiza a leitura e transformação do DataFrame de reviews, executando as seguintes etapas:
+
+        * Seleção de colunas específicas relevantes para o processamento.
+        * Conversão dos nomes das colunas para maiúsculas, garantindo uniformidade.
+        * Adição de novas colunas utilizando expressões regulares (regex) para extrair informações relevantes dos dados.
+        * União de DataFrames provenientes de diferentes origens em um único DataFrame consolidado.
+
+      **Parâmetros:**
+
+      * `df` (DataFrame): O DataFrame de reviews a ser processado.
+
+      **Retorno:**
+
+      * (DataFrame): O DataFrame transformado, pronto para as próximas etapas de processamento.
+
+          ```python
+          processed_df = processing_reviews(df)
+          processed_df.show()
+          ```
+
+
+      2. `get_schema(df, schema)`: Assegura que o DataFrame esteja em conformidade com um esquema predefinido, convertendo os tipos das colunas para os tipos especificados no esquema. **Parâmetros:** `df` (DataFrame): O DataFrame a ser ajustado. `schema` (StructType): O esquema de destino. **Retorno:** (DataFrame): O DataFrame em conformidade com o esquema.
+
+          ```python
+          aligned_df = get_schema(df, schema)
+          aligned_df.printSchema()
+          ```
+
+      3. `save_reviews(reviews_df, directory)`: Salva os dados do DataFrame no formato Parquet no diretório que foi passado via `directory` **Parâmetros:** `reviews_df` (DataFrame): O DataFrame a ser ajustado. `directory` diretório a ser gravado.
+
+          ```python
+          save_reviews(df, path)
+          ```
+
+      4. `write_to_mongo(dados_feedback, table_id, overwrite=False)`:Escreve dados em uma coleção MongoDB, com a opção de sobrescrever a coleção. **Parâmetros:** `dados_feedback` (dict): Dados a ser gravados na collections do MongoDB,  `table_id` collections destino a ser gravada e `overwrite` Se True, sobrescreve a coleção, excluindo todos os documentos antes de inserir novos dados. 
+
+          ```python
+          # Converte o DataFrame do PySpark em uma lista de dicionários (JSON)
+          data = [json.loads(row) for row in df.toJSON().collect()]
+          collection_name = "dt_d_view_gold_agg_compass"
+          write_to_mongo(data, collection_name, overwrite=True)
+          ```
+      
+    - **Validação:** 
+    
+        1.  `validate_ingest(spark: SparkSession, df: DataFrame) -> tuple`: Valida dados de ingestão, comparando com histórico e verificando qualidade. **Retorna** DataFrames de dados válidos e inválidos, e resultados da validação. 
+    
+            - **Duplicatas:** Identifica registros duplicados por "id".
+            - **Nulos:** Verifica nulos em colunas críticas.
+            - **Tipos:** Garante consistência de tipos.
+
+            Código de retorno na validação:
+
+            > `200`: Sucesso (Nenhum problema encontrado) <br>
+            > `400`: Erro nos dados (Valores nulos ou tipos inválidos) <br>
+            > `409`: Conflito de dados (Registros duplicados encontrados)
+
+
+
+    - **Carga:** Escrita em HDFS (Parquet):
+    
+      1. Caminho principal (dados válidos) `/santander/gold/compass/reviews/apps_santander_aggregate/odate={datePath}/` 
+      2. Caminho de falha `/santander/gold/compass/reviews_fail/apps_santander_aggregate/odate={datePath}/`
+
+    - **Métricas:** A função `collect_metrics` coleta um conjunto abrangente de métricas para fornecer uma visão detalhada do processo de ingestão e validação de dados. As métricas são estruturadas em um objeto JSON, facilitando o consumo por sistemas de monitoramento e análise.
+
+
+      * **Informações da Aplicação:**
+          * `application_id`: Identificador único da aplicação Spark.
+          * `owner`: Detalhes do proprietário da aplicação (sigla, projeto, camada do Lake).
+          * `source`: Detalhes sobre a fonte dos dados (`app`, `search`).
+      * **Contagem de Registros:**
+          * `valid_data`: Contagem e porcentagem de registros válidos.
+          * `invalid_data`: Contagem e porcentagem de registros inválidos.
+          * `total_records`: Contagem total de registros processados.
+      * **Desempenho do Processamento:**
+          * `total_processing_time`: Tempo total de processamento em minutos.
+          * `memory_used`: Uso de memória em megabytes.
+          * `stages`: Métricas detalhadas dos estágios de execução do Spark.
+      * **Resultados da Validação:**
+          * `validation_results`: Resultados detalhados de cada validação (duplicatas, nulos, tipos).
+          * `success_count`: Número de validações bem-sucedidas.
+          * `error_count`: Número de validações com erros.
+          * `type_client`: Lista de segmentos únicos dos clientes.
+      * **Timestamps:**
+          * `_ts`: Timestamps de início e término do processamento.
+          * `timestamp`: Timestamp da geração das métricas.
+
+      **Formato do JSON:**
+
+      As métricas são estruturadas em um objeto JSON com a seguinte estrutura geral:
+
+      ```json
+      {
+        "application_id": "...",
+        "owner": {
+          "sigla": "...",
+          "projeto": "...",
+          "layer_lake": "..."
+        },
+        "valid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "invalid_data": {
+          "count": ...,
+          "percentage": ...
+        },
+        "total_records": ...,
+        "total_processing_time": "...",
+        "memory_used": ...,
+        "stages": { ... },
+        "validation_results": { ... },
+        "success_count": ...,
+        "error_count": ...,
+        "type_client": "...",
+        "source": {
+          "app": "...",
+          "search": "..."
+        },
+        "_ts": {
+          "compass_start_ts": "...",
+          "compass_end_ts": "..."
+        },
+        "timestamp": "..."
+      }
+      ```
+
+  Este JSON pode ser utilizado para monitorar o desempenho do pipeline de dados, identificar problemas de qualidade de dados e otimizar o processo de ingestão. Já para as falhas o JSON é estruturado e enviado para o indice no Elastic Search de aplicações com falhas.
+
+  * **Informações do erro:**
+    * `timestamp`: Timestamp da geração das métricas.
+    * `layer`: Camada referencia onde ocorreu o erro.
+    * `project`: Projeto responsável pela aplicação com erro.
+    * `job`: Job da malha que está em execução e que falhou.
+    * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+    * `tower`: Torre da sigla responsável pelo alerta.
+    * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
+    * `error`: log do erro da aplicação.
+            
+
+      ```json
+        {
+            "timestamp": "...",
+            "layer": "gold",
+            "project": "compass",
+            "job": "aggregate_apps_reviews",
+            "priority": "0",
+            "tower": "SBBR_COMPASS",
+            "client": "[PF, PJ, NA]",
+            "error": "..."
+        }
+      ```
+
+</details>
+
+
+---
+
+♨️ **Aplicações - Validações de Qualidade**
+
+
+A aplicação responsável por realizar as qualidade de dados operam como um agente de qualidade do pipeline para reviews de aplicativos, provenientes de diferentes fontes (Google Play, MongoDB e Apple Store). Ele realiza as seguintes tarefas principais:
+
+  - Volumetria
+  - Schema
+  - Pattern
+
+![<data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/validador_data_quality.png?raw=true)
+
+`📦 artefato` `iamgacarvalho/dmc-quality-pipeline-compass` 
+<details>
+  <summary>Informações detalhada do artefato iamgacarvalho/dmc-quality-pipeline-compass </summary> 
+
+  - **Versão:** `1.0.1`
+  - **Fase do Projeto:** `V1`
+  - **Repositório:** [GitHub](https://github.com/gacarvalho/quality-pipeline-compass)  
+  - **Imagem Docker:** [Docker Hub](hhttps://hub.docker.com/repository/docker/iamgacarvalho/dmc-quality-pipeline-compass/tags/1.0.1/sha256-a089704d2d12d1816d85246347e9604d082d605229d95116aaff145f1be990ba)  
+
+    ```shell
+      /app/app-code-compass-quality-pipeline.py $CONFIG_ENV $PARAM1
+    ```
+      - `$CONFIG_ENV` (`Pre`, `Pro`) → Define o ambiente: `Pre` (Pré-Produção), `Pro` (Produção).
+      - `$PARAM1` (`bronze`, `SILVER`) → Define a camada do data laker a ser validado: `bronze` (Camada do Data Lake com dados brutos), `silver` (Camada do Data Lake com dados já tratados).
+  - **Pipeline:**
+    - **Descrição:** Este pipeline de dados realiza a validação e processamento de reviews de aplicativos, coletadas de diversas fontes (Google Play, MongoDB e Apple Store), com o objetivo de garantir a qualidade e consistência dos dados. O processo inicia com a leitura dos dados brutos (camada Bronze) ou pré-processados (camada Silver) armazenados no HDFS em formato Parquet. Em seguida, os dados são validados em relação a esquemas predefinidos e padrões específicos para cada fonte, identificando e segregando registros inválidos. Os dados validados são então transformados e enriquecidos, preparando-os para análise posterior. As métricas de processamento e os registros inválidos são persistidos no HDFS, respectivamente, para monitoramento e rastreabilidade.
+    - **Fonte de Dados:** 
+    Definindo caminhos para cada camada. Variável wildcard:
+
+      - Para `"bronze"`, wildcard recebe o valor `*/`.
+      - Para `"silver"`, wildcard recebe uma string vazia `("")`.
+
+      - **Caminhos em paths:** Substituí `*/` por `{wildcard}` nos caminhos das fontes. Isso permite que o comportamento do caminho mude dinamicamente conforme o valor de type_processing. Exemplo de Caminhos Gerados:
+
+          - Se `type_processing` for `bronze` e date_ref for "2024-12-08", os caminhos serão:
+        
+            `/santander/bronze/compass/reviews/googlePlay/*/odate=2024-12-08`
+            
+          - Se type_processing for `silver` e date_ref for "2024-12-08", os caminhos serão:            
+
+            `/santander/silver/compass/reviews/googlePlay/odate=2024-12-08`
+
+    ```python
+      paths = {
+            "google_play": f"{base_path}/{type_processing}/compass/reviews/googlePlay/{wildcard}odate={date_ref}",
+            "mongodb": f"{base_path}/{type_processing}/compass/reviews/mongodb/{wildcard}odate={date_ref}",
+            "apple_store": f"{base_path}/{type_processing}/compass/reviews/appleStore/{wildcard}odate={date_ref}",
+        }
+    ```
+    - **Destino:** <br>
+    
+      `/santander/quality/compass/reviews/schema/odate={datePath}` <br>
+      `/santander/quality/compass/reviews/pattern/google_play/odate={datePath}` <br>
+      `/santander/quality/compass/reviews/pattern/apple_store/odate={datePath}` <br>
+      `/santander/quality/compass/reviews/pattern/internal_databases/odate={datePath}` <br>
+
+    - **Tipo de processo:** Batch (diário)
+
+  - **Fluxo de Dados:**
+    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Validação leitura da origem e carga:** PySpark
+
+      1.  `read_parquet_data(spark, path)`: Lê dados de um arquivo Parquet e trata erros de leitura.
+          ```python
+          read_parquet_data(spark: SparkSession, path: str) -> DataFrame
+          ```
+          **Parâmetros:**
+          * `spark` (SparkSession): A sessão Spark utilizada para ler o arquivo.
+          * `path` (str): O caminho do arquivo Parquet a ser lido.
+          **Retorno:**
+          * (DataFrame): Um DataFrame contendo os dados lidos do arquivo Parquet.
+          **Exceções:**
+          * Levanta uma exceção `Exception` se ocorrer um erro durante a leitura do arquivo Parquet.
+          ```python
+          Exemplo: df = read_parquet_data(spark, "/caminho/para/arquivo.parquet")
+          ```
+
+      2.  `validate_dataframes(dataframes, layer)`: Valida se todos os DataFrames em um dicionário possuem dados e realiza a união deles.
+          ```python
+          validate_dataframes(dataframes: dict, layer: str) -> tuple[DataFrame, DataFrame, DataFrame]
+          ```
+          **Parâmetros:**
+          * `dataframes` (dict): Um dicionário onde as chaves são os nomes das fontes de dados e os valores são os DataFrames correspondentes.
+          * `layer` (str): A camada de processamento ("bronze" ou "silver").
+          **Retorno:**
+          * (tuple[DataFrame, DataFrame, DataFrame]): Uma tupla contendo os DataFrames unidos para google_play, mongodb e apple_store.
+          **Exceções:**
+          * Levanta uma exceção `ValueError` se alguma das fontes de dados estiver vazia.
+          ```python
+          Exemplo: google_df, mongo_df, apple_df = validate_dataframes(dataframes, "bronze")
+          ```
+
+      3.  `validate_source_load(spark, date_ref, type_processing)`: Valida o processo de carga de dados de diferentes fontes (Google Play, MongoDB, Apple Store).
+          ```python
+          validate_source_load(spark: SparkSession, date_ref: str, type_processing: str) -> tuple[DataFrame, DataFrame, DataFrame]
+          ```
+          **Parâmetros:**
+          * `spark` (SparkSession): A sessão Spark utilizada para processar os dados.
+          * `date_ref` (str): A data de referência para os dados.
+          * `type_processing` (str): O tipo de processamento ("bronze" ou "silver").
+          **Retorno:**
+          * (tuple[DataFrame, DataFrame, DataFrame]): Uma tupla contendo os DataFrames unidos para google_play, mongodb e apple_store.
+          **Exceções:**
+          * Levanta uma exceção `ValueError` se o `type_processing` for inválido ou se ocorrer um erro de validação.
+          * Levanta uma exceção `Exception` se ocorrer um erro inesperado durante o processamento dos dados.
+          ```python
+          Exemplo: google_df, mongo_df, apple_df = validate_source_load(spark, "2024-12-08", "bronze")
+          ```
+
+      -   **Validação de schemas:** PySpark
+
+      4.  `simplify_schema(schema)`: Simplifica um esquema de DataFrame, tratando tipos compostos.
+          ```python
+          simplify_schema(schema: StructType or ArrayType or DataType) -> StructType or ArrayType or DataType
+          ```
+          **Parâmetros:**
+          * `schema` (StructType or ArrayType or DataType): O esquema a ser simplificado.
+          **Retorno:**
+          * (StructType or ArrayType or DataType): O esquema simplificado.
+          ```python
+          Exemplo: simplified_schema = simplify_schema(df.schema)
+          ```
+
+      5.  `compare_schemas(actual_schema, expected_schema)`: Compara dois esquemas de DataFrame, levando em conta tipos compostos.
+          ```python
+          compare_schemas(actual_schema: StructType, expected_schema: StructType) -> bool
+          ```
+          **Parâmetros:**
+          * `actual_schema` (StructType): O esquema real do DataFrame.
+          * `expected_schema` (StructType): O esquema esperado do DataFrame.
+          **Retorno:**
+          * (bool): `True` se os esquemas forem iguais, `False` caso contrário.
+          ```python
+          Exemplo: schemas_match = compare_schemas(df.schema, expected_schema)
+          ```
+
+      6.  `validate_schema(spark, df, source_name)`: Valida o esquema de um DataFrame comparando com o esquema esperado para uma fonte específica.
+          ```python
+          validate_schema(spark: SparkSession, df: DataFrame, source_name: str) -> DataFrame
+          ```
+          **Parâmetros:**
+          * `spark` (SparkSession): A sessão Spark utilizada para criar o DataFrame de resultados.
+          * `df` (DataFrame): O DataFrame a ser validado.
+          * `source_name` (str): O nome da fonte de dados.
+          **Retorno:**
+          * (DataFrame): Um DataFrame contendo os resultados da validação do esquema.
+          **Exceções:**
+          * Levanta uma exceção `ValueError` se a fonte fornecida não estiver no dicionário de esquemas esperados ou se o esquema for inválido.
+          ```python
+          Exemplo: schema_validation_result = validate_schema(spark, df, "google_play_bronze")
+          ```
+
+      -   **Validação Pattern:** PySpark
+
+      7.  `validated_pattern_google_play(df)`: Valida o DataFrame com base na estrutura e padrões fornecidos para o Google Play.
+          ```python
+          validated_pattern_google_play(df: DataFrame) -> DataFrame
+          ```
+          **Parâmetros:**
+          * `df` (DataFrame): O DataFrame a ser validado.
+          **Retorno:**
+          * (DataFrame): O DataFrame com as colunas "validation" e "failed_Columns".
+          ```python
+          Exemplo: validated_df = validated_pattern_google_play(df)
+          ```
+
+      8.  `validated_pattern_apple_store(df)`: Valida o DataFrame com base na estrutura e padrões fornecidos para a Apple Store.
+          ```python
+          validated_pattern_apple_store(df: DataFrame) -> DataFrame
+          ```
+          **Parâmetros:**
+          * `df` (DataFrame): O DataFrame a ser validado.
+          **Retorno:**
+          * (DataFrame): O DataFrame com as colunas "validation" e "failed_columns".
+          ```python
+          Exemplo: validated_df = validated_pattern_apple_store(df)
+          ```
+
+      9.  `validated_pattern_mongodb(df)`: Valida o DataFrame com base na estrutura e padrões fornecidos para o MongoDB.
+          ```python
+          validated_pattern_mongodb(df: DataFrame) -> DataFrame
+          ```
+          **Parâmetros:**
+          * `df` (DataFrame): O DataFrame a ser validado.
+          **Retorno:**
+          * (DataFrame): O DataFrame com as colunas "validation" e "failed_columns".
+          ```python
+          Exemplo: validated_df = validated_pattern_mongodb(df)
+          ```
+
+      -   **Persistência de dados:** PySpark e MongoDB
+
+      10. `save_reviews(reviews_df, directory)`: Salva os dados do DataFrame no formato Parquet no diretório especificado.
+          ```python
+          save_reviews(reviews_df: DataFrame, directory: str) -> None
+          ```
+          **Parâmetros:**
+          * `reviews_df` (DataFrame): DataFrame PySpark contendo as avaliações.
+          * `directory` (str): Caminho do diretório onde os dados serão salvos.
+          **Retorno:**
+          * `None`
+          ```python
+          Exemplo: save_reviews(df, "/caminho/para/salvar")
+          ```
+
+      11. `save_dataframe(df, path, label)`: Salva o DataFrame em formato parquet e loga a operação.
+          ```python
+          save_dataframe(df: DataFrame, path: str, label: str) -> None
+          ```
+          **Parâmetros:**
+          * `df` (DataFrame): DataFrame a ser salvo.
+          * `path` (str): Caminho do diretório onde os dados serão salvos.
+          * `label` (str): Label para o log.
+          **Retorno:**
+          * `None`
+          ```python
+          Exemplo: save_dataframe(df, "/caminho/para/salvar", "reviews")
+          ```
+
+      12. `write_to_mongo(dados_feedback, table_id, overwrite=False)`: Escreve dados em uma coleção MongoDB, com a opção de sobrescrever a coleção.
+          ```python
+          write_to_mongo(dados_feedback: dict or list, table_id: str, overwrite: bool = False) -> None
+          ```
+          **Parâmetros:**
+          * `dados_feedback` (dict or list): Dados a serem inseridos na coleção (um único dicionário ou uma lista de dicionários).
+          * `table_id` (str): Nome da coleção onde os dados serão inseridos.
+          * `overwrite` (bool): Se True, sobrescreve a coleção, excluindo todos os documentos antes de inserir novos dados.
+          **Retorno:**
+          * `None`
+          ```python
+          Exemplo: write_to_mongo(metrics, "dt_datametrics_compass")
+          ```
+
+      13. `save_metrics(metrics_json)`: Salva as métricas no MongoDB.
+          ```python
+          save_metrics(metrics_json: str) -> None
+          ```
+          **Parâmetros:**
+          * `metrics_json` (str): String JSON contendo as métricas.
+          **Retorno:**
+          * `None`
+          ```python
+          Exemplo: save_metrics('{"metric": "value"}')
+          ```
+
+      14. `save_metrics_job_fail(metrics_json)`: Salva as métricas de falha no MongoDB.
+          ```python
+          save_metrics_job_fail(metrics_json: str) -> None
+          ```
+          **Parâmetros:**
+          * `metrics_json` (str): String JSON contendo as métricas de falha.
+          **Retorno:**
+          * `None`
+          ```python
+          Exemplo: save_metrics_job_fail('{"error": "message"}')
+          ```
+
+</details>
+
+---
+
 
 ## 4. Fluxo Funcional e Jornada do Cliente
 
