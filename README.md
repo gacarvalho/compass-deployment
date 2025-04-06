@@ -1945,31 +1945,8 @@ Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio
 
 A solução foi projetada para atender ao time de negócios do Santander, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
 
-📌 Fluxo Funcional:
 
-```mermaid
-graph LR;
-    subgraph "Cliente e Loja"
-        A[Cliente Santander] --> B[Apple Store];
-        A --> C[Google Play];
-    end
-
-    subgraph "Uso do Aplicativo"
-        B --> D[App Santander Way];
-        C --> D;
-        D --> E[Interação do Cliente];
-    end
-
-    subgraph "Coleta e Análise"
-        E --> F[Feedback Coletado];
-        F --> G[Armazenamento e Processamento];
-        G --> H[Dashboards e Métricas];
-        H --> I[Time de Negócios];
-        I --> J[Melhoria nos Canais];
-    end
-
-
-```
+![<fluxo-funcional>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/fluxo%20de%20negocios.jpg?raw=true)
 
 📌 Conceito base de regra de negócio:
 
