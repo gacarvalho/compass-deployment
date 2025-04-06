@@ -1948,20 +1948,24 @@ A solução foi projetada para atender ao time de negócios do Santander, propor
 
 ![<fluxo-funcional>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/fluxo%20de%20negocios.jpg?raw=true)
 
-📌 Conceito base de regra de negócio:
+Como princípio fundamental da estrutura de Experiência do Usuário, foi levantada a questão sobre qual é o fluxo atualmente utilizado para coletar, analisar e aplicar melhorias com base nas dores dos clientes. Abaixo, detalhamos esse processo:
 
-  <details>
-  <summary>Regra de Negócio: Ingestão (fonte destino: bronze) </summary>
-  
-  Este é o conteúdo que estará escondido até que o usuário clique para expandir.
 
-  Você pode adicionar mais informações aqui, como texto, listas ou imagens.
+> Atualmente, monitoramos alguns indicadores por meio de um dashboard para identificar as principais dores dos clientes. A partir desses dados, realizamos um diagnóstico que nos permite entender se o caso se trata de um incidente (INC) ou de um ponto de fricção na jornada do cliente. Com base nessa análise, encaminhamos as informações para o time de produto, classificando-as como incidentes ou oportunidades de melhoria.
 
-  - Item 1
-  - Item 2
-  - Item 3
+No entanto, ao aprofundarmos a análise do fluxo atual, identificamos que essas avaliações são realizadas `exclusivamente com dados internos`, desconsiderando feedbacks externos, como os comentários e avaliações deixados por clientes em plataformas como a Apple Store e o Google Play.
 
-</details>
+Com os dados de extração pelo Projeto Compass, será possível unificar e enriquecer as principais dores dos clientes com dados externos — como avaliações, comentários e feedbacks coletados em plataformas públicas, como Apple Store, Google Play, entre outras.
+
+Essa integração permitirá uma visão mais holística da experiência do usuário, combinando dados internos (transacionais, comportamentais e operacionais) com insumos externos, possibilitando:
+
+  - Identificação mais precisa de pontos de fricção ao longo da jornada do cliente;
+  - Priorização de melhorias com base na percepção real dos usuários;
+  - Antecipação de problemas recorrentes, mesmo antes de serem reportados via canais formais;
+  - Alinhamento estratégico com o time de Produto, garantindo que evoluções sejam orientadas por dados e focadas em gerar valor;
+  - Monitoramento contínuo da reputação da marca nas plataformas externas, reforçando a governança da experiência do cliente.
+
+Com isso, o Projeto Compass se posiciona como uma iniciativa estratégica, permitindo que a companhia avance para uma atuação proativa, centrada no cliente e orientada por dados.
 
 ## 5. Compass como produto analytics Santander
 
