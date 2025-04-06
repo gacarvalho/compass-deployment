@@ -1982,6 +1982,8 @@ Como premissa central do Projeto Compass, o objetivo é consolidar uma base estr
 
 A seguir, estão descritas em formato de tabela as principais regras de negócio e critérios de aceite que orientam a execução do Projeto Compass.
 
+> [!NOTE]
+> A maior parte das regras funcionais implementadas neste pipeline dizem respeito à estrutura final dos dados e aos filtros aplicados para garantir integridade mínima. Como estamos lidando com dados semi-estruturados (comentários, avaliações, etc.), não há muitas outras regras funcionais a serem aplicadas. O tratamento é limitado pela ausência de um esquema rígido, o que impede a criação de regras mais específicas como joins complexos, validações por domínio ou integridade referencial. 
 ---
 <details>
   <summary> 🏷️ Regras de Negócios - Apple Store </summary>
@@ -2059,5 +2061,11 @@ A seguir, estão descritas em formato de tabela as principais regras de negócio
 ## 6. Instruções para Configuração e Execução do Projeto Compass
 
 ## 7. Melhorias do projeto e Considerações Finais
+
+
+
+
+
+---
 
 
