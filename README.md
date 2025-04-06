@@ -4,7 +4,7 @@
 <p align="left">
   <img src="https://img.shields.io/badge/projeto-Compass-blue?style=flat-square" alt="Projeto">
   <img src="https://img.shields.io/badge/versão-1.0.0-blue?style=flat-square" alt="Versão">
-  <img src="https://img.shields.io/badge/status-Finalizado-green?style=flat-square" alt="Status">
+  <img src="https://img.shields.io/badge/status-production deployment-green?style=flat-square" alt="Status">
   <img src="https://img.shields.io/badge/autor-Gabriel_Carvalho-lightgrey?style=flat-square" alt="Autor">
 </p>
 
@@ -34,9 +34,11 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
     + [3.2.2.3  Malha do Projeto Compass](#3223-malha-do-projeto-compass)
 - [4. Fluxo Funcional e Jornada do Cliente](#4-fluxo-funcional-e-jornada-do-cliente)
 - [5. Compass como produto analytics Santander](#5-compass-como-produto-analytics-santander)
+  * [5.1 Regras de Negócio](#51-regras-de-negócio)
+  * [5.2 Dicionário de Dados](#52-dicionário-de-dados)
+  * [5.3 Produtos Compass](#53-produtos-compass)
 - [6. Instruções para Configuração e Execução do Projeto Compass](#6-instruções-para-configuração-e-execução-do-projeto-compass)
 - [7. Melhorias do projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
-
 
 
 
@@ -1948,14 +1950,14 @@ A solução foi projetada para atender ao time de negócios do Santander, propor
 
 ![<fluxo-funcional>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/fluxo%20de%20negocios.jpg?raw=true)
 
-Como princípio fundamental da estrutura de Experiência do Usuário, foi levantada a questão sobre qual é o fluxo atualmente utilizado para coletar, analisar e aplicar melhorias com base nas dores dos clientes. Abaixo, detalhamos esse processo:
 
+Como princípio fundamental da estrutura de Experiência do Usuário, foi levantada a questão sobre qual é o fluxo atualmente utilizado para coletar, analisar e aplicar melhorias com base nas dores dos clientes. Abaixo, detalhamos esse processo:
 
 > Atualmente, monitoramos alguns indicadores por meio de um dashboard para identificar as principais dores dos clientes. A partir desses dados, realizamos um diagnóstico que nos permite entender se o caso se trata de um incidente (INC) ou de um ponto de fricção na jornada do cliente. Com base nessa análise, encaminhamos as informações para o time de produto, classificando-as como incidentes ou oportunidades de melhoria.
 
 No entanto, ao aprofundarmos a análise do fluxo atual, identificamos que essas avaliações são realizadas `exclusivamente com dados internos`, desconsiderando feedbacks externos, como os comentários e avaliações deixados por clientes em plataformas como a Apple Store e o Google Play.
 
-Com os dados de extração pelo Projeto Compass, será possível unificar e enriquecer as principais dores dos clientes com dados externos — como avaliações, comentários e feedbacks coletados em plataformas públicas, como Apple Store, Google Play, entre outras.
+Com os dados de extração pelo Projeto Compass, será possível unificar e enriquecer as principais dores dos clientes com dados externos — como avaliações, comentários e feedbacks coletados em plataformas públicas, como Apple Store, Google Play, Reclame Aqui, entre outras.
 
 Essa integração permitirá uma visão mais holística da experiência do usuário, combinando dados internos (transacionais, comportamentais e operacionais) com insumos externos, possibilitando:
 
@@ -1969,8 +1971,35 @@ Com isso, o Projeto Compass se posiciona como uma iniciativa estratégica, permi
 
 ## 5. Compass como produto analytics Santander
 
+---
 
 O projeto Compass como Produto tem como objetivo fornecer uma solução robusta e escalável para o Santander, utilizando Engenharia de Dados para desenvolver um fluxo que permita identificar as principais necessidades e desafios dos seus clientes. Esse fluxo busca não apenas atender as demandas internas do banco, mas também possui o potencial de expandir sua abrangência, permitindo escalar a busca para entender as "dores" dos concorrentes do Santander no mercado.
+
+
+### 5.1 Regras de Negócio
+
+Como premissa central do Projeto Compass, o objetivo é consolidar uma base estruturada com as principais dores dos clientes em relação aos produtos do Santander. Essa base permitirá a geração de insights valiosos e a análise de oportunidades de melhoria nos diferentes canais de atendimento e relacionamento, contribuindo diretamente para o aumento da principalidade do cliente com a instituição.
+
+A seguir, estão descritas em formato de tabela as principais regras de negócio e critérios de aceite que orientam a execução do Projeto Compass.
+
+| ID       | Fonte de Origem | Versão do Projeto | Regra de Negócio                                                        | Descrição                                                                                                                                                                | Última Atualização |
+|----------|-----------------|-------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| **RN001** | Apple Store     | v1                | Remoção de acentos e padronização de texto                              | Os textos dos campos `author_name`, `title` e `content` devem ser convertidos para letras maiúsculas e ter acentos removidos.                                             | 2025-04-06          |
+| **RN002** | Apple Store     | v1                | Geração de métricas de erro                                             | Em caso de falha no processamento, uma métrica detalhada contendo o erro e informações do cliente será salva no Elasticsearch.                                           | 2025-04-06          |
+| **RN003** | Apple Store     | v1                | Padronização de schema antes da escrita                                 | Antes da persistência, os dados devem ser reestruturados conforme o schema definido para a camada silver (`apple_store_schema_silver`).                                 | 2025-04-06          |
+| **RN004** | Apple Store     | v1                | Extração de metadados a partir do nome do arquivo                       | Os campos `app` e `segmento` devem ser extraídos a partir do caminho do arquivo no HDFS com expressões regulares.                                                         | 2025-04-06          |
+| **RN005** | Apple Store     | v1                | Validação da existência de partições no HDFS                            | A execução só continuará se houver partições no formato `odate=*` no caminho histórico `/santander/silver/compass/reviews/appleStore/`.                                   | 2025-04-06          |
+| **RN006** | Apple Store     | v1                | Salvamento de métricas da aplicação                                     | Métricas de execução bem-sucedida devem ser enviadas ao índice `compass_dt_datametrics` no Elasticsearch, usando autenticação básica.                                     | 2025-04-06          |
+| **RN007** | Apple Store     | v1                | Verificação de duplicidade de registros                                 | Verifica se há duplicidade de registros com base na coluna `id`. Caso existam, retorna erro de conflito e bloqueia a execução.                                            | 2025-04-06          |
+| **RN008** | Apple Store     | v1                | Validação de campos nulos em colunas obrigatórias                       | Valida se colunas essenciais como `id`, `content`, `im_rating`, `im_version` estão preenchidas. Caso contrário, gera erro e encerra o processo.                          | 2025-04-06          |
+| **RN009** | Apple Store     | v1                | Consistência de tipo para campos numéricos                              | Garante que os valores na coluna `im_rating` sejam numéricos válidos (por exemplo, inteiros ou floats). Registros inválidos são descartados ou tratados conforme regra. | 2025-04-06          |
+
+
+### 5.2 Dicionário de Dados
+
+### 5.3 Produtos Compass
+
+
 
 🧭 Dashboard Funcional - Gerência
 
