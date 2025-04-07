@@ -1982,8 +1982,12 @@ Como premissa central do Projeto Compass, o objetivo é consolidar uma base estr
 
 A seguir, estão descritas em formato de tabela as principais regras de negócio e critérios de aceite que orientam a execução do Projeto Compass.
 
-> [!NOTE]
-> A maior parte das regras funcionais implementadas neste pipeline dizem respeito à estrutura final dos dados e aos filtros aplicados para garantir integridade mínima. Como estamos lidando com dados semi-estruturados (comentários, avaliações, etc.), não há muitas outras regras funcionais a serem aplicadas. O tratamento é limitado pela ausência de um esquema rígido, o que impede a criação de regras mais específicas como joins complexos, validações por domínio ou integridade referencial. 
+[!NOTE]
+> A maior parte das regras funcionais implementadas neste pipeline dizem respeito à estrutura final dos dados e aos filtros aplicados para garantir integridade mínima. 
+> Como estamos lidando com dados semi-estruturados (comentários, avaliações, etc.), não há muitas outras regras funcionais a serem aplicadas. 
+> O tratamento é limitado pela ausência de um esquema rígido, o que impede a criação de regras mais específicas como joins complexos, validações por domínio ou integridade referencial.
+
+
 ---
 <details>
   <summary> 🏷️ Regras de Negócios - Apple Store </summary>
@@ -2041,6 +2045,56 @@ A seguir, estão descritas em formato de tabela as principais regras de negócio
 ---
 
 ### 5.2 Dicionário de Dados
+
+Este dicionário de dados tem como objetivo documentar e padronizar a estrutura dos dados utilizados ao longo das esteiras de ingestão, transformação e disponibilização. Ele serve como uma referência clara e objetiva para desenvolvedores, analistas e squads que atuam com os dados descritos.
+
+A estrutura apresentada foi definida para garantir consistência, rastreabilidade e governança dos dados, além de facilitar o entendimento técnico-funcional sobre a origem e o destino de cada informação.
+
+Cada tabela está organizada com os seguintes campos:
+
+| Campo              | Descrição |
+|--------------------|-----------|
+| **DIRETORIO**       | Caminho onde os dados são armazenados no Data Lake. |
+| **PARTICIONAMENTO** | Padrão de particionamento utilizado, visando performance de leitura e organização dos dados. |
+| **CAMPO**           | Nome da coluna. |
+| **TYPE**            | Tipo de dado (string, int, double, etc.). |
+| **PATTERN**         | Expressão ou formato esperado (ex: regex, padrão ISO, etc.). |
+| **OBRIGATORIO**     | Indica se o campo é obrigatório ou não. |
+| **EXEMPLO**         | Um valor de exemplo para facilitar a interpretação. |
+| **DESCRIÇÃO**       | Explicação clara e funcional da regra de negócio atrelada ao campo. |
+
+
+> [!NOTE]
+> A maior parte das regras funcionais está associada à estrutura final do dado e aos filtros aplicados durante a transformação. Por se tratar de dados **semiestruturados ou não estruturados**, não é possível aplicar todas as validações convencionais com rigidez. Assim, o foco deste dicionário está em garantir a visão **mais próxima possível do modelo de saída**, com ênfase na **estrutura de schema**, padrões mínimos esperados e critérios funcionais já implementados.
+
+Este documento será atualizado continuamente conforme novas regras forem implementadas ou alteradas nos pipelines. Ele deve ser utilizado como **referência oficial** para análises e desenvolvimento do projeto Compass.
+
+<details>
+<summary><strong>🎲 Mostrar dicionário de dados:</strong> Apple Store {application ingestion}  </summary>
+
+<br>
+
+| DIRETORIO                                                                 | PARTICIONAMENTO | ORIGEM      | CAMPO                    | TYPE      | PATTERN                                           | OBRIGATORIO | EXEMPLO                                       | DESCRIÇÃO                                              | LOCALIZAÇÃO DAG/JOB                           |
+|---------------------------------------------------------------------------|------------------|-------------|---------------------------|-----------|---------------------------------------------------|--------------|-----------------------------------------------|---------------------------------------------------------|------------------------------------------------|
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | author_name              | string    | ^.+$                                              | S            | Flavia Lemes                                  | Campo do nome da avaliação.                             | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | author_uri               | string    | .*                                                | S            | https://itunes.apple.com/br/reviews/id12083758426 | Campo da URI do autor da avaliação.                    | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content                  | string    | .*                                                | S            | app não cair notificação                       | Campo com o conteúdo da avaliação.                      | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content_attributes_label | string    | .*                                                | S            | Aplicativo                                     | Categoria atribuída ao conteúdo da avaliação.          | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content_attributes_term  | string    | .*                                                | S            | Application                                    | Termo relacionado ao conteúdo da avaliação.            | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | id                       | string    | ^\d+$                                             | S            | 12118476144                                   | Identificador único da avaliação.                      | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_rating                | integer   | ^[1-5]$                                           | S            | 1                                              | Nota da avaliação (1 a 5).                              | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_version               | string    | .*                                                | S            | 24.10.2                                       | Versão do aplicativo avaliado.                         | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_votecount             | integer   | ^\d+$                                             | S            | 0                                              | Quantidade de votos recebidos.                         | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_votesum               | integer   | ^\d+$                                             | S            | 0                                              | Soma total dos votos recebidos.                        | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | link_attributes_href     | string    | .*                                                | S            | https://itunes.apple.com/br/reviews/id12083758426 | URL do link da avaliação.                              | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | link_attributes_related  | string    | .*                                                | S            | related                                       | Tipo de relacionamento do link.                        | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | title                    | string    | .*                                                | S            | App Santander                                 | Título da avaliação.                                   | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | updated                  | timestamp | ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*$           | S            | 2024-12-30T02:59:00+00:00                    | Data e hora da última atualização da avaliação.        | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | odate                    | string    | ^\d{8}$                                           | S            | 20250307                                     | Data de extração no formato yyyyMMdd.                  | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+
+
+</details>
+
 
 ### 5.3 Produtos Compass
 
