@@ -1982,7 +1982,7 @@ Como premissa central do Projeto Compass, o objetivo é consolidar uma base estr
 
 A seguir, estão descritas em formato de tabela as principais regras de negócio e critérios de aceite que orientam a execução do Projeto Compass.
 
-> [!NOTE]
+[!NOTE]
 > A maior parte das regras funcionais implementadas neste pipeline dizem respeito à estrutura final dos dados e aos filtros aplicados para garantir integridade mínima. 
 > Como estamos lidando com dados semi-estruturados (comentários, avaliações, etc.), não há muitas outras regras funcionais a serem aplicadas. 
 > O tratamento é limitado pela ausência de um esquema rígido, o que impede a criação de regras mais específicas como joins complexos, validações por domínio ou integridade referencial.
@@ -2042,6 +2042,7 @@ A seguir, estão descritas em formato de tabela as principais regras de negócio
 
 </details>
 
+
 ---
 
 ### 5.2 Dicionário de Dados
@@ -2064,10 +2065,12 @@ Cada tabela está organizada com os seguintes campos:
 | **DESCRIÇÃO**       | Explicação clara e funcional da regra de negócio atrelada ao campo. |
 
 
-> [!NOTE]
+[!NOTE]
 > A maior parte das regras funcionais está associada à estrutura final do dado e aos filtros aplicados durante a transformação. Por se tratar de dados **semiestruturados ou não estruturados**, não é possível aplicar todas as validações convencionais com rigidez. Assim, o foco deste dicionário está em garantir a visão **mais próxima possível do modelo de saída**, com ênfase na **estrutura de schema**, padrões mínimos esperados e critérios funcionais já implementados.
 
 Este documento será atualizado continuamente conforme novas regras forem implementadas ou alteradas nos pipelines. Ele deve ser utilizado como **referência oficial** para análises e desenvolvimento do projeto Compass.
+
+---
 
 <details>
 <summary><strong>🎲 Mostrar dicionário de dados:</strong> Apple Store {application ingestion}  </summary>
@@ -2094,6 +2097,56 @@ Este documento será atualizado continuamente conforme novas regras forem implem
 
 
 </details>
+
+
+<details>
+<summary><strong>🎲 Mostrar dicionário de dados:</strong> Google Play {application ingestion}  </summary>
+
+<br>
+
+| DIRETORIO                                                               | PARTICIONAMENTO | ORIGEM      | CAMPO       | TYPE    | PATTERN                                           | OBRIGATORIO | EXEMPLO                                       | DESCRIÇÃO                                              | LOCALIZAÇÃO DAG/JOB                           |
+|------------------------------------------------------------------------|------------------|-------------|-------------|---------|---------------------------------------------------|--------------|-----------------------------------------------|---------------------------------------------------------|------------------------------------------------|
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | avatar      | string  | ^https:\/\/.*$                                    | N            | https://play-lh.googleusercontent.com/...     | URL da imagem de perfil do autor da avaliação.         | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | date        | string  | ^[A-Za-z]+ \d{2}, \d{4}$                          | S            | March 10, 2019                                 | Data textual da avaliação (formato Play Store).         | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | id          | string  | ^[a-f0-9\-]{36}$                                  | S            | ca9a8eca-ee30-43c2-aaaa-bb10a7b0c774           | Identificador único da avaliação.                       | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | iso_date    | string  | ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$            | S            | 2019-03-10T10:00:02Z                           | Data da avaliação em formato ISO 8601.                  | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | likes       | long    | ^\d+$                                             | N            | 85                                            | Quantidade de curtidas na avaliação.                    | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | rating      | double  | ^[1-5](\.0)?$                                     | S            | 1.0                                           | Nota atribuída à avaliação (de 1.0 a 5.0).               | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | response    | map     | {date -> .*?, text -> .*?}                        | N            | {date -> March 12, 2019, text -> Obrigado!}    | Resposta do app à avaliação, contendo data e texto.     | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | snippet     | string  | ^.+$                                              | S            | Aplicativo super instável                      | Texto da avaliação feita pelo usuário.                  | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | title       | string  | ^.*$                                              | S            | Um usuário do Google                           | Nome do autor da avaliação (ou pseudônimo do sistema).  | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/googlePlay/banco-santander-br_pf/    | odate=yyyyMMdd   | Google Play | odate       | integer | ^\d{8}$                                           | S            | 20250307                                      | Data da coleta da avaliação no formato yyyyMMdd.         | group_jobs_google → GOOGLE_INGESTION_BANCO-SANTANDER-BR |
+
+
+</details>
+
+
+<details>
+<summary><strong>🎲 Mostrar dicionário de dados:</strong> MongoDB, internal database {application ingestion}  </summary>
+
+<br>
+
+| DIRETORIO                                                                 | PARTICIONAMENTO | ORIGEM   | CAMPO         | TYPE    | PATTERN                                           | OBRIGATORIO | EXEMPLO            | DESCRIÇÃO                                         | LOCALIZAÇÃO DAG/JOB                            |
+|---------------------------------------------------------------------------|------------------|----------|----------------|---------|---------------------------------------------------|--------------|---------------------|----------------------------------------------------|-------------------------------------------------|
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | id             | string  | ^[a-zA-Z0-9]+$                                    | S            | 67c693b10f4ffb0e6...| Identificador único da avaliação.                | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | comment        | string  | ^.+$                                              | S            | FALTAM INFORMAÇÕES | Texto da avaliação.                              | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | votes_count    | int     | ^\d+$                                             | N            | 6                   | Quantidade de votos na avaliação.                | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | os             | string  | ^.+$                                              | N            | IOS                 | Sistema operacional do usuário.                  | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | os_version     | string  | ^[\d\.]+$                                         | N            | 18.04               | Versão do sistema operacional.                   | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | country        | string  | ^[A-Z]{2}$                                        | N            | BR                  | País do usuário.                                 | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | age            | int     | ^\d+$                                             | N            | 68                  | Idade do usuário.                                | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | customer_id    | string  | ^\d+$                                             | S            | 6461                | ID do cliente no sistema.                        | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | cpf            | string  | ^\d{3}\.\d{3}\.\d{3}-\d{2}$                       | S            | 129.048.657-30      | CPF do cliente.                                  | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | app_version    | string  | ^\d+\.\d+\.\d+$                                   | N            | 1.0.0               | Versão do aplicativo.                            | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | rating         | int     | ^[1-5]$                                           | S            | 4                   | Nota atribuída pelo usuário.                     | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | timestamp      | string  | ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*$           | S            | 2025-03-04T05:45:...| Data e hora da avaliação.                        | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | app            | string  | ^.+$                                              | S            | banco-santander-br  | Nome do aplicativo.                              | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/mongodb/banco-santander-br_pf/         | odate=yyyyMMdd   | MongoDB  | odate          | int     | ^\d{8}$                                           | S            | 20250308            | Data da partição no formato yyyyMMdd.            | group_jobs_mongo → MONGO_INGESTION_BANCO-SANTANDER-BR |
+
+
+</details>
+
+---
 
 
 ### 5.3 Produtos Compass
