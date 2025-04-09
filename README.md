@@ -1982,7 +1982,7 @@ Como premissa central do Projeto Compass, o objetivo é consolidar uma base estr
 
 A seguir, estão descritas em formato de tabela as principais regras de negócio e critérios de aceite que orientam a execução do Projeto Compass.
 
-[!NOTE]
+> [!NOTE]
 > A maior parte das regras funcionais implementadas neste pipeline dizem respeito à estrutura final dos dados e aos filtros aplicados para garantir integridade mínima. 
 > Como estamos lidando com dados semi-estruturados (comentários, avaliações, etc.), não há muitas outras regras funcionais a serem aplicadas. 
 > O tratamento é limitado pela ausência de um esquema rígido, o que impede a criação de regras mais específicas como joins complexos, validações por domínio ou integridade referencial.
@@ -2065,7 +2065,7 @@ Cada tabela está organizada com os seguintes campos:
 | **DESCRIÇÃO**       | Explicação clara e funcional da regra de negócio atrelada ao campo. |
 
 
-[!NOTE]
+> [!NOTE]
 > A maior parte das regras funcionais está associada à estrutura final do dado e aos filtros aplicados durante a transformação. Por se tratar de dados **semiestruturados ou não estruturados**, não é possível aplicar todas as validações convencionais com rigidez. Assim, o foco deste dicionário está em garantir a visão **mais próxima possível do modelo de saída**, com ênfase na **estrutura de schema**, padrões mínimos esperados e critérios funcionais já implementados.
 
 Este documento será atualizado continuamente conforme novas regras forem implementadas ou alteradas nos pipelines. Ele deve ser utilizado como **referência oficial** para análises e desenvolvimento do projeto Compass.
