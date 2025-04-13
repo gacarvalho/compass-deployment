@@ -2340,6 +2340,10 @@ Exemplo de estrutura de schema gerada para registros rejeitados, com detalhament
 
 Este dashboard apresenta indicadores funcionais relacionados à experiência do cliente com os canais digitais de uma Instituição Financeira (apps móveis - no case utilizamos a Instituição Financeira Santander). Ele consolida métricas extraídas de diversas fontes (Google Play, Apple Store, MongoDB - considerado como uma base interna), com foco na volumetria e avaliação qualitativa de usuários.
 
+
+> [!NOTE]  
+> Para informações detalhada de cada item do Dashboard, favor, consultar o tópico **3.1.4 Camada de Visualização e Telemetria (observabilidade)**
+
 - Objetivo: Monitorar a qualidade percebida pelos usuários nos aplicativos Santander.
 - Público-alvo: Times de Produto, Experiência de Usuário e Gerência. 
 - Frequência de atualização: Diário.
@@ -2358,8 +2362,6 @@ Este dashboard apresenta indicadores funcionais relacionados à experiência do 
 2. Visão Agregada:
 3. Visão Detalhada: 
 
-> [!NOTE]  
-> Para informações detalhada de cada item do Dashboard, favor, consultar o tópico **3.1.4 Camada de Visualização e Telemetria (observabilidade)**
 
 ![<metabase-metricas-funcionais>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-metricas-funcionais.gif?raw=true)
 
@@ -2368,6 +2370,7 @@ Este dashboard apresenta indicadores funcionais relacionados à experiência do 
 🧭 Dashboard Técnico - Aplicações e Dashboard Técnico - Sustentação  
 
 Este dashboard foi desenvolvido para fornecer uma visão técnica consolidada da execução dos pipelines no projeto Compass, permitindo o monitoramento contínuo da saúde operacional, da qualidade dos dados e da sustentação dos processos em produção.
+
 
 📌 O que você encontrará neste painel:
 
@@ -2385,6 +2388,10 @@ Este dashboard foi desenvolvido para fornecer uma visão técnica consolidada da
 📌 Público-alvo
 
 Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentação e Operações, com o objetivo de garantir resposta ágil a incidentes, visibilidade total do processo e tomada de decisão baseada em evidências.
+
+
+> [!NOTE]  
+> Para informações detalhada de cada item do Dashboard, favor, consultar o tópico **3.1.4 Camada de Visualização e Telemetria (observabilidade)**
 
 <p align="center">
   <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_apps.png?raw=true" width="49%">
