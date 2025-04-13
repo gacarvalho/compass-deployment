@@ -2257,7 +2257,7 @@ Este documento será atualizado continuamente conforme novas regras forem implem
 ---
 
 <details>
-<summary><strong>🎲 Mostrar dicionário de dados:</strong> Dados Agregados {application Gold}  </summary>
+<summary><strong>🎲 Mostrar dicionário de dados:</strong> Dados Rejeitados {application data quality }  </summary>
 
 <br>
   O processo de verificação de qualidade para os dados de reviews no projeto Compass é realizado a partir de múltiplas origens e apresenta estrutura particionada por data de processamento (`odate=yyyyMMdd`). A seguir, destacamos os principais diretórios, particionamentos e origens envolvidos:
