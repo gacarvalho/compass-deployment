@@ -2333,19 +2333,65 @@ Exemplo de estrutura de schema gerada para registros rejeitados, com detalhament
 
 ### 5.3 Produtos Compass
 
-
+---
 
 🧭 Dashboard Funcional - Gerência
 
+
+Este dashboard apresenta indicadores funcionais relacionados à experiência do cliente com os canais digitais de uma Instituição Financeira (apps móveis - no case utilizamos a Instituição Financeira Santander). Ele consolida métricas extraídas de diversas fontes (Google Play, Apple Store, MongoDB - considerado como uma base interna), com foco na volumetria e avaliação qualitativa de usuários.
+
+- Objetivo: Monitorar a qualidade percebida pelos usuários nos aplicativos Santander.
+- Público-alvo: Times de Produto, Experiência de Usuário e Gerência. 
+- Frequência de atualização: Diário.
+- Fontes de dados: Google Play, Apple Store e MongoDB.
+
+📌 Filtros Globais do Dashboard: 
+
+- Canais: Permite selecionar os canais (WAY, SELECT, BR).
+- Fonte de Dados: Escolha entre fontes como Apple Store, Google Play e MongoDB.
+- Segmento: PF ou PJ.
+- Ano-Mês: Para recortes temporais mensais.
+
+📌 Paineis: 
+
+1. Dashbord
+2. Visão Agregada:
+3. Visão Detalhada: 
+
+> [!NOTE]  
+> Para informações detalhada de cada item do Dashboard, favor, consultar o tópico **3.1.4 Camada de Visualização e Telemetria (observabilidade)**
+
 ![<metabase-metricas-funcionais>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-metricas-funcionais.gif?raw=true)
 
+---
+
 🧭 Dashboard Técnico - Aplicações e Dashboard Técnico - Sustentação  
+
+Este dashboard foi desenvolvido para fornecer uma visão técnica consolidada da execução dos pipelines no projeto Compass, permitindo o monitoramento contínuo da saúde operacional, da qualidade dos dados e da sustentação dos processos em produção.
+
+📌 O que você encontrará neste painel:
+
+  - Status geral do pipeline: identificação clara de execuções bem-sucedidas ou com falhas.
+  - Volume de jobs executados, com detalhamento entre sucessos e falhas.
+  - Indicadores de qualidade de dados, incluindo:
+  - Presença de valores nulos;
+  - Inconsistências nos dados;
+  - Registros duplicados.
+  - Painel de Sustentação, com:
+  - Marcação de timestamp dos erros mais recentes;
+  - Tabela com a criticidade dos jobs (escala de 0 a 2, sendo 0 o mais crítico);
+  - Relatório de erros específicos que causaram falhas na execução.
+
+📌 Público-alvo
+
+Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentação e Operações, com o objetivo de garantir resposta ágil a incidentes, visibilidade total do processo e tomada de decisão baseada em evidências.
 
 <p align="center">
   <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_apps.png?raw=true" width="49%">
   <img src="https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/grafana_sustentacao.png?raw=true" width="49%">
 </p>
 
+---
 
 ## 6. Instruções para Configuração e Execução do Projeto Compass
 
