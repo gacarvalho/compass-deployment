@@ -2256,6 +2256,68 @@ Este documento será atualizado continuamente conforme novas regras forem implem
 
 ---
 
+<details>
+<summary><strong>🎲 Mostrar dicionário de dados:</strong> Dados Agregados {application Gold}  </summary>
+
+<br>
+  O processo de verificação de qualidade para os dados de reviews no projeto Compass é realizado a partir de múltiplas origens e apresenta estrutura particionada por data de processamento (`odate=yyyyMMdd`). A seguir, destacamos os principais diretórios, particionamentos e origens envolvidos:
+  
+  **Diretórios de Qualidade (Quality Layer)**
+  
+  - `/santander/quality/compass/reviews/schema/odate={odate}`
+  - `/santander/quality/compass/reviews/pattern/google_play/odate={odate}`
+  - `/santander/quality/compass/reviews/pattern/apple_store/odate={odate}`
+  - `/santander/quality/compass/reviews/pattern/internal_databases/odate={odate}`
+  
+  > [!NOTE]
+  > As cargas realizadas pelo PIPELINE DATA QUALITY podem apresentar diferenças tanto no conteúdo quanto no schema, variando conforme a estrutura da origem dos dados. Essa variação se aplica às camadas BRONZE e SILVER.
+
+  
+  | Camada  | Particionamento       | Caminho Base                                                                 |
+  |---------|-----------------------|------------------------------------------------------------------------------|
+  | Bronze  | `odate=yyyyMMdd`       | /santander/bronze/compass/reviews/appleStore/<nome-app_segmento>            |
+  | Bronze  | `odate=yyyyMMdd`       | /santander/bronze/compass/reviews/googlePlay/<nome-app_segmento>            |
+  | Bronze  | `odate=yyyyMMdd`       | /santander/bronze/compass/reviews/mongodb/<nome-app_segmento>               |
+  | Silver  | `odate=yyyyMMdd`       | /santander/silver/compass/reviews/appleStore/                               |
+  | Silver  | `odate=yyyyMMdd`       | /santander/silver/compass/reviews/googlePlay/                               |
+  | Silver  | `odate=yyyyMMdd`       | /santander/silver/compass/reviews/mongodb/                                  |
+  
+  No exemplo abaixo, é possível visualizar o schema dos dados juntamente com um output que demonstra os registros rejeitados e os respectivos motivos da rejeição.
+  
+  ```bash
+   |-- id: string (nullable = true)
+   |-- name_client: string (nullable = true)
+   |-- app: string (nullable = true)
+   |-- im_version: string (nullable = true)
+   |-- im_rating: string (nullable = true)
+   |-- title: string (nullable = true)
+   |-- content: string (nullable = true)
+   |-- updated: string (nullable = true)
+   |-- segmento: string (nullable = true)
+   |-- historical_data: array (nullable = true)
+   |    |-- element: struct (containsNull = true)
+   |    |    |-- title: string (nullable = true)
+   |    |    |-- content: string (nullable = true)
+   |    |    |-- app: string (nullable = true)
+   |    |    |-- segmento: string (nullable = true)
+   |    |    |-- im_version: string (nullable = true)
+   |    |    |-- im_rating: string (nullable = true)
+   |-- failed_columns: array (nullable = true)
+   |    |-- element: string (containsNull = true)
+   |-- validation: string (nullable = true)
+   |-- odate: integer (nullable = true)
+  
+  +-----------+-----------+---------------------+----------+---------+-------+-------------------------------------------------------------------------------------------------+-------+--------+---------------+--------------+----------+----------+
+  |id         |name_client|app                  |im_version|im_rating|title  |content                                                                                          |updated|segmento|historical_data|failed_columns|validation| odate    |
+  +-----------+-----------+---------------------+----------+---------+-------+-------------------------------------------------------------------------------------------------+-------+--------+---------------+--------------+----------+----------+
+  |11919243008|           |banco-santander-br_pf|24.10.1   |1        |TRAVADO|O APP TRAVOU E NAO MOSTRA O LIMITE DO CARTAO E NEM A FATURA. JA DESINSTALEI E INSTALEI NOVAMENTE.|NULL   |NULL    |[]             |[name_client] |no_match  | 20250413 |
+  +-----------+-----------+---------------------+----------+---------+-------+-------------------------------------------------------------------------------------------------+-------+--------+---------------+--------------+----------+----------+
+  
+  ```
+
+</details>
+
+---
 
 ### 5.3 Produtos Compass
 
