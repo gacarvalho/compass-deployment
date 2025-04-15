@@ -517,6 +517,9 @@ As aplicações responsáveis por realizar as ingestões, transformações e car
 
 A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilidade e eficiência no processamento de grandes volumes de dados, executando em um schedule diário. Embora o processamento em tempo real (Streaming) seja uma alternativa viável para outros cenários, o foco do projeto é consolidar dados de forma estruturada, assegurando a consistência necessária para que os times de negócios possam acompanhar e analisar as necessidades e desafios dos clientes de forma precisa e estratégica.
 
+> [!IMPORTANT]
+> Para acessar os repositórios das aplicações abaixo, favor entrar em contato para liberação do acesso ao repositório!
+
 ♨️ **Aplicações - Ingestões de dados**
 
 As aplicações para ingestões de dados foram desenvolvidas para realizar captura de informações em 2 ambientes, um deles é o ambiente interno do Banco Santander, já o outro ambiente é externo, obtendo informações de duas APIs distintas. 
