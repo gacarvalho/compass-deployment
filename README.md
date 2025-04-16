@@ -72,7 +72,7 @@ Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha o desenvo
 
 A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tecnologias para armazenamento, processamento e visualização de dados. A solução é composta por várias camadas, cada uma com um papel específico no fluxo de dados.
 
-![<arquitetura-data-master-compass>](https://raw.githubusercontent.com/gacarvalho/repo-spark-delta-iceberg/refs/heads/main/arquitetura.png)
+![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/arquitetura.png?raw=true)
 
 Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por quatro componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
