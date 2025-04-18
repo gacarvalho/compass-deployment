@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/autor-Gabriel_Carvalho-lightgrey?style=flat-square" alt="Autor">
 </p>
 
-O repositório **compass-deployment** é uma solução desenvolvida no contexto do programa Data Master, promovido pela F1rst Tecnologia, com o objetivo de disponibilizar uma plataforma robusta e escalável para captura, processamento e análise de feedbacks de clientes do Banco Santander.
+O repositório **compass-deployment** é uma solução desenvolvida no contexto do programa Data Master, promovido pela F1rst Tecnologia, com o objetivo de disponibilizar uma plataforma robusta e escalável para captura, processamento e análise de feedbacks de clientes.
 
 
 ![<data-master-compass>](https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true)
@@ -20,9 +20,9 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
 - [1. Objetivo do Projeto](#1-objetivo-do-projeto)
   * [1.1 O Projeto Compass](#11-o-projeto-compass)
 - [2. Arquitetura da Solução](#2-arquitetura-da-solução)
-- [3. Visão Geral da Arquitetura Técnica](#3-visão-geral-da-arquitetura-técnica)
+- [3. Visão Geral da Arquitetura Técnica](#3-visão-geral-da-arquitetura-técnica-do-case)
   * [3.1 Descrição do Fluxo de Dados](#31-descrição-do-fluxo-de-dados)
-    + [3.1.1 Origens de Dados (fontes)](#311-origens-de-dados-fontes)
+    + [3.1.1 Fonte (datasource) de Dados](#311-fonte-datasource-de-dados)
     + [3.1.2 Camada de Processamento](#312-camada-de-processamento)
     + [3.1.3 Camada de Armazenamento](#313-camada-de-armazenamento)
     + [3.1.4 Camada de Visualização e Telemetria (observabilidade)](#314-camada-de-visualização-e-telemetria-observabilidade)
@@ -42,32 +42,37 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
 
 
 
-## 1. Objetivo do Projeto
+# 1. Objetivo do Projeto
 ---
 
-A idealização deste case surgiu da necessidade de conectar as dores do time de negócios ao potencial da Engenharia de Dados para resolvê-las. O objetivo foi explorar como a extração, transformação e disponibilização de informações podem gerar insights valiosos sobre a experiência dos clientes do Santander ao utilizarem seus produtos e serviços. Além disso, a solução tem o potencial de analisar as dores dos clientes da concorrência, permitindo uma visão estratégica ainda mais ampla.
+A idealização deste case surgiu da necessidade de conectar as demandas do time de negócios ao potencial da Engenharia de Dados na resolução de desafios reais. O objetivo foi explorar como a extração, transformação e disponibilização de informações podem gerar insights valiosos sobre a experiência dos usuários na interação com produtos e serviços. Além disso, a solução tem o potencial de identificar pontos de dor dos usuários em outras empresas do setor, permitindo uma visão estratégica mais abrangente.
 
-### 1.1 O Projeto Compass
+
+## 1.1 O Projeto Compass
 ---
 
-O **Projeto Data Master Compass** é uma iniciativa de Engenharia de Dados projetada para capturar e analisar feedbacks de clientes sobre produtos e serviços do Banco Santander. O nome `Compass` reflete seu propósito: orientar o time de negócios na melhoria contínua de processos e produtos, com base em dados reais.
+O Projeto **Data Master Compass** é uma iniciativa de Engenharia de Dados projetada para capturar e analisar feedbacks de clientes sobre produtos e serviços. O nome **Compass** reflete seu propósito: orientar o time de negócios na melhoria contínua de processos e soluções, com base em dados reais.
 
-Ao coletar e interpretar avaliações dos clientes, o projeto identifica necessidades e oportunidades de aprimoramento, fortalecendo o compromisso do Santander com a satisfação e fidelização. Essa abordagem não só refina a experiência do cliente, mas também consolida o banco como referência no mercado, contribuindo para a **principalidade** — ser o banco principal de seus clientes.
+Ao coletar e interpretar avaliações dos usuários, o projeto identifica necessidades e oportunidades de aprimoramento, fortalecendo o compromisso da organização com a satisfação e fidelização de seus clientes. Essa abordagem não só refina a experiência do usuário, como também contribui para consolidar a marca como referência em seu setor de atuação.
 
-A solução centraliza as informações em um **Data Lake** no HDFS, categorizando por data de referencia e segmento (PF e PJ). Isso proporciona insights valiosos para **Product Owners**, **Product Managers** e **Gerentes de Projetos**, permitindo decisões baseadas em evidências e alinhadas às necessidades reais dos clientes.
+A solução centraliza as informações em um Data Lake baseado em HDFS, organizando os dados por data de referência e segmento de público. Isso proporciona insights valiosos para Product Owners, Product Managers e Gerentes de Projetos, permitindo decisões baseadas em evidências e alinhadas às necessidades reais dos usuários.
+
+
 
 🧭 **Exemplo Prático**
 
-Imagine uma equipe desenvolvendo uma nova funcionalidade para contas correntes, como extratos detalhados com mais de 90 dias de transações. Sem feedbacks reais, as melhorias podem ser implementadas com base em suposições internas. O Projeto Compass elimina essa incerteza, fornecendo acesso rápido às avaliações dos clientes, substituindo pesquisas demoradas e garantindo que as melhorias atendam às expectativas reais.
+Imagine uma equipe desenvolvendo uma nova funcionalidade para um produto digital, como o acesso a extratos detalhados com mais de 90 dias de transações. Sem feedbacks reais dos usuários, as melhorias podem ser baseadas apenas em suposições internas. O Projeto Compass elimina essa incerteza ao fornecer acesso rápido e estruturado às avaliações dos clientes, substituindo pesquisas demoradas e garantindo que as entregas estejam alinhadas com as expectativas reais.
 
-Agora, imagine que o Banco Santander deseja lançar um novo canal de investimentos para jovens do ensino médio. Como é um produto novo para o banco, é essencial entender como esse modelo funciona no mercado. O Projeto Compass possibilita a análise das principais reclamações e elogios dos clientes da concorrência, oferecendo insights estratégicos para um lançamento mais assertivo.
+Agora, imagine que uma Instituição Financeira deseja lançar um novo canal de investimentos voltado para o público jovem. Por ser um produto inédito na organização, é essencial entender como esse modelo tem sido recebido no mercado. O Projeto Compass viabiliza a análise das principais críticas e elogios dos clientes da concorrência, oferecendo insights estratégicos para um lançamento mais assertivo e competitivo.
 
-Além disso, times responsáveis por produtos como PIX, Consórcio e Contas Correntes podem monitorar continuamente a evolução de suas funcionalidades, acompanhando a satisfação dos clientes por segmento e canal, com avaliações de 1 a 5 estrelas.
+Além disso, times responsáveis por produtos e serviços diversos podem monitorar continuamente a evolução de suas funcionalidades, acompanhando a satisfação dos usuários por segmento e canal, com avaliações classificadas, por exemplo, de 1 a 5 estrelas.
 
-Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha o desenvolvimento de produtos às necessidades reais dos clientes, impulsionando a excelência operacional e aprimorando a experiência do usuário.
+Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha o desenvolvimento de produtos e serviços às necessidades reais dos usuários, impulsionando a excelência operacional e aprimorando a experiência do cliente.
 
 
-## 2. Arquitetura da Solução
+
+
+# 2. Arquitetura da Solução
 ---
 
 A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tecnologias para armazenamento, processamento e visualização de dados. A solução é composta por várias camadas, cada uma com um papel específico no fluxo de dados.
@@ -77,20 +82,19 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
 Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por quatro componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
 | **Componente**          | **Descrição**                                                                 | **Versão**  |
-|-------------------------|-------------------------------------------------------------------------------|---------------------------------|
-| Storage                 | Armazenamento de dados funcionais dividido em duas categorias: <br> - Avaliações internas dos aplicativos Santander: Alimentadas via API e canal de feedback, armazenadas no MongoDB. <br> - Métricas aplicacionais: Armazenadas no Elasticsearch. <br> Armazenamento de dados historico: <br> - Armazenamento de dados históricos com retenção máxima de cinco anos. Utiliza Apache Hadoop para suportar grandes volumes de dados. | MongoDB: 7 <br>  Elasticsearch: 8.16.1 <br> Apache Hadoop: 3.1.1  |
-| Processing              | Utiliza Apache Spark para processamento distribuído de dados.                 | Apache Spark 3.5.0 |
-| Visualization           | Métricas técnicas: Grafana. <br> Métricas funcionais: Metabase. | Grafana, Metabase |
-| Orchestrator            | Apache Airflow é utilizado como orquestrador principal da malha de dados do projeto. | Apache Airflow 2.7.2 |
+|-------------------------|-------------------------------------------------------------------------------|-------------|
+| **Storage**             | Armazenamento de dados funcionais dividido em duas categorias: <br> - **MONGODB:** Avaliações internas de usuários, recebidas via API e canais de feedback. <br> - **ELASTICSEARCH:** Métricas aplicacionais armazenadas para análise de performance. <br> - Armazenamento de dados históricos: <br> - **HDFS:** Utilizado para retenção de longo prazo (até cinco anos), com suporte a grandes volumes de dados via Apache Hadoop. | MongoDB: 7 <br> Elasticsearch: 8.16.1 <br> Apache Hadoop: 3.1.1 |
+| **Processing**          | Processamento distribuído de dados com Apache Spark, possibilitando análises em larga escala. | Apache Spark 3.5.0 |
+| **Visualization**       | Visualização de métricas:<br> - Técnicas: Grafana.<br> - Funcionais: Metabase. | Grafana, Metabase |
+| **Orchestrator**        | Orquestração dos fluxos de dados realizada com Apache Airflow.               | Apache Airflow 2.7.2 |
 
 
 > [!NOTE]
-> O repositório da infraestrutura do Hadoop foi desenvolvida em:
-> https://github.com/gacarvalho/infra-data-master-compass
+> O repositório da infraestrutura do Hadoop foi desenvolvida em: > https://github.com/gacarvalho/infra-data-master-compass. Para acessar o repositório, favor entrar em contato!
 
 
 
-## 3. Visão Geral da Arquitetura Técnica
+# 3. Visão Geral da Arquitetura Técnica do Case
 ---
 
 Como base da arquitetura, o projeto Compass utiliza alguns recursos para realizar o processo desde a extração dos dados até a disponibilização. O ambiente onde o projeto está em execução é on-premisses e foram divididas em algumas camadas, como:
@@ -105,140 +109,160 @@ Como base da arquitetura, o projeto Compass utiliza alguns recursos para realiza
 
 
 
-### 3.1 Descrição do Fluxo de Dados
+## 3.1 Descrição do Fluxo de Dados
 ---
 
 Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dados, Transformação de Dados e Carga de Dados.
 
 > [!IMPORTANT]
-> Descrição das collections e armazenamento estão descritos para **v1 do Projeto Compass**!
+> O case foi estruturado para ser aplicado em qualquer organização que deseje transformar dados em decisões mais estratégicas e orientadas por dados. A proposta é automatizar a coleta, organização e análise de informações, proporcionando uma compreensão mais profunda das necessidades dos clientes e das tendências observadas no mercado. A solução é flexível e escalável, podendo ser adaptada a diferentes setores e expandida para diversas frentes estratégicas e operacionais.
+> Embora a instituição Santander tenha sido utilizada como exemplo aplicado, o modelo é totalmente replicável em outros contextos. Qualquer organização interessada em conhecer melhor seus usuários, acompanhar a concorrência e embasar decisões com dados reais pode se beneficiar diretamente dessa abordagem.
 
 
-#### 3.1.1 Origens de Dados (fontes)
 
-As coleções do MongoDB representam o armazenamento interno do Santander, utilizado para armazenar os feedbacks provenientes de diversos canais, refletindo a jornada do cliente dentro do aplicativo Santander. Essas coleções são alimentadas conforme o canal responsável por cada interação.
+### 3.1.1 Fonte (datasource) de Dados
+
+As coleções armazenadas em banco de dados representam os dados internos da organização, utilizados para registrar feedbacks capturados por diferentes canais e que refletem a jornada dos usuários dentro dos aplicativos. Cada conjunto de dados é alimentado de acordo com a origem da interação.
 
 
-- **BASE INTERNA SANTANDER**:
-    - `Collections (MongoDB) Santander Way`: Aplicação móvel do Santander utilizada pelos clientes.
-    - `Collections (MongoDB) Santander BR`: Aplicação móvel do Santander para operações bancárias.
-    - `Collections (MongoDB) Santander Select Global`: Aplicação móvel de conta em dólar do Santander.
-    - `Collections (MongoDB) Outros Aplicativos Santander`: Diversos aplicativos que fornecem dados transacionais.
 
-As APIs externas são responsáveis pela captura de dados provenientes de fontes fora do ecossistema Santander, utilizando duas APIs distintas. A SERPAPI, uma solução paga, foi escolhida como alternativa devido a uma limitação no acesso direto aos dados do Google Play. Como não somos proprietários do aplicativo Santander na plataforma, não podemos acessar essas informações diretamente. Para realizar a extração dos dados, seria necessário ser proprietário do aplicativo na Google Play Store e possuir uma conta de serviço com permissões de desenvolvedor. Diante dessa restrição, a SERPAPI foi adotada como uma solução viável.
+- **Base Interna (MongoDB)**:
+    - `Collections` `Aplicativo de Cartões`: Aplicação móvel da instituição utilizada pelos clientes.
+    - `Collections` `Aplicativo de Conta`: Aplicação móvel da instituição para operações bancárias.
+    - `Collections` `Aplicativo de Conta Internacional`: Aplicação móvel de conta em dólar da instituição.
+    - `Collections` `Outros Aplicativos`: Diversos aplicativos que fornecem dados transacionais.
 
-Por outro lado, a API do iTunes está disponível sem custos, mas sua utilização requer uma liberação de firewall e a colaboração com um time responsável pela extração de dados externos do Santander. Vale destacar que, ao utilizar essa API, há uma limitação no número de avaliações que podem ser acessadas, sendo possível buscar apenas as últimas 500 avaliações.
+As APIs externas são responsáveis por capturar informações de fontes que estão fora do ecossistema da organização. No projeto, foram utilizadas duas soluções distintas para acessar dados públicos de avaliações de usuários em plataformas digitais.
 
-- **EXTENO SANTANDER**:
-    - `SerpApi`: API utilizada para coletar avaliações do **Google Play** (opcional).
+A SERPAPI, uma solução comercial, foi adotada como alternativa ao acesso direto ao Google Play, já que esse acesso é restrito apenas ao proprietário do aplicativo na plataforma. Para obter essas informações diretamente, seria necessário possuir a aplicação cadastrada na Google Play Store e contar com uma conta de serviço com permissões de desenvolvedor. Diante dessa limitação, a SERPAPI se mostrou uma alternativa viável e eficaz para a coleta das avaliações disponíveis publicamente.
+
+Por outro lado, a API do iTunes é de acesso gratuito, porém sua utilização pode exigir configurações específicas na infraestrutura da organização, como liberação de firewall e apoio de equipes responsáveis pelo consumo de dados externos. Além disso, essa API possui uma limitação quanto à quantidade de avaliações recuperáveis — permitindo o acesso apenas às 500 mais recentes.
+
+- **Externo da Instituição**:
+    - `SerpApi`: API utilizada para coletar avaliações do **Google Play** `(opcional)`.
     - `itunes.apple.com`: API utilizada para coletar avaliações da **Apple Store**.
 
-#### 3.1.2 Camada de Processamento 
+### 3.1.2 Camada de Processamento 
 
-A Camada de Processamento é uma das principais responsáveis pelo tratamento e transformação dos dados dentro do projeto Compass, composta por três camadas distintas de processamento utilizando o Apache Spark. Cada camada tem um papel específico no fluxo de dados, desde a ingestão até o enriquecimento final.
+A Camada de Processamento desempenha um papel essencial no projeto Compass, sendo responsável por tratar, transformar e estruturar os dados de forma eficiente. Essa camada é composta por três estágios distintos, implementados com Apache Spark, que organizam o fluxo de dados desde a ingestão inicial até a geração de insights enriquecidos.
 
-- **PROCESSAMENTO**:
-    - `Spark Bronze - Ingestion`: Responsável pela ingestão e pré-processamento de dados.
-    - `Spark Silver`: Camada intermediária de processamento, armazenando dados históricos.
-    - `Spark Gold`: Camada de agregação e enriquecimento dos dados processados.
+- **Processamento**:
+    - **`Spark Bronze – Ingestão`**: Realiza a ingestão dos dados brutos e aplica os primeiros tratamentos para padronização e validação inicial.
+
+    - **`Spark Silver – Processamento Intermediário`**: Armazena e processa dados com histórico, aplicando transformações de limpeza, padronização e qualidade que preparam as informações para análises mais avançadas.
+
+    - **`Spark Gold – Enriquecimento e Agregação`**: Responsável por agregar, cruzar e enriquecer os dados tratados, gerando visões analíticas valiosas para apoio à tomada de decisão.
 
 > [!NOTE]
 > A regra de negócios está detalhado no item `4. Fluxo Funcional e Jornada do Cliente`!
 
-#### 3.1.3 Camada de Armazenamento
+### 3.1.3 Camada de Armazenamento
 
-- **ARMAZENAMENTO**:
-    - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
+A Camada de Armazenamento é responsável por manter os dados persistidos ao longo de todo o fluxo do projeto Compass, desde sua ingestão bruta até o consumo final. Essa camada contempla diferentes tecnologias, cada uma com propósito específico, garantindo flexibilidade, desempenho e organização dos dados em seus respectivos estágios de processamento.
 
-  <details>
-    <summary>Informações Detalhada do Armazenamento: MONGODB</summary>
+Os principais sistemas utilizados incluem:
+
+- **MongoDB**: Armazena dados funcionais estruturados, utilizados principalmente para análises e relatórios.
+- **Hadoop (HDFS)**: Responsável por armazenar dados em diferentes níveis (Bronze, Silver, Gold e Quality), de forma distribuída e organizada por data.
+- **Elasticsearch**: Voltado à indexação e consulta de dados técnicos e de monitoramento, permitindo análises rápidas e detalhadas de métricas e falhas.
+
+A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios, coleções e índices, bem como os responsáveis por alimentar essas estruturas.
+
+- **Armazenamento**:
+  - `MongoDB`: Banco de dados NoSQL para armazenamento estruturado para dados funcionais.
+    <details>
+      <summary>Informações Detalhada do Armazenamento: MONGODB</summary>
+      
+      ---
+      
+      Abaixo estão as coleções presentes no MongoDB, com informações sobre os dados armazenados e os processos responsáveis pela alimentação de cada uma delas:
   
-  
-    | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
-    |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
-    | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
-    | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
-    | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
-    | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
-    | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
-  
-  </details>
-
-
-
+      | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
+      |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
+      | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
+      | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
+      | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
+      | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
+      | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
+    
+    </details>
 
   - `Hadoop`: Sistema distribuído para armazenamento e processamento de dados.
 
+    
+    <details>
+      <summary>Informações Detalhada do Armazenamento: HADOOP</summary>
 
+      ---
+      A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:
 
-  <details>
-    <summary>Informações Detalhada do Armazenamento: HADOOP</summary>
+      > Caminho Base Bronze: `/santander/bronze/compass/reviews/`
+      
+      
+      | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
+      |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+      | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | <ul><li> `banco-santander-br_pf/`</li> <li>`santander-select-global_pf/`</li> <li>`santander-way_pf/`</li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
 
-    <p>A camada Bronze armazena dados brutos coletados de diferentes fontes. Esses dados ainda não passaram por processamento ou transformação. Subdiretórios por aplicativo: `banco-santander-br_pf`, `santander-select-global_pf`, `santander-way_pf`. Abaixo está a estrutura detalhada:</p>
-
-    > Caminho Base Bronze: `/santander/bronze/compass/reviews/`
+      ---
+      
+      A camada **Silver** contém dados processados e transformados a partir da camada Bronze. Esses dados são mais estruturados e prontos para análise.
+      
+      > Caminho Base Silver: `/santander/silver/compass/reviews/`
+      
+      
+      
+      | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**           | **Organização**                                 |
+      |--------------------|---------------------------------------------------|--------------------------------------------|------------------------------------------------|
+      | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.             | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.      | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      
+      ---
+      
+      A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
+      > Caminho Base Gold: `/santander/gold/compass/reviews/`
+      
+      | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+      |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+      | **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      
+      ---
+      
+      
+      A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
+      > Caminho Base Quality: `/santander/quality/compass/reviews/`
+      
+      | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
+      |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
+      | **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
+      
     
-    
-    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
-    |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-    | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | <ul><li> `banco-santander-br_pf/`</li> <li>`santander-select-global_pf/`</li> <li>`santander-way_pf/`</li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-
-    ---
-    
-    A camada **Silver** contém dados processados e transformados a partir da camada Bronze. Esses dados são mais estruturados e prontos para análise.
-    
-    > Caminho Base Silver: `/santander/silver/compass/reviews/`
-    
-    
-    
-    | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**           | **Organização**                                 |
-    |--------------------|---------------------------------------------------|--------------------------------------------|------------------------------------------------|
-    | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.             | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.      | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    
-    ---
-    
-    A camada **Gold** contém dados agregados e prontos para consumo final. Esses dados são utilizados para geração de relatórios, dashboards e análises avançadas.
-    > Caminho Base Gold: `/santander/gold/compass/reviews/`
-    
-    | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
-    |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-    | **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    | **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-    
-    ---
-    
-    
-    A camada **Quality** contém dados relacionados à qualidade dos dados, como padrões de validação e métricas de qualidade.
-    > Caminho Base Quality: `/santander/quality/compass/reviews/`
-    
-    | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
-    |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-    | **Padrões de Validação**  | `/santander/quality/compass/reviews/pattern/`     | Padrões de validação aplicados aos dados.                                                      | Subdiretórios por plataforma (ex: `pattern/`, `schema/`) |
-    
-  
-  </details>
+    </details>
 
   - `Elasticsearch`: O **Elasticsearch** é usado para indexação e busca de dados técnicos. Abaixo estão os índices disponíveis, com seus objetivos e responsáveis pela ingestão dos dados.
 
-  <details>
+     <details>
       <summary>Informações Detalhada do Armazenamento: ELASTICSEARCH</summary>
+
+      ---
+
+      Os índices abaixo são utilizados para monitoramento técnico e análise de performance dos processos de ingestão e transformação de dados no Compass:
+
+      
+      | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
+      |-------------------------------------|-----------------------------------------------|-------------------|
+      | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | <ul><li> DAG: `dag_d_pipeline_compass_review` </li> <li>JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold)</li></ul> |
+      | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | <ul><li> DAG: `dag_d_pipeline_compass_reviews` </li> <li> JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) </li></ul> |
     
-    
-    | **Índice**                         | **Objetivo**                                  | **Quem Alimenta** |
-    |-------------------------------------|-----------------------------------------------|-------------------|
-    | **compass_dt_datametrics**          | Dados técnicos de métricas de performance     | <ul><li> DAG: `dag_d_pipeline_compass_review` </li> <li>JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold)</li></ul> |
-    | **compass_dt_datametrics_fail**     | Dados de falhas nas métricas de performance   | <ul><li> DAG: `dag_d_pipeline_compass_reviews` </li> <li> JOB: Todos JOBS SPARK (group_ingestion, group_jobs_silver, group_jobs_gold) </li></ul> |
-    
-  </details>
+    </details>
 
 
 
-#### 3.1.4 Camada de Visualização e Telemetria (observabilidade)
+### 3.1.4 Camada de Visualização e Telemetria (observabilidade)
 
 - `Metabase`: Ferramenta de Business Intelligence (BI) para análise de dados.
   <details>
@@ -386,11 +410,11 @@ A Camada de Processamento é uma das principais responsáveis pelo tratamento e 
 
   </details>
 
-### 3.2 Aspectos Técnicos do Projeto Compass
+## 3.2 Aspectos Técnicos do Projeto Compass
 ---
 Nesta seção, será apresentada a arquitetura técnica do Projeto Compass, detalhando seu funcionamento desde a infraestrutura até a camada aplicacional. O objetivo é fornecer uma visão abrangente do que está sendo executado, como os processos acontecem e as razões por trás das escolhas feitas, garantindo uma compreensão clara sobre a operação e a arquitetura do sistema.
 
-#### 3.2.1 Tecnologias Utilizadas
+### 3.2.1 Tecnologias Utilizadas
 
 Como base principal, as tecnologias utilizadas foram necessárias para atender o fluxo de dados, desde a coleta até a disponibilização das informações.
 
@@ -412,7 +436,7 @@ Como base principal, as tecnologias utilizadas foram necessárias para atender o
 > O projeto Compass foi concebido para ser executado inicialmente em um ambiente on-premises. Embora soluções em nuvem, como Azure e AWS, ofereçam vantagens significativas, como escalabilidade e alta disponibilidade, sua adoção exclusiva pode gerar dependência de fornecedores específicos. Para mitigar esse risco, a escolha por tecnologias open-source proporciona maior flexibilidade, permitindo a execução local e facilitando a migração para a nuvem quando necessário, sem comprometer a autonomia do sistema.
 
 
-#### 3.2.2 Caracteristicas da Execução do Projeto
+### 3.2.2 Caracteristicas da Execução do Projeto
 
 O projeto Compass é executado em uma infraestrutura on-premises, onde os serviços são instanciados localmente em contêineres baseados em imagens Docker. Para garantir a gestão eficiente da execução desses contêineres, foi necessária a adoção de uma ferramenta de orquestração, sendo o Docker Swarm a solução escolhida para este ambiente.
 
@@ -421,62 +445,25 @@ O Docker Swarm foi escolhido como ferramenta de orquestração no projeto Compas
 A escolha também considerou a necessidade de baixa sobrecarga computacional, já que o Swarm é mais leve e não exige um alto consumo de recursos, tornando-se uma alternativa viável para infraestrutura local. Além disso, seu mecanismo de balanceamento de carga automático e alta disponibilidade garante a distribuição eficiente das cargas de trabalho, melhorando a resiliência dos serviços sem a necessidade de configurações avançadas.
 
 
-#### 3.2.2.1 **Infraestrutura do Projeto Compass**
+### 3.2.2.1 **Infraestrutura do Projeto Compass**
 
 Nessa sessão, será descrito a infraestrutura para atender a demanda do projeto Compass, utilizada para gerenciar um ambiente Hadoop distribuído. A configuração permite a orquestração dos serviços essenciais do Hadoop, incluindo Namenode, Datanode, History Server, Resource Manager e Node Manager.
 
 
-Configuração Hadoop
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **Namenode**            | `iamgacarvalho/hadoop-namenode-data-in-compass:2.0.0`        | `32763:9870`         | `/mnt/hadoop/namenode:/data/hdfs/name`    | `CLUSTER_NAME: hadoop_cluster`  | 1            | `nc -z localhost 9870`                                    |
-| **Datanode**            | `iamgacarvalho/hadoop-datanode-data-in-compass:2.0.0`        | `9854-9864:9864`     | `/mnt/hadoop/datanode:/data/hdfs/data`    | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 9864`                                    |
-| **History Server**      | `iamgacarvalho/hadoop-historyserver-data-in-compass:2.0.0`   | `8188:8188`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8188`                                    |
-| **Resource Manager**    | `iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0` | `8088:8088`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8088`                                    |
-| **Node Manager**        | `iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0`     | `8032-8042:8042`     | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 3            | `nc -z localhost 8042`                                    |
-
----
-
-Configuração Spark
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **Spark Master**        | `iamgacarvalho/spark-master-data-in-compass:3.0.0`           | `8084:8082`<br>`7077:7077` | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data` | -                             | 1            | `nc -z localhost 8082`                                    |
-| **Spark Worker**        | `iamgacarvalho/spark-worker-data-in-compass:3.0.0`           | `8090-8100:8081`     | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data`<br>`/mnt/spark/worker-logs:/opt/spark/logs` | `WORKER_PORT=8081`            | 2            | `nc -z localhost 8081`                                    |
-
----
-
-Configuração Grafana
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **Grafana**            | `grafana/grafana:latest`                                     | `4000:3000`          | `/mnt/grafana_data:/var/lib/grafana`      | `GF_SECURITY_ADMIN_USER=admin`<br>`GF_SECURITY_ADMIN_PASSWORD=admin123`<br>`GF_INSTALL_PLUGINS=grafana-mongodb-datasource`<br>`GF_PLUGINS_PREINSTALL=grafana-clock-panel` | 2            | Não configurado, mas a disponibilidade pode ser verificada pela porta `3000` |
-
----
-
-Configuração Elasticsearch e Kibana
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **Elasticsearch**       | `docker.elastic.co/elasticsearch/elasticsearch:8.16.1`       | `9200:9200`<br>`9300:9300` | `/mnt/es_data:/usr/share/elasticsearch/data`<br>`/mnt/certs:/usr/share/elasticsearch/config/certs` | `ES_JAVA_OPTS=-Xms4g -Xmx4g`<br>`ELASTIC_PASSWORD=data-@a1`<br>`xpack.security.enabled=true`<br>`xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node.key`<br>`xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node.crt`<br>`xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt` | 1            | Não configurado, mas pode ser monitorado na porta `9200` |
-| **Kibana**             | `docker.elastic.co/kibana/kibana:8.16.1`                    | `5601:5601`          | -                                         | `ELASTICSEARCH_HOSTS=http://elasticsearch:9200`<br>`ELASTICSEARCH_USERNAME=kibana_user_service`<br>`ELASTICSEARCH_PASSWORD=data-@a1`<br>`XPACK_SECURITY_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_REPORTING_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=` | 1            | `curl -f http://localhost:5601` (intervalo: 30s, 3 tentativas) |
-
----
-
-Configuração MongoDB
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **MongoDB**             | `mongo:7`                                                    | `27017:27017`        | `/mnt/mongodb:/data/db`<br>`/mnt/mongodb_configData:/data/configdb`<br>`/mnt/mongodb_init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js` | `MONGO_INITDB_ROOT_USERNAME=${MONGO_USER_ADMIN}`<br>`MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS_ADMIN}` | 1            | Não configurado, mas pode ser monitorado na porta `27017` |
-
----
-
-Configuração Metabase
-
-| **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
-|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
-| **Metabase**            | `metabase/metabase:latest`                                    | `8085:3000`          | `/mnt/metabase:/metabase.db`             | `MB_PASSWORD_RESET=true`      | 1            | Não configurado, mas pode ser monitorado na porta `3000` |
+| **Configuração**        | **Serviço**            | **Imagem**                                                   | **Portas**           | **Volumes**                               | **Variáveis de Ambiente**      | **Replicas** | **Healthcheck**                                           |
+|-------------------------|------------------------|--------------------------------------------------------------|----------------------|-------------------------------------------|---------------------------------|--------------|-----------------------------------------------------------|
+| **Configuração Hadoop** | **Namenode**            | `iamgacarvalho/hadoop-namenode-data-in-compass:2.0.0`        | `32763:9870`         | `/mnt/hadoop/namenode:/data/hdfs/name`    | `CLUSTER_NAME: hadoop_cluster`  | 1            | `nc -z localhost 9870`                                    |
+| **Configuração Hadoop** | **Datanode**            | `iamgacarvalho/hadoop-datanode-data-in-compass:2.0.0`        | `9854-9864:9864`     | `/mnt/hadoop/datanode:/data/hdfs/data`    | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 9864`                                    |
+| **Configuração Hadoop** | **History Server**      | `iamgacarvalho/hadoop-historyserver-data-in-compass:2.0.0`   | `8188:8188`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8188`                                    |
+| **Configuração Hadoop** | **Resource Manager**    | `iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0` | `8088:8088`          | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 1            | `nc -z localhost 8088`                                    |
+| **Configuração Hadoop** | **Node Manager**        | `iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0`     | `8032-8042:8042`     | -                                         | `SERVICE_PRECONDITION: namenode:9870` | 3            | `nc -z localhost 8042`                                    |
+| **Configuração Spark**  | **Spark Master**        | `iamgacarvalho/spark-master-data-in-compass:3.0.0`           | `8084:8082`<br>`7077:7077` | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data` | -                             | 1            | `nc -z localhost 8082`                                    |
+| **Configuração Spark**  | **Spark Worker**        | `iamgacarvalho/spark-worker-data-in-compass:3.0.0`           | `8090-8100:8081`     | `/mnt/spark/apps:/opt/spark-apps`<br>`/mnt/spark/data:/opt/spark-data`<br>`/mnt/spark/worker-logs:/opt/spark/logs` | `WORKER_PORT=8081`            | 2            | `nc -z localhost 8081`                                    |
+| **Configuração Grafana**  | **Grafana**            | `grafana/grafana:latest`                                     | `4000:3000`          | `/mnt/grafana_data:/var/lib/grafana`      | `GF_SECURITY_ADMIN_USER=admin`<br>`GF_SECURITY_ADMIN_PASSWORD=admin123`<br>`GF_INSTALL_PLUGINS=grafana-mongodb-datasource`<br>`GF_PLUGINS_PREINSTALL=grafana-clock-panel` | 2            | Não configurado, mas a disponibilidade pode ser verificada pela porta `3000` |
+| **Configuração Elastic**  | **Elasticsearch**       | `docker.elastic.co/elasticsearch/elasticsearch:8.16.1`       | `9200:9200`<br>`9300:9300` | `/mnt/es_data:/usr/share/elasticsearch/data`<br>`/mnt/certs:/usr/share/elasticsearch/config/certs` | `ES_JAVA_OPTS=-Xms4g -Xmx4g`<br>`ELASTIC_PASSWORD=data-@a1`<br>`xpack.security.enabled=true`<br>`xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node.key`<br>`xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node.crt`<br>`xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt` | 1            | Não configurado, mas pode ser monitorado na porta `9200` |
+| **Configuração Kibana**  | **Kibana**             | `docker.elastic.co/kibana/kibana:8.16.1`                    | `5601:5601`          | -                                         | `ELASTICSEARCH_HOSTS=http://elasticsearch:9200`<br>`ELASTICSEARCH_USERNAME=kibana_user_service`<br>`ELASTICSEARCH_PASSWORD=data-@a1`<br>`XPACK_SECURITY_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=`<br>`XPACK_REPORTING_ENCRYPTIONKEY=eqyW5iPqa8ghok7RqY7eFluG+dqvXBczFEU+HhlDLFM=` | 1            | `curl -f http://localhost:5601` (intervalo: 30s, 3 tentativas) |
+| **Configuração MongoDB**  | **MongoDB**             | `mongo:7`                                                    | `27017:27017`        | `/mnt/mongodb:/data/db`<br>`/mnt/mongodb_configData:/data/configdb`<br>`/mnt/mongodb_init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js` | `MONGO_INITDB_ROOT_USERNAME=${MONGO_USER_ADMIN}`<br>`MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS_ADMIN}` | 1            | Não configurado, mas pode ser monitorado na porta `27017` |
+| **Configuração Metabase**  | **Metabase**            | `metabase/metabase:latest`                                    | `8085:3000`          | `/mnt/metabase:/metabase.db`             | `MB_PASSWORD_RESET=true`      | 1            | Não configurado, mas pode ser monitorado na porta `3000` |
 
 ---
 
@@ -1946,7 +1933,7 @@ Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio
 | `dag_s_pipeline_expurge_compass_reviews` | Pipeline semanal responsável por realizar expurgo dos dados nas camadas Bronze, Silver e Gold.                                                      | `B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_BR`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_WAY`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_BR`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_WAY`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_BR`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_WAY`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_SELECT_GLOBAL`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_APPLE_STORE`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_GOOGLE_PLAY`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_INTERNAL_BASE`<br>`G_EXPURGE_APP_HDFS_HISTORY_GOLD_AGGREGATE` |
 
 
-## 4. Fluxo Funcional e Jornada do Cliente
+# 4. Fluxo Funcional e Jornada do Cliente
 
 A solução foi projetada para atender ao time de negócios do Santander, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
 
@@ -1972,14 +1959,14 @@ Essa integração permitirá uma visão mais holística da experiência do usuá
 
 Com isso, o Projeto Compass se posiciona como uma iniciativa estratégica, permitindo que a companhia avance para uma atuação proativa, centrada no cliente e orientada por dados.
 
-## 5. Compass como produto analytics Santander
+# 5. Compass como produto analytics Santander
 
 ---
 
 O projeto Compass como Produto tem como objetivo fornecer uma solução robusta e escalável para o Santander, utilizando Engenharia de Dados para desenvolver um fluxo que permita identificar as principais necessidades e desafios dos seus clientes. Esse fluxo busca não apenas atender as demandas internas do banco, mas também possui o potencial de expandir sua abrangência, permitindo escalar a busca para entender as "dores" dos concorrentes do Santander no mercado.
 
 
-### 5.1 Regras de Negócio
+## 5.1 Regras de Negócio
 
 Como premissa central do Projeto Compass, o objetivo é consolidar uma base estruturada com as principais dores dos clientes em relação aos produtos do Santander. Essa base permitirá a geração de insights valiosos e a análise de oportunidades de melhoria nos diferentes canais de atendimento e relacionamento, contribuindo diretamente para o aumento da principalidade do cliente com a instituição.
 
@@ -2048,7 +2035,7 @@ A seguir, estão descritas em formato de tabela as principais regras de negócio
 
 ---
 
-### 5.2 Dicionário de Dados
+## 5.2 Dicionário de Dados
 
 Este dicionário de dados tem como objetivo documentar e padronizar a estrutura dos dados utilizados ao longo das esteiras de ingestão, transformação e disponibilização. Ele serve como uma referência clara e objetiva para desenvolvedores, analistas e squads que atuam com os dados descritos.
 
@@ -2334,7 +2321,7 @@ Exemplo de estrutura de schema gerada para registros rejeitados, com detalhament
 
 ---
 
-### 5.3 Produtos Compass
+## 5.3 Produtos Compass
 
 ---
 
@@ -2403,9 +2390,8 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 
 ---
 
-## 6. Instruções para Configuração e Execução do Projeto Compass
-
-## 7. Melhorias do projeto e Considerações Finais
+# 6. Instruções para Configuração e Execução do Projeto Compass
+# 7. Melhorias do projeto e Considerações Finais
 
 
 
