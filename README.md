@@ -31,7 +31,7 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
     + [3.2.2 Caracteristicas da Execução do Projeto](#322-caracteristicas-da-execução-do-projeto)
     + [3.2.2.1 Infraestrutura do Projeto Compass](#3221-infraestrutura-do-projeto-compass)
     + [3.2.2.2 Aplicações do Projeto Compass](#3222-aplicações-do-projeto-compass)
-    + [3.2.2.3  Malha do Projeto Compass](#3223-malha-do-projeto-compass)
+    + [3.2.2.3  Pipeline do Projeto Compass](#3223-pipeline-do-projeto-compass)
 - [4. Fluxo Funcional e Jornada do Cliente](#4-fluxo-funcional-e-jornada-do-cliente)
 - [5. Compass como produto analytics Santander](#5-compass-como-produto-analytics-santander)
   * [5.1 Regras de Negócio](#51-regras-de-negócio)
@@ -45,7 +45,11 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
 # 1. Objetivo do Projeto
 ---
 
-A idealização deste case surgiu da necessidade de conectar as demandas do time de negócios ao potencial da Engenharia de Dados na resolução de desafios reais. O objetivo foi explorar como a extração, transformação e disponibilização de informações podem gerar insights valiosos sobre a experiência dos usuários na interação com produtos e serviços. Além disso, a solução tem o potencial de identificar pontos de dor dos usuários em outras empresas do setor, permitindo uma visão estratégica mais abrangente.
+A idealização deste case surgiu da necessidade de fortalecer o alinhamento entre o time de negócios e a Engenharia de Dados, com foco na resolução de desafios práticos relacionados à jornada do usuário. A iniciativa teve como ponto de partida uma dor claramente identificada: a ausência de visibilidade aprofundada sobre a forma como os clientes interagem com os produtos e serviços da empresa. Essa limitação comprometia a identificação de gargalos, dificultava a compreensão do comportamento dos usuários e tornava menos eficiente a priorização de ações de melhoria com base em dados.
+
+Diante desse cenário, estabeleceu-se como objetivo central o desenvolvimento de uma solução capaz de capturar, tratar e estruturar dados de interação dos usuários, de forma a viabilizar análises confiáveis e acionáveis para suporte à tomada de decisão. A proposta não se restringiu à disponibilização de informações estruturadas para uso interno; buscou-se também criar mecanismos que possibilitassem uma leitura mais ampla do mercado, por meio da comparação com padrões comportamentais de outras empresas do setor.
+
+A arquitetura concebida foi desenhada com foco em flexibilidade e escalabilidade, permitindo sua aplicação em diferentes contextos e ampliando o potencial de geração de valor. Além de atender às demandas internas por inteligência sobre a experiência do cliente, a solução pode ser estendida para identificar tendências e pontos de atenção em players do mesmo segmento, desde que haja disponibilidade de dados comparáveis. Essa capacidade amplia a perspectiva analítica da organização, contribuindo para uma atuação mais informada em estratégias de mercado e comparações setoriais relevantes.
 
 
 ## 1.1 O Projeto Compass
@@ -79,18 +83,19 @@ A arquitetura proposta é baseada em um ambiente **on-premises**, utilizando tec
 
 ![<arquitetura-data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/arquitetura.png?raw=true)
 
-Separando a arquitetura do Compass por compoentes, é posśivel entender que é composta por quatro componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
+Separando a arquitetura do Compass por componentes, é possível entender que é composta por quatro componentes principais, cada um responsável por uma etapa específica do fluxo de dados:
 
 | **Componente**          | **Descrição**                                                                 | **Versão**  |
 |-------------------------|-------------------------------------------------------------------------------|-------------|
-| **Storage**             | Armazenamento de dados funcionais dividido em duas categorias: <br> - **MONGODB:** Avaliações internas de usuários, recebidas via API e canais de feedback. <br> - **ELASTICSEARCH:** Métricas aplicacionais armazenadas para análise de performance. <br> - Armazenamento de dados históricos: <br> - **HDFS:** Utilizado para retenção de longo prazo (até cinco anos), com suporte a grandes volumes de dados via Apache Hadoop. | MongoDB: 7 <br> Elasticsearch: 8.16.1 <br> Apache Hadoop: 3.1.1 |
-| **Processing**          | Processamento distribuído de dados com Apache Spark, possibilitando análises em larga escala. | Apache Spark 3.5.0 |
-| **Visualization**       | Visualização de métricas:<br> - Técnicas: Grafana.<br> - Funcionais: Metabase. | Grafana, Metabase |
-| **Orchestrator**        | Orquestração dos fluxos de dados realizada com Apache Airflow.               | Apache Airflow 2.7.2 |
+| **Armazenamento**             | **MONGODB:** Avaliações internas de usuários, recebidas via API e canais de feedback. <br> - **ELASTICSEARCH:** Métricas aplicacionais armazenadas para análise de performance. <br> - **HDFS:** Utilizado para retenção de longo prazo (até cinco anos), com suporte a grandes volumes de dados via Apache Hadoop. | MongoDB: 7 <br> Elasticsearch: 8.16.1 <br> Apache Hadoop: 3.1.1 |
+| **Processamento**          | Processamento distribuído de dados com Apache Spark, possibilitando análises em larga escala. | Apache Spark 3.5.0 |
+| **Visualização**       | Visualização de métricas:<br> - Técnicas: Grafana.<br> - Funcionais: Metabase. | Grafana, Metabase |
+| **Orquestração**        | Orquestração dos fluxos de dados realizada com Apache Airflow.               | Apache Airflow 2.7.2 |
 
 
 > [!NOTE]
-> O repositório da infraestrutura do Hadoop foi desenvolvida em: > https://github.com/gacarvalho/infra-data-master-compass. Para acessar o repositório, favor entrar em contato!
+> O repositório com a infraestrutura do Hadoop utilizada neste case está disponível em: [infra-data-master-compass no GitHub](https://github.com/gacarvalho/infra-data-master-compass).Para obter acesso, entre em contato diretamente pelo [LinkedIn](https://www.linkedin.com/in/iamgacarvalho/)
+
 
 
 
@@ -120,17 +125,18 @@ Como parte da arquitetura, vamos ter 3 divisões bases, como: Extração de dado
 
 
 
-### 3.1.1 Fonte (datasource) de Dados
+### 3.1.1 Fonte (Datasource) de Dados
 
 As coleções armazenadas em banco de dados representam os dados internos da organização, utilizados para registrar feedbacks capturados por diferentes canais e que refletem a jornada dos usuários dentro dos aplicativos. Cada conjunto de dados é alimentado de acordo com a origem da interação.
 
-
+> [!NOTE]
+> Como não dispomos de uma base de dados real de clientes para este case, foi desenvolvido um pipeline no Airflow, denominado dag_e_pipeline_compass_reviews, com o objetivo de inserir dados simulados na coleção do MongoDB. Essa abordagem visa criar um cenário mais próximo da realidade, permitindo que a simulação de dados de interação seja alimentada nos canais, tornando o case mais representativo de um ambiente de produção.
 
 - **Base Interna (MongoDB)**:
     - `Collections` `Aplicativo de Cartões`: Aplicação móvel da instituição utilizada pelos clientes.
     - `Collections` `Aplicativo de Conta`: Aplicação móvel da instituição para operações bancárias.
     - `Collections` `Aplicativo de Conta Internacional`: Aplicação móvel de conta em dólar da instituição.
-    - `Collections` `Outros Aplicativos`: Diversos aplicativos que fornecem dados transacionais.
+    - `Collections` `Outros Aplicativos`: Diversos aplicativos que fornecem dados de avaliações - *quando falamos em outros aplicativos, é uma collections no MongoDB para cada aplicativo*!
 
 As APIs externas são responsáveis por capturar informações de fontes que estão fora do ecossistema da organização. No projeto, foram utilizadas duas soluções distintas para acessar dados públicos de avaliações de usuários em plataformas digitais.
 
@@ -151,10 +157,9 @@ A Camada de Processamento desempenha um papel essencial no projeto Compass, send
 
     - **`Spark Silver – Processamento Intermediário`**: Armazena e processa dados com histórico, aplicando transformações de limpeza, padronização e qualidade que preparam as informações para análises mais avançadas.
 
-    - **`Spark Gold – Enriquecimento e Agregação`**: Responsável por agregar, cruzar e enriquecer os dados tratados, gerando visões analíticas valiosas para apoio à tomada de decisão.
+    - **`Spark Gold – Enriquecimento e Agregação`**: Responsável por agregar e enriquecer os dados tratados, gerando visões analíticas valiosas para apoio à tomada de decisão.
 
-> [!NOTE]
-> A regra de negócios está detalhado no item `4. Fluxo Funcional e Jornada do Cliente`!
+
 
 ### 3.1.3 Camada de Armazenamento
 
@@ -162,8 +167,8 @@ A Camada de Armazenamento é responsável por manter os dados persistidos ao lon
 
 Os principais sistemas utilizados incluem:
 
-- **MongoDB**: Armazena dados funcionais estruturados, utilizados principalmente para análises e relatórios.
-- **Hadoop (HDFS)**: Responsável por armazenar dados em diferentes níveis (Bronze, Silver, Gold e Quality), de forma distribuída e organizada por data.
+- **MongoDB**: Armazena dados funcionais estruturados, utilizados principalmente para análises e relatórios - Visão Silver e Gold sempre da última atualização.
+- **Hadoop (HDFS)**: Responsável por armazenar dados em diferentes níveis (Bronze, Silver, Gold e Quality), de forma distribuída e organizada por data - Visão histórica.
 - **Elasticsearch**: Voltado à indexação e consulta de dados técnicos e de monitoramento, permitindo análises rápidas e detalhadas de métricas e falhas.
 
 A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios, coleções e índices, bem como os responsáveis por alimentar essas estruturas.
@@ -179,9 +184,6 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
   
       | **Collection**                          | **Descrição**                                          | **Quem Alimenta**                              |
       |-----------------------------------------|--------------------------------------------------------|------------------------------------------------|
-      | banco-santander-br                      | Feedbacks e avaliações do aplicativo Santander BR      | Canal                                          |
-      | santander-select-global                 | Feedbacks e avaliações do aplicativo Santander Select Global            | Canal            |
-      | santander-way                           | Feedbacks e avaliações do aplicativo Santander Way     | Canal                       |
       | dt_d_view_gold_agg_compass              | Camada de agregação de dados históricos e enriquecidos  |  <ul><li>Processos de agregação e análise do Compass</li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li> JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER    </li> |
       | dt_d_view_silver_historical_compass     | Camada intermediária de dados históricos               | <ul><li> Processos de pré-processamento e agregação do Compass </li> <li>  DAG: dag_d_pipeline_compass_reviews. </li> <li>  JOB: GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDE </li> </ul> |
     
@@ -494,8 +496,7 @@ volumes:
   business-metabase:
 ```
 > [!IMPORTANT]
-> * Repositório do código fonte da infraestrutura: https://github.com/gacarvalho/infra-data-master-compass. <br>
-> * YAML do Docker Swarm das tecnologias citadas acima: https://github.com/gacarvalho/compass-deployment/tree/compass/infra-3.0.0/services/batch_layer
+> YAML do Docker Swarm das tecnologias citadas acima: [Arquivos YAML no repositório](https://github.com/gacarvalho/compass-deployment/tree/compass/infra-3.0.0/services/batch_layer)
 
 
 #### 3.2.2.2 **Aplicações do Projeto Compass**
@@ -518,7 +519,6 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass </summary> 
   
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/mongodb/)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass/tags/1.0.1/sha256-4b406055b4cabd7b2b2e5395eb6f7f1062f104f8080a2bef5d25f2c350bdf43f)  
   - **Descrição:**  Coleta avaliações de clientes do Banco Santander armazenadas no **MongoDB**, processa os dados e os armazena no **HDFS** em formato **Parquet**.
@@ -540,7 +540,6 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass </summary> 
   
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass/tags/1.0.1/sha256-8a038d0998e0cb11267936b87cb277f10dc210a928571feb14ccba20c8cd807b)  
   - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store**, realizando a ingestão e os armazenando no **HDFS** em formato **Parquet**.
@@ -564,7 +563,6 @@ As aplicações para ingestões de dados foram desenvolvidas para realizar captu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass </summary> 
   
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/google-play)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass/tags/1.0.1/sha256-df992cb185f7a17ed0d40306e91d50139553e17e5c2a4d900579a0d42b804d9e)  
   - **Descrição:**  Coleta avaliações de clientes do Banco Santander armazenadas no  **Google Play**, processa os dados e os armazena no **HDFS** em formato **Parquet**.
@@ -592,7 +590,6 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-apple-store </summary> 
 
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/apple-store-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-apple-store/tags/1.0.1/sha256-a35d88d3c69b78abcecfff0a53906201fab48bdd8b2e5579057e935f58b6fe41)  
   - **Descrição:**  Coleta avaliações de clientes nos canais via API do Itunes na **Apple Store** ingeridos no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no **HDFS** em formato **Parquet**.
@@ -811,7 +808,6 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-google-play </summary> 
   
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/google-play-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-google-play/tags/1.0.1/sha256-3b68861761c0059f6ecb60253086b0f9bef78fa079ea8e5b1a5f44b9da82b252)  
   - **Descrição:**  Coleta avaliações de clientes nos canais via API SERAPI que se origina do **Google Play** que foi ingerido no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no HDFS em formato Parquet.
@@ -937,8 +933,8 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
 
     - **Carga:** Escrita em HDFS (Parquet):
     
-      1. Caminho principal (dados válidos) `/santander/silver/compass/reviews/appleStore/odate={datePath}/` 
-      2. Caminho de falha `/santander/silver/compass/reviews_fail/appleStore/odate={datePath}/`
+      1. Caminho principal (dados válidos) `/santander/silver/compass/reviews/googlePlay/odate={datePath}/` 
+      2. Caminho de falha `/santander/silver/compass/reviews_fail/googlePlay/odate={datePath}/`
 
     - **Métricas:** A função `collect_metrics` coleta um conjunto abrangente de métricas para fornecer uma visão detalhada do processo de ingestão e validação de dados. As métricas são estruturadas em um objeto JSON, facilitando o consumo por sistemas de monitoramento e análise.
 
@@ -1039,7 +1035,6 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-app-silver-reviews-mongodb </summary> 
 
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/mongodb-processing-historical)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-app-silver-reviews-mongodb/tags/1.0.1/sha256-6138a44faa031c50a8f8b7b4e75db092a8d03a62a0124b9e4414f999788e0d69)  
   - **Descrição:**  Coleta avaliações de clientes nos canais via base de dados **MongoDB** ingeridos no Data Lake, realizando a ingestão a partir da camada Bronze, processando e aplicando tratamento de dados e armazenando no HDFS em formato Parquet.
@@ -1286,7 +1281,6 @@ A agregação tem como propósito oferecer ao time de negócio uma visão consol
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-reviews-aggregate-apps-santander </summary> 
 
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/reviews-aggregate-apps-santander)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-reviews-aggregate-apps-santander/tags/1.0.1/sha256-58173fc5e2bc379e19dc5496c1da79f1ccaac0535a5ab5ae27430f64050f98ac)  
   - **Descrição:**  Coleta avaliações de clientes de diversos  canais ingeridos no Data Lake, realizando a ingestão a partir da camada Silver, processando, agregando as informações e armazenando no **HDFS** em formato **Parquet**.
@@ -1489,7 +1483,6 @@ No exemplo abaixo, é possível observar que a validação de volumetria foi rea
   <summary>Informações detalhada do artefato iamgacarvalho/dmc-quality-pipeline-compass </summary> 
 
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/quality-pipeline-compass)  
   - **Imagem Docker:** [Docker Hub](hhttps://hub.docker.com/repository/docker/iamgacarvalho/dmc-quality-pipeline-compass/tags/1.0.1/sha256-a089704d2d12d1816d85246347e9604d082d605229d95116aaff145f1be990ba)  
 
@@ -1746,7 +1739,6 @@ A aplicação responsável por realizar o expurgo dos dados é uma aplicação S
   <summary>Informações detalhada do artefato iamgacarvalho/iamgacarvalho/dmc-expurge-partitions-hdfs </summary> 
 
   - **Versão:** `1.0.1`
-  - **Fase do Projeto:** `V1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/expurge-partitions-hdfs-compass)  
   - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-expurge-partitions-hdfs/tags/1.0.0/sha256-e78cdb9d002ec2273ef464606b8b7e7d6d6a7dc4136a66868be703315201cac4)  
 
@@ -1921,11 +1913,14 @@ A aplicação responsável por realizar o expurgo dos dados é uma aplicação S
 </details>
 
 ---
-#### 3.2.2.3 **Malha do Projeto Compass**
+#### 3.2.2.3 **Pipeline do Projeto Compass**
 
-A orquestração dos fluxos de ingestão, transformação e carga das informações é realizada por meio do Apache Airflow, ferramenta escolhida pela sua flexibilidade, escalabilidade e capacidade de monitoramento de pipelines de dados. A malha desenvolvida no Airflow permite o agendamento e controle dos jobs Spark, garantindo a execução ordenada e confiável das etapas do processo de dados dentro do Projeto Compass.
+A orquestração dos fluxos de ingestão, transformação e carga das informações é realizada por meio do Apache Airflow, ferramenta escolhida pela sua flexibilidade, escalabilidade e capacidade de monitoramento de pipelines de dados. O pipeline desenvolvido no Airflow permite o agendamento e controle dos jobs Spark, garantindo a execução ordenada e confiável das etapas do processo de dados dentro do Projeto Compass.
 
 Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio, contendo tarefas interdependentes que asseguram o tratamento correto dos dados desde a origem até os destinos finais, como o Data Lake ou sistemas consumidores. Essa abordagem permite maior governança, rastreabilidade e facilidade de manutenção da arquitetura de dados, além de suportar a integração com outras ferramentas e sistemas do ecossistema Big Data.
+
+> [!NOTE]
+> O pipeline segue um padrão: `dag_<schedule>_pipeline_<projeto>_reviews`. **Legendas schedule:** `d`: Diário,`s`: Semanal, `m`: Mensal, `e`: Eventual, 
 
 | Nome da DAG                              | Descrição                                                                                                                                          | JOBS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1935,17 +1930,12 @@ Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio
 
 # 4. Fluxo Funcional e Jornada do Cliente
 
-A solução foi projetada para atender ao time de negócios do Santander, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
+A solução foi projetada para atender ao time de negócio, proporcionando uma visão estratégica das principais dores dos clientes e da concorrência. Ela permite análises em diferentes níveis de granularidade, desde indicadores agregados, como a distribuição das avaliações e notas (de 0 a 5) por segmento e canal, até um nível mais detalhado, possibilitando o acompanhamento do histórico de avaliações de clientes específicos dentro de um determinado segmento. 
 
 
 ![<fluxo-funcional>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/fluxo%20de%20negocios.jpg?raw=true)
 
 
-Como princípio fundamental da estrutura de Experiência do Usuário, foi levantada a questão sobre qual é o fluxo atualmente utilizado para coletar, analisar e aplicar melhorias com base nas dores dos clientes. Abaixo, detalhamos esse processo:
-
-> Atualmente, monitoramos alguns indicadores por meio de um dashboard para identificar as principais dores dos clientes. A partir desses dados, realizamos um diagnóstico que nos permite entender se o caso se trata de um incidente (INC) ou de um ponto de fricção na jornada do cliente. Com base nessa análise, encaminhamos as informações para o time de produto, classificando-as como incidentes ou oportunidades de melhoria.
-
-No entanto, ao aprofundarmos a análise do fluxo atual, identificamos que essas avaliações são realizadas `exclusivamente com dados internos`, desconsiderando feedbacks externos, como os comentários e avaliações deixados por clientes em plataformas como a Apple Store e o Google Play.
 
 Com os dados de extração pelo Projeto Compass, será possível unificar e enriquecer as principais dores dos clientes com dados externos — como avaliações, comentários e feedbacks coletados em plataformas públicas, como Apple Store, Google Play, Reclame Aqui, entre outras.
 
@@ -1982,53 +1972,53 @@ A seguir, estão descritas em formato de tabela as principais regras de negócio
 <details>
   <summary> 🏷️ Regras de Negócios - Apple Store </summary>
 
-  | **ID**    | **Fonte de Origem** | **Versão do Projeto** | **Regra de Negócio**                                               | **Descrição**                                                                                                                                                             | **Objetivo**                                                                                     | **Última Atualização** |
+  | **ID**    | **Fonte de Origem** | **Versão do Projeto/Aplicação** | **Regra de Negócio**                                               | **Descrição**                                                                                                                                                             | **Objetivo**                                                                                     | **Última Atualização** |
   |----------|----------------------|------------------------|---------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|-------------------------|
-  | **RN001** | Google Play          | v1                     | Uso de dados históricos (`historical_data`)                         | Utiliza a função `historical_data` para obter a partição anterior e realizar atualização incremental.                                                                     | Evitar reprocessamento completo e permitir atualização incremental.                             | 2025-04-06              |
-  | **RN002** | Apple Store          | v1                     | Remoção de acentos e padronização de texto                          | Os textos dos campos `author_name`, `title` e `content` devem ser convertidos para letras maiúsculas e ter acentos removidos.                                              | Uniformizar dados textuais para análises e buscas.                                               | 2025-04-06              |
-  | **RN003** | Apple Store          | v1                     | Geração de métricas de erro                                         | Em caso de falha no processamento, uma métrica detalhada contendo o erro e informações do cliente será salva no Elasticsearch.                                            | Permitir rastreabilidade e visibilidade de falhas.                                               | 2025-04-06              |
-  | **RN004** | Apple Store          | v1                     | Padronização de schema antes da escrita                             | Antes da persistência, os dados devem ser reestruturados conforme o schema definido para a camada silver (`apple_store_schema_silver`).                                  | Garantir consistência da estrutura dos dados armazenados.                                        | 2025-04-06              |
-  | **RN005** | Apple Store          | v1                     | Extração de metadados a partir do nome do arquivo                   | Os campos `app` e `segmento` devem ser extraídos a partir do caminho do arquivo no HDFS com expressões regulares.                                                          | Enriquecer os dados com metadados úteis sem depender de colunas explícitas.                     | 2025-04-06              |
-  | **RN006** | Apple Store          | v1                     | Validação da existência de partições no HDFS                        | A execução só continuará se houver partições no formato `odate=*` no caminho histórico `/santander/silver/compass/reviews/appleStore/`.                                  | Evitar falhas por ausência de dados e otimizar a execução.                                       | 2025-04-06              |
-  | **RN007** | Apple Store          | v1                     | Salvamento de métricas da aplicação                                 | Métricas de execução bem-sucedida devem ser enviadas ao índice `compass_dt_datametrics` no Elasticsearch, usando autenticação básica.                                     | Garantir observabilidade da execução e indicadores de sucesso.                                  | 2025-04-06              |
-  | **RN008** | Apple Store          | v1                     | Verificação de duplicidade de registros                             | Verifica se há duplicidade de registros com base na coluna `id`. Caso existam, retorna erro de conflito e bloqueia a execução.                                             | Evitar dados duplicados e garantir unicidade dos registros.                                     | 2025-04-06              |
-  | **RN009** | Apple Store          | v1                     | Validação de campos nulos em colunas obrigatórias                   | Valida se colunas essenciais como `id`, `content`, `im_rating`, `im_version` estão preenchidas. Caso contrário, gera erro e encerra o processo.                           | Garantir integridade dos dados antes da persistência.                                            | 2025-04-06              |
-  | **RN010** | Apple Store          | v1                     | Consistência de tipo para campos numéricos                          | Garante que os valores na coluna `im_rating` sejam numéricos válidos (por exemplo, inteiros ou floats). Registros inválidos são descartados ou tratados conforme regra. | Evitar erros de tipo e assegurar qualidade para análise quantitativa.                           | 2025-04-06              |
+  | **RN001** | Google Play - Silver| v1 - 1.0.1             | Uso de dados históricos (`historical_data`)                         | Utiliza a função `historical_data` para obter a partição anterior e realizar atualização incremental.                                                                     | Evitar reprocessamento completo e permitir atualização incremental.                             | 2025-04-06              |
+  | **RN002** | Apple Store - Silver| v1 - 1.0.1             | Remoção de acentos e padronização de texto                          | Os textos dos campos `author_name`, `title` e `content` devem ser convertidos para letras maiúsculas e ter acentos removidos.                                              | Uniformizar dados textuais para análises e buscas.                                               | 2025-04-06              |
+  | **RN003** | Apple Store - Silver| v1 - 1.0.1             | Geração de métricas de erro                                         | Em caso de falha no processamento, uma métrica detalhada contendo o erro e informações do cliente será salva no Elasticsearch.                                            | Permitir rastreabilidade e visibilidade de falhas.                                               | 2025-04-06              |
+  | **RN004** | Apple Store - Silver| v1 - 1.0.1             | Padronização de schema antes da escrita                             | Antes da persistência, os dados devem ser reestruturados conforme o schema definido para a camada silver (`apple_store_schema_silver`).                                  | Garantir consistência da estrutura dos dados armazenados.                                        | 2025-04-06              |
+  | **RN005** | Apple Store - Silver| v1 - 1.0.1             | Extração de metadados a partir do nome do arquivo                   | Os campos `app` e `segmento` devem ser extraídos a partir do caminho do arquivo no HDFS com expressões regulares.                                                          | Enriquecer os dados com metadados úteis sem depender de colunas explícitas.                     | 2025-04-06              |
+  | **RN006** | Apple Store - Silver| v1 - 1.0.1             | Validação da existência de partições no HDFS                        | A execução só continuará se houver partições no formato `odate=*` no caminho histórico `/santander/silver/compass/reviews/appleStore/`.                                  | Evitar falhas por ausência de dados e otimizar a execução.                                       | 2025-04-06              |
+  | **RN007** | Apple Store - Silver| v1 - 1.0.1             | Salvamento de métricas da aplicação                                 | Métricas de execução bem-sucedida devem ser enviadas ao índice `compass_dt_datametrics` no Elasticsearch, usando autenticação básica.                                     | Garantir observabilidade da execução e indicadores de sucesso.                                  | 2025-04-06              |
+  | **RN008** | Apple Store - Silver| v1 - 1.0.1             | Verificação de duplicidade de registros                             | Verifica se há duplicidade de registros com base na coluna `id`. Caso existam, retorna erro de conflito e bloqueia a execução.                                             | Evitar dados duplicados e garantir unicidade dos registros.                                     | 2025-04-06              |
+  | **RN009** | Apple Store - Silver| v1 - 1.0.1             | Validação de campos nulos em colunas obrigatórias                   | Valida se colunas essenciais como `id`, `content`, `im_rating`, `im_version` estão preenchidas. Caso contrário, gera erro e encerra o processo.                           | Garantir integridade dos dados antes da persistência.                                            | 2025-04-06              |
+  | **RN010** | Apple Store - Silver| v1 - 1.0.1             | Consistência de tipo para campos numéricos                          | Garante que os valores na coluna `im_rating` sejam numéricos válidos (por exemplo, inteiros ou floats). Registros inválidos são descartados ou tratados conforme regra. | Evitar erros de tipo e assegurar qualidade para análise quantitativa.                           | 2025-04-06              |
 
 </details>
 
 <details>
   <summary> 🏷️ Regras de Negócios - Google Play </summary>
 
-  | **ID** | Fonte de Origem| Versão do Projeto | Regra de Negócio                             | Descrição                                                                                                                                              | **Objetivo**                                                                 | Última Atualização                    |
+  | **ID** | Fonte de Origem| Versão do Projeto/Aplicação | Regra de Negócio                             | Descrição                                                                                                                                              | **Objetivo**                                                                 | Última Atualização                    |
   |--------|----------------|-------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|-----------------------------------|
-  | **RN001**  | Google Play    | v1                | Uso de dados históricos (`historical_data`)    | Utiliza a função `historical_data` para obter a partição anterior e realizar atualização incremental.                                                      | Evitar reprocessamento completo e permitir atualização incremental.         | 2025-04-06      |
-  | **RN002**  | Google Play    | v1                |Filtragem por dados válidos (`validate_ingest`) | Aplica regras de validação de schema, campos obrigatórios, tipos de dados e padrões esperados.                                                             | Separar dados válidos e inválidos para rastreabilidade.                     | 2025-04-06        |
-  | **RN003**  | Google Play    | v1                |Normalização de texto (`unidecode`)             | Remove acentuação e converte para caixa alta nos campos `title` e `snippet`.                                                                               | Uniformizar texto para análise textual.                                     | 2025-04-06          |
-  | **RN004**  | Google Play    | v1                |Identificação de segmentação (PF/PJ)            | Classifica os dados de entrada como pessoa física ou jurídica com base no caminho do arquivo.                                                              | Enriquecer o dado com a informação de segmento.                             | 2025-04-06                     |
-  | **RN005**  | Google Play    | v1                |Extração do nome do app                         | A partir do caminho do arquivo (`input_file_name`), extrai dinamicamente o nome do aplicativo.                                                             | Associar corretamente o review ao seu aplicativo.                           | 2025-04-06                      |
-  | **RN006**  | Google Play    | v1                |Criação de colunas técnicas                     | Adiciona colunas como `job_datetime` e `partition_column` para rastreabilidade da execução e particionamento por data.                                    | Permitir auditoria e facilitar consultas particionadas.                      | 2025-04-06      |
-  | **RN007**  | Google Play    | v1                |Particionamento por data (`partition_column`)   | Os dados são particionados por data da execução extraída do nome do arquivo (`odate`).                                                                     | Melhorar performance de leitura e escrita no lake.                          | 2025-04-06             |
-  | **RN008**  | Google Play    | v1                |Rejeição de dados inconsistentes                | Dados com inconsistências, como tipos errados ou campos vazios obrigatórios, são separados e salvos no caminho de *falhas*.                                | Garantir integridade da camada Silver.                                      | 2025-04-06                   |
-  | **RN009**  | Google Play    | v1                |Envio de métricas para observabilidade          | Em caso de erro, envia um documento JSON para Elasticsearch com os detalhes do job.                                                                        | Monitorar falhas em tempo real.                                             | 2025-04-06   |
+  | **RN001**  | Google Play - Silver| v1 - 1.0.1             |  Uso de dados históricos (`historical_data`)    | Utiliza a função `historical_data` para obter a partição anterior e realizar atualização incremental.                                                      | Evitar reprocessamento completo e permitir atualização incremental.         | 2025-04-06      |
+  | **RN002**  | Google Play - Silver| v1 - 1.0.1             | Filtragem por dados válidos (`validate_ingest`) | Aplica regras de validação de schema, campos obrigatórios, tipos de dados e padrões esperados.                                                             | Separar dados válidos e inválidos para rastreabilidade.                     | 2025-04-06        |
+  | **RN003**  | Google Play - Silver| v1 - 1.0.1             | Normalização de texto (`unidecode`)             | Remove acentuação e converte para caixa alta nos campos `title` e `snippet`.                                                                               | Uniformizar texto para análise textual.                                     | 2025-04-06          |
+  | **RN004**  | Google Play - Silver| v1 - 1.0.1             | Identificação de segmentação (PF/PJ)            | Classifica os dados de entrada como pessoa física ou jurídica com base no caminho do arquivo.                                                              | Enriquecer o dado com a informação de segmento.                             | 2025-04-06                     |
+  | **RN005**  | Google Play - Silver| v1 - 1.0.1             | Extração do nome do app                         | A partir do caminho do arquivo (`input_file_name`), extrai dinamicamente o nome do aplicativo.                                                             | Associar corretamente o review ao seu aplicativo.                           | 2025-04-06                      |
+  | **RN006**  | Google Play - Silver| v1 - 1.0.1             | Criação de colunas técnicas                     | Adiciona colunas como `job_datetime` e `partition_column` para rastreabilidade da execução e particionamento por data.                                    | Permitir auditoria e facilitar consultas particionadas.                      | 2025-04-06      |
+  | **RN007**  | Google Play - Silver| v1 - 1.0.1             | Particionamento por data (`partition_column`)   | Os dados são particionados por data da execução extraída do nome do arquivo (`odate`).                                                                     | Melhorar performance de leitura e escrita no lake.                          | 2025-04-06             |
+  | **RN008**  | Google Play - Silver| v1 - 1.0.1             | Rejeição de dados inconsistentes                | Dados com inconsistências, como tipos errados ou campos vazios obrigatórios, são separados e salvos no caminho de *falhas*.                                | Garantir integridade da camada Silver.                                      | 2025-04-06                   |
+  | **RN009**  | Google Play - Silver| v1 - 1.0.1             | Envio de métricas para observabilidade          | Em caso de erro, envia um documento JSON para Elasticsearch com os detalhes do job.                                                                        | Monitorar falhas em tempo real.                                             | 2025-04-06   |
 </details>
 
 <details>
   <summary> 🏷️ Regras de Negócios - Base Interna | MongoDB </summary>
 
-  | ID       | Fonte de Origem | Versão do Projeto | Regra de Negócio Funcional                    | Descrição                                                                                                                        | Objetivo                                                                                      | Última Atualização |
+  | ID       | Fonte de Origem | Versão do Projeto/Aplicação | Regra de Negócio Funcional                    | Descrição                                                                                                                        | Objetivo                                                                                      | Última Atualização |
   |----------|------------------|--------------------|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|---------------------|
-  | **RN001**   | MongoDB          | v1                 | Filtro por colunas obrigatórias               | Remove registros que não possuem `id`, `rating`, `snippet` ou `date`.                                                           | Garantir integridade mínima dos dados antes do enriquecimento.                              | 2025-04-06          |
-  | **RN002**   | MongoDB          | v1                 | Tratamento de acentos                         | Aplica função para remover acentos do campo `comment`.                                                                          | Padronizar texto para facilitar análise textual.                                              | 2025-04-06          |
-  | **RN003**   | MongoDB          | v1                 | Conversão para caixa alta                     | Converte os comentários (`comment`) para letras maiúsculas.                                                                     | Evitar distinções entre palavras com mesmas letras em diferentes casos.                     | 2025-04-06          |
-  | **RN004**   | MongoDB          | v1                 | Adição da coluna `app`                        | Extrai o nome do app a partir do nome do arquivo/parquet lido.                                                                  | Enriquecer os dados com a aplicação de origem.                                                | 2025-04-06          |
-  | **RN005**   | MongoDB          | v1                 | Adição da coluna `segmento`                   | Extrai o segmento (`pf` ou `pj`) do nome do arquivo/parquet lido.                                                               | Permitir segmentação dos dados por tipo de cliente.                                           | 2025-04-06          |
-  | **RN006**   | MongoDB          | v1                 | Criação da coluna `historical_data`           | Compara os dados atuais com dados anteriores e adiciona campo indicando alterações.                                             | Rastrear modificações nos comentários ou avaliações ao longo do tempo.                      | 2025-04-06          |
-  | **RN007**   | MongoDB          | v1                 | Remoção de colunas desnecessárias             | Remove campos como `avatar`, `iso_date`, entre outros após transformação.                                                       | Reduzir tamanho do dataset e manter apenas colunas relevantes.                               | 2025-04-06          |
-  | **RN008**   | MongoDB          | v1                 | Padronização do schema final (`Silver`)       | Aplica `withColumn` e `select` para garantir colunas fixas: `id`, `title`, `rating`, `comment`, `likes`, `date`, `app`, etc.   | Garantir compatibilidade com camadas posteriores e contratos de dados.                       | 2025-04-06          |
-  | **RN009**   | MongoDB          | v1                 | Criação da coluna `dt_partition`              | Adiciona uma partição de data (`dt_partition`) baseada na data de execução.                                                     | Otimizar queries futuras e organização no HDFS.                                               | 2025-04-06          |
-  | **RN010**   | MongoDB          | v1                 | Conversão de tipos                            | Campos como `likes` e `rating` são convertidos explicitamente para `IntegerType` e `FloatType`.                                | Evitar erros de tipo e garantir consistência na leitura e escrita.                          | 2025-04-06          |
-  | **RN011**   | MongoDB          | v1                 | Unificação dos dados `pf` e `pj`              | Dados são lidos separadamente por segmento e unidos em um único DataFrame.                                                      | Obter um dataset consolidado para uso analítico.                                              | 2025-04-06          |
+  | **RN001**   | MongoDB - Silver| v1 - 1.0.1       | Filtro por colunas obrigatórias               | Remove registros que não possuem `id`, `rating`, `snippet` ou `date`.                                                           | Garantir integridade mínima dos dados antes do enriquecimento.                              | 2025-04-06          |
+  | **RN002**   | MongoDB - Silver| v1 - 1.0.1       |  Tratamento de acentos                         | Aplica função para remover acentos do campo `comment`.                                                                          | Padronizar texto para facilitar análise textual.                                              | 2025-04-06          |
+  | **RN003**   | MongoDB - Silver| v1 - 1.0.1       |  Conversão para caixa alta                     | Converte os comentários (`comment`) para letras maiúsculas.                                                                     | Evitar distinções entre palavras com mesmas letras em diferentes casos.                     | 2025-04-06          |
+  | **RN004**   | MongoDB - Silver| v1 - 1.0.1       |  Adição da coluna `app`                        | Extrai o nome do app a partir do nome do arquivo/parquet lido.                                                                  | Enriquecer os dados com a aplicação de origem.                                                | 2025-04-06          |
+  | **RN005**   | MongoDB - Silver| v1 - 1.0.1       |  Adição da coluna `segmento`                   | Extrai o segmento (`pf` ou `pj`) do nome do arquivo/parquet lido.                                                               | Permitir segmentação dos dados por tipo de cliente.                                           | 2025-04-06          |
+  | **RN006**   | MongoDB - Silver| v1 - 1.0.1       |  Criação da coluna `historical_data`           | Compara os dados atuais com dados anteriores e adiciona campo indicando alterações.                                             | Rastrear modificações nos comentários ou avaliações ao longo do tempo.                      | 2025-04-06          |
+  | **RN007**   | MongoDB - Silver| v1 - 1.0.1       |  Remoção de colunas desnecessárias             | Remove campos como `avatar`, `iso_date`, entre outros após transformação.                                                       | Reduzir tamanho do dataset e manter apenas colunas relevantes.                               | 2025-04-06          |
+  | **RN008**   | MongoDB - Silver| v1 - 1.0.1       |  Padronização do schema final (`Silver`)       | Aplica `withColumn` e `select` para garantir colunas fixas: `id`, `title`, `rating`, `comment`, `likes`, `date`, `app`, etc.   | Garantir compatibilidade com camadas posteriores e contratos de dados.                       | 2025-04-06          |
+  | **RN009**   | MongoDB - Silver| v1 - 1.0.1       |  Criação da coluna `dt_partition`              | Adiciona uma partição de data (`dt_partition`) baseada na data de execução.                                                     | Otimizar queries futuras e organização no HDFS.                                               | 2025-04-06          |
+  | **RN010**   | MongoDB - Silver| v1 - 1.0.1       |  Conversão de tipos                            | Campos como `likes` e `rating` são convertidos explicitamente para `IntegerType` e `FloatType`.                                | Evitar erros de tipo e garantir consistência na leitura e escrita.                          | 2025-04-06          |
+  | **RN011**   | MongoDB - Silver| v1 - 1.0.1       |  Unificação dos dados `pf` e `pj`              | Dados são lidos separadamente por segmento e unidos em um único DataFrame.                                                      | Obter um dataset consolidado para uso analítico.                                              | 2025-04-06          |
 
 </details>
 
@@ -2074,7 +2064,7 @@ Este documento será atualizado continuamente conforme novas regras forem implem
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content                  | string    | .*                                                | S            | app não cair notificação                       | Campo com o conteúdo da avaliação.                      | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content_attributes_label | string    | .*                                                | S            | Aplicativo                                     | Categoria atribuída ao conteúdo da avaliação.          | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | content_attributes_term  | string    | .*                                                | S            | Application                                    | Termo relacionado ao conteúdo da avaliação.            | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
-| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | id                       | string    | ^\d+$                                             | S            | 12118476144                                   | Identificador único da avaliação.                      | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
+| /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | id                       | string    | ^\d+$                                            | S            | 12118476144                                   | Identificador único da avaliação.                      | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_rating                | integer   | ^[1-5]$                                           | S            | 1                                              | Nota da avaliação (1 a 5).                              | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_version               | string    | .*                                                | S            | 24.10.2                                       | Versão do aplicativo avaliado.                         | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
 | /santander/bronze/compass/reviews/appleStore/banco-santander-br_pf/      | odate=yyyyMMdd   | Apple Store | im_votecount             | integer   | ^\d+$                                             | S            | 0                                              | Quantidade de votos recebidos.                         | group_jobs_apple → APPLE_INGESTION_BANCO-SANTANDER-BR |
@@ -2393,10 +2383,4 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 # 6. Instruções para Configuração e Execução do Projeto Compass
 # 7. Melhorias do projeto e Considerações Finais
 
-
-
-
-
 ---
-
-
