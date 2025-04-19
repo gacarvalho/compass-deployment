@@ -203,9 +203,9 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
       
       | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**                                                                | **Organização**                                 |
       |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-      | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | <ul><li> `banco-santander-br_pf/`</li> <li>`santander-select-global_pf/`</li> <li>`santander-way_pf/`</li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li></ul>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li>                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Apple Store**     | `/santander/bronze/compass/reviews/appleStore/`   | <ul><li> `banco-santander-br_pf/`</li> <li>`santander-select-global_pf/`</li> <li>`santander-way_pf/`</li></ul>                     | Subdiretórios por data de carga(`odate=YYYYMMDD`)      |
+      | **Google Play**     | `/santander/bronze/compass/reviews/googlePlay/`   | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li></ul>                     | Subdiretórios por data de carga(`odate=YYYYMMDD`)      |
+      | **MongoDB**         | `/santander/bronze/compass/reviews/mongodb/`      | <ul><li>`banco-santander-br_pf/` </li><li>`santander-select-global_pf/`</li> <li>`santander-way_pf/` </li>                     | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
 
       ---
       
@@ -217,10 +217,10 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
       
       | **Plataforma**     | **Caminho**                                       | **Subdiretórios por Aplicativo**           | **Organização**                                 |
       |--------------------|---------------------------------------------------|--------------------------------------------|------------------------------------------------|
-      | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.         | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.             | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.      | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Apple Store**     | `/santander/silver/compass/reviews/appleStore/`   | Dados processados da Apple Store.         | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
+      | **Google Play**     | `/santander/silver/compass/reviews/googlePlay/`   | Dados processados do Google Play.         | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
+      | **MongoDB**         | `/santander/silver/compass/reviews/mongodb/`      | Dados processados do MongoDB.             | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
+      | **Falhas**          | `/santander/silver/compass/reviews_fail/`         | Dados que falharam no processamento.      | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
       
       ---
       
@@ -229,8 +229,8 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
       
       | **Tipo de Dado**          | **Caminho**                                       | **Descrição**                                                                                   | **Organização**                                 |
       |---------------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------|------------------------------------------------|
-      | **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data (`odate=YYYYMMDD`)      |
-      | **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data (`odate=YYYYMMDD`)      |
+      | **Agregação de Reviews**  | `/santander/gold/compass/reviews/apps_santander_aggregate/` | Dados agregados dos aplicativos do Santander.                                                  | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
+      | **Falhas no Processamento** | `/santander/gold/compass/reviews_fail/`           | Dados que falharam no processamento final.                                                     | Subdiretórios por data de carga (`odate=YYYYMMDD`)      |
       
       ---
       
@@ -406,8 +406,8 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
 
     | **Componente**                     | **Categoria**            | Visão                         | **Tipo de Painel**        | **Nome da métrica**                           | **Unidade**         | **Descrição**                                                                                                                                                             | **Query Metrica**                                                                                | **Fonte**
     |------------------------------------|--------------------------|-------------------------------|---------------------------|-----------------------------------------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------
-    | Aplicações Spark por prioridade    | Totais de Falhas         | Display: Medidor de Barras    | Dashboard                 | Applications fail per priority [total]        | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha                                                         | ``                                                                                               | ElasticSearch
-    | Aplicações Spark por camada        | Totais de Falhas         | Display: Séries Temporais     | Dashboard                 | Applications fail per priority [historical]   | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para a malha e de acordo com a camada (bronze, silver ou gold)                                                      | ``                                                                                               | ElasticSearch
+    | Aplicações Spark por prioridade    | Totais de Falhas         | Display: Medidor de Barras    | Dashboard                 | Applications fail per priority [total]        | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para o pipeline                                                         | ``                                                                                               | ElasticSearch
+    | Aplicações Spark por camada        | Totais de Falhas         | Display: Séries Temporais     | Dashboard                 | Applications fail per priority [historical]   | Numero Total        | Exibe total de aplicações que falharam de acordo com o tipo de prioridade, que pode ir de 0 a 2 que poderá ser listado no dashboard, quanto menor a prioridade (exemplo: 0), mais critíco é o impacto para o pipeline de acordo com a camada (bronze, silver ou gold)                                                      | ``                                                                                               | ElasticSearch
     | Tabela de Falhas das aplicações Spark | Detalhes das falhas   | Display: Tabela               | Dashboard                 | N/A                                           | Registro            | Tabela com os registros das aplicações que falharam, exibindo: Timestamp, Layer, JOB, Priority, Projeto. Tower e Error                                                      | ``                                                                                               | ElasticSearch
 
   </details>
@@ -609,7 +609,7 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
     - **Tipo de processo:** Batch (diário)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados PF/PJ particionados por data de carga `odate` em Parquet
     - **Transformação e Funções:** PySpark <br> 
       1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
 
@@ -779,8 +779,8 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
     * `timestamp`: Timestamp da geração das métricas.
     * `layer`: Camada referencia onde ocorreu o erro.
     * `project`: Projeto responsável pela aplicação com erro.
-    * `job`: Job da malha que está em execução e que falhou.
-    * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+    * `job`: Job do pipeline que está em execução e que falhou.
+    * `priority`: Prioridade do erro, quanto menor, mais impacto no pipeline e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
     * `tower`: Torre da sigla responsável pelo alerta.
     * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
     * `error`: log do erro da aplicação.
@@ -827,7 +827,7 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
     - **Tipo de processo:** Batch (diário)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados PF/PJ particionados por data de carga `odate` em Parquet
     - **Transformação e Funções:** PySpark <br> 
       1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
 
@@ -1006,8 +1006,8 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
         * `timestamp`: Timestamp da geração das métricas.
         * `layer`: Camada referencia onde ocorreu o erro.
         * `project`: Projeto responsável pela aplicação com erro.
-        * `job`: Job da malha que está em execução e que falhou.
-        * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+        * `job`: Job do pipeline que está em execução e que falhou.
+        * `priority`: Prioridade do erro, quanto menor, mais impacto no pipeline e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
         * `tower`: Torre da sigla responsável pelo alerta.
         * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
         * `error`: log do erro da aplicação.
@@ -1053,7 +1053,7 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
     - **Tipo de processo:** Batch (diário)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados PF/PJ particionados por data de carga `odate` em Parquet
     - **Transformação e Funções:** PySpark <br> 
       1.  `remove_accents(s)`: Remove acentos de uma string, utilizando a biblioteca unidecode. Esta função é registrada como uma UDF (User Defined Function) no Spark para ser aplicada em colunas de DataFrames. **Parâmetros:** `s` (str): A string da qual os acentos serão removidos. **Retorno:** (str): A string sem acentos.
 
@@ -1223,8 +1223,8 @@ As aplicações responsáveis pela transformação dos dados realizarão a leitu
         * `timestamp`: Timestamp da geração das métricas.
         * `layer`: Camada referencia onde ocorreu o erro.
         * `project`: Projeto responsável pela aplicação com erro.
-        * `job`: Job da malha que está em execução e que falhou.
-        * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+        * `job`: Job do pipeline que está em execução e que falhou.
+        * `priority`: Prioridade do erro, quanto menor, mais impacto no pipeline e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
         * `tower`: Torre da sigla responsável pelo alerta.
         * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
         * `error`: log do erro da aplicação.
@@ -1300,7 +1300,7 @@ A agregação tem como propósito oferecer ao time de negócio uma visão consol
     - **Tipo de processo:** Batch (diário)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados particionados por data de carga `odate` em Parquet
     - **Transformação e Funções:** PySpark <br> 
 
       1.  `processing_reviews(df)`: 
@@ -1439,8 +1439,8 @@ A agregação tem como propósito oferecer ao time de negócio uma visão consol
     * `timestamp`: Timestamp da geração das métricas.
     * `layer`: Camada referencia onde ocorreu o erro.
     * `project`: Projeto responsável pela aplicação com erro.
-    * `job`: Job da malha que está em execução e que falhou.
-    * `priority`: Prioridade do erro, quanto menor, mais impacto na malha e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
+    * `job`: Job do pipeline que está em execução e que falhou.
+    * `priority`: Prioridade do erro, quanto menor, mais impacto no pipeline e na visão cliente, considera que de 0 a 2 é o imapacto crítico, superior a isso, há impacto mas o fluxo segue normal. Exemplo: `Falha de 0-2` -> Erro ao capturar dados da API ou erro ao gravar no path destino.  `Falha de 3-4` -> Erro ao enviar as métricas.
     * `tower`: Torre da sigla responsável pelo alerta.
     * `client`: Segmento impactado, considerando PF (pessoa física) e/ou PJ (pessoa juridica).
     * `error`: log do erro da aplicação.
@@ -1474,7 +1474,7 @@ A aplicação responsável por realizar as qualidade de dados operam como um age
   - Pattern
 
 
-No exemplo abaixo, é possível observar que a validação de volumetria foi realizada com sucesso, porém, caiu em rejeitados no schema, exibindo o schema atual e o schema que deveria ser estruturado, além de apontar o caminho no HDFS que o dado foi rejeitado por odate.
+No exemplo abaixo, é possível observar que a validação de volumetria foi realizada com sucesso, porém, caiu em rejeitados no schema, exibindo o schema atual e o schema que deveria ser estruturado, além de apontar o caminho no HDFS que o dado foi rejeitado por data de carga (odate).
 
 ![<data-master-compass>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/validador_data_quality.png?raw=true)
 
@@ -1526,7 +1526,7 @@ No exemplo abaixo, é possível observar que a validação de volumetria foi rea
     - **Tipo de processo:** Batch (diário)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados PF/PJ particionados por data de carga `odate` em Parquet
     - **Validação leitura da origem e carga:** PySpark
 
       1.  `read_parquet_data(spark, path)`: Lê dados de um arquivo Parquet e trata erros de leitura.
@@ -1731,7 +1731,7 @@ No exemplo abaixo, é possível observar que a validação de volumetria foi rea
 ♨️ **Aplicação - Rentenção/expurgo de dados**
 
 
-A aplicação responsável por realizar o expurgo dos dados é uma aplicação Spark que realiza a limpeza automática de partições antigas no HDFS com base em uma data limite configurável. Ele identifica partições no formato odate=YYYYMMDD e remove aquelas fora do intervalo de dias desejado. Em caso de erro durante qualquer etapa (Spark, HDFS ou MongoDB), o script envia métricas detalhadas de falha para uma base MongoDB, incluindo timestamp, contexto e mensagem do erro.
+A aplicação responsável por realizar o expurgo dos dados é uma aplicação Spark que realiza a limpeza automática de partições antigas no HDFS com base em uma data limite configurável. Ele identifica partições no formato data de carga odate=YYYYMMDD e remove aquelas fora do intervalo de dias desejado. Em caso de erro durante qualquer etapa (Spark, HDFS ou MongoDB), o script envia métricas detalhadas de falha para uma base MongoDB, incluindo timestamp, contexto e mensagem do erro.
 
 
 `📦 artefato` `iamgacarvalho/iamgacarvalho/dmc-expurge-partitions-hdfs` 
@@ -1750,7 +1750,7 @@ A aplicação responsável por realizar o expurgo dos dados é uma aplicação S
       - `$PARAM2` (`7`, `1825`) → Define o número de dias que manterá os dados dentro do Data Lake.
 
   - **Pipeline:**
-    - **Descrição:** A aplicação em Spark, foi desenvolvido com o propósito de realizar o expurgo automatizado de partições antigas armazenadas em um diretório HDFS. Sua função é identificar e remover partições que estejam fora de um intervalo de datas definido pelo usuário, com o objetivo de liberar espaço e manter a estrutura do HDFS organizada e eficiente. A aplicação inicia criando uma sessão Spark configurada para suportar leitura de arquivos Parquet e a inclusão de dependências externas. Em seguida, ela valida os parâmetros de entrada fornecidos via linha de comando, que incluem o ambiente de execução, o diretório base no HDFS e a quantidade de dias cujos dados devem ser preservados. Com essas informações, o script calcula a data limite com base na data atual e no número de dias a manter, e utiliza comandos HDFS para listar todas as partições existentes dentro do diretório especificado. Cada partição é avaliada de acordo com seu nome, que deve seguir o padrão odate=YYYYMMDD. Se a data extraída estiver fora do intervalo permitido, a partição é removida do HDFS por meio de um comando hdfs dfs -rm -r, sempre com tratamento de exceções para garantir a estabilidade da execução. Além disso, em caso de qualquer erro durante o processo — seja na criação da sessão Spark, na leitura das partições ou na tentativa de remoção —, o script registra a falha em uma estrutura de métricas com informações detalhadas, como timestamp, nome do job, grupo responsável e mensagem do erro. Esses dados são salvos em uma coleção específica dentro do MongoDB, cuja conexão é configurada por variáveis de ambiente seguras, com usuário, senha, host, porta e nome do banco. Ao final da execução, o HDFS permanece apenas com as partições desejadas, e qualquer falha ocorrida durante o processo é devidamente registrada para rastreabilidade e monitoramento operacional.
+    - **Descrição:** A aplicação em Spark, foi desenvolvido com o propósito de realizar o expurgo automatizado de partições antigas armazenadas em um diretório HDFS. Sua função é identificar e remover partições que estejam fora de um intervalo de datas definido pelo usuário, com o objetivo de liberar espaço e manter a estrutura do HDFS organizada e eficiente. A aplicação inicia criando uma sessão Spark configurada para suportar leitura de arquivos Parquet e a inclusão de dependências externas. Em seguida, ela valida os parâmetros de entrada fornecidos via linha de comando, que incluem o ambiente de execução, o diretório base no HDFS e a quantidade de dias cujos dados devem ser preservados. Com essas informações, o script calcula a data limite com base na data atual e no número de dias a manter, e utiliza comandos HDFS para listar todas as partições existentes dentro do diretório especificado. Cada partição é avaliada de acordo com seu nome, que deve seguir o padrão de data de carga odate=YYYYMMDD. Se a data extraída estiver fora do intervalo permitido, a partição é removida do HDFS por meio de um comando hdfs dfs -rm -r, sempre com tratamento de exceções para garantir a estabilidade da execução. Além disso, em caso de qualquer erro durante o processo — seja na criação da sessão Spark, na leitura das partições ou na tentativa de remoção —, o script registra a falha em uma estrutura de métricas com informações detalhadas, como timestamp, nome do job, grupo responsável e mensagem do erro. Esses dados são salvos em uma coleção específica dentro do MongoDB, cuja conexão é configurada por variáveis de ambiente seguras, com usuário, senha, host, porta e nome do banco. Ao final da execução, o HDFS permanece apenas com as partições desejadas, e qualquer falha ocorrida durante o processo é devidamente registrada para rastreabilidade e monitoramento operacional.
 
 
     - **Fonte de Dados:** 
@@ -1774,7 +1774,7 @@ A aplicação responsável por realizar o expurgo dos dados é uma aplicação S
     - **Tipo de processo:** Batch (Semanal)
 
   - **Fluxo de Dados:**
-    - **Extração:** Leitura de dados PF/PJ particionados por `odate` em Parquet
+    - **Extração:** Leitura de dados PF/PJ particionados por data de carga `odate` em Parquet
     - **Validação leitura da origem e carga:** PySpark
 
       1. `read_parquet_data(spark, path)`
@@ -1924,7 +1924,7 @@ Cada DAG (Directed Acyclic Graph) representa um pipeline específico de negócio
 
 | Nome da DAG                              | Descrição                                                                                                                                          | JOBS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `dag_d_pipeline_compass_reviews`         | Pipeline diária responsável por manter a malha principal do Projeto Compass, garantindo que a ingestão até a disponibilização da carga final seja entregue ao cliente final. | `MONGO_INGESTION_SANTANDER-WAY`<br>`MONGO_INGESTION_BANCO-SANTANDER-BR`<br>`MONGO_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`APPLE_INGESTION_SANTANDER-WAY`<br>`APPLE_INGESTION_BANCO-SANTANDER-BR`<br>`APPLE_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`GOOGLE_INGESTION_BR.COM.SANTANDER.WAY`<br>`GOOGLE_INGESTION_COM.SANTANDER.APP`<br>`GOOGLE_INGESTION_COM.SANTANDER.SELECTGLOBAL`<br>`SILVER_APP_SILVER_APPLE_STORE`<br>`SILVER_APP_SILVER_GOOGLE_PLAY`<br>`SILVER_APP_SILVER_INTERNAL_BASE`<br>`GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER`<br>`B_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER`<br>`S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER` |
+| `dag_d_pipeline_compass_reviews`         | Pipeline diária responsável por manter o pipeline principal do Projeto Compass, garantindo que a ingestão até a disponibilização da carga final seja entregue ao cliente final. | `MONGO_INGESTION_SANTANDER-WAY`<br>`MONGO_INGESTION_BANCO-SANTANDER-BR`<br>`MONGO_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`APPLE_INGESTION_SANTANDER-WAY`<br>`APPLE_INGESTION_BANCO-SANTANDER-BR`<br>`APPLE_INGESTION_SANTANDER-SELECT-GLOBAL`<br>`GOOGLE_INGESTION_BR.COM.SANTANDER.WAY`<br>`GOOGLE_INGESTION_COM.SANTANDER.APP`<br>`GOOGLE_INGESTION_COM.SANTANDER.SELECTGLOBAL`<br>`SILVER_APP_SILVER_APPLE_STORE`<br>`SILVER_APP_SILVER_GOOGLE_PLAY`<br>`SILVER_APP_SILVER_INTERNAL_BASE`<br>`GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER`<br>`B_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER`<br>`S_QUALITY_PIPELINE_APP_REVIEWS_SANTANDER` |
 | `dag_s_pipeline_expurge_compass_reviews` | Pipeline semanal responsável por realizar expurgo dos dados nas camadas Bronze, Silver e Gold.                                                      | `B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_BR`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_WAY`<br>`B_EXPURGE_APPLE_STORE_HDFS_HISTORY_BRONZE_APPLE_STORE_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_BR`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_WAY`<br>`B_EXPURGE_GOOGLE_PLAY_HDFS_HISTORY_BRONZE_GOOGLE_PLAY_APP_SANTANDER_SELECT_GLOBAL`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_BR`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_WAY`<br>`B_EXPURGE_MONGODB_HDFS_HISTORY_BRONZE_INTERNAL_BASE_APP_SANTANDER_SELECT_GLOBAL`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_APPLE_STORE`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_GOOGLE_PLAY`<br>`S_EXPURGE_APP_HDFS_HISTORY_SILVER_INTERNAL_BASE`<br>`G_EXPURGE_APP_HDFS_HISTORY_GOLD_AGGREGATE` |
 
 
@@ -2241,7 +2241,7 @@ Este documento será atualizado continuamente conforme novas regras forem implem
 
 <br>
 
-O processo de verificação da qualidade dos dados de reviews no projeto **Compass** é realizado a partir de múltiplas fontes, estruturadas por data de processamento (`odate=yyyyMMdd`). Abaixo estão os principais diretórios, particionamentos e fontes envolvidos no pipeline:
+O processo de verificação da qualidade dos dados de reviews no projeto **Compass** é realizado a partir de múltiplas fontes, estruturadas por data de processamento e carga (`odate=yyyyMMdd`). Abaixo estão os principais diretórios, particionamentos e fontes envolvidos no pipeline:
 
 ---
 
@@ -2383,4 +2383,10 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 # 6. Instruções para Configuração e Execução do Projeto Compass
 # 7. Melhorias do projeto e Considerações Finais
 
+
+
+
+
 ---
+
+
