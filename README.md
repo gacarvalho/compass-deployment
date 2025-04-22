@@ -2381,7 +2381,176 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 ---
 
 # 6. Instruções para Configuração e Execução do Projeto Compass
+---
 
+## 6.1 Pré-requisitos
+---
+### Requisitos da Máquina Local
+- **CPU:** Mínimo de 4 vCPUs
+- **Memória RAM:** 32 GiB
+- **Sistema Operacional:** Linux (recomendado)
+
+### Requisitos de Conectividade
+- **Acesso à Internet:** Necessário para download de imagens, dependências e integração com APIs externas
+
+### Portas Necessárias (Protocolos TCP)
+Certifique-se de que as seguintes portas estejam **liberadas**:
+
+| Porta | Descrição / Serviço Relacionado      |
+|-------|--------------------------------------|
+| 5601  | Kibana                               |
+| 9861  | HDFS DataNode HTTP                   |
+| 9862  | HDFS DataNode IPC                    |
+| 8188  | Timeline Server (YARN)               |
+| 32763 | Porta aleatória mapeada (ajustável)  |
+| 8088  | ResourceManager (YARN)               |
+| 7077  | Spark Master                         |
+| 8080  | Spark UI / Serviços Web              |
+| 9870  | HDFS NameNode Web UI                 |
+| 8084  | Serviço personalizado (ex: API)      |
+| 8090  | Serviço personalizado (ex: UI)       |
+| 8085  | Metabase                             |
+| 4000  | Grafana                              |
+
+> **Nota:** Ajuste as portas personalizadas conforme sua stack.
+
+### Ferramentas Necessárias
+- **Git** – para clonar o repositório do projeto
+- **Docker e Docker Compose** – para orquestração dos serviços via containers e adicione o usuário atual ao grupo docker, o que permite que ele execute comandos Docker sem precisar usar sudo. `sudo usermod -aG docker $USER` e para ativar o comando sem reiniciar a maquina utilize `newgrp docker`
+- **Acesso Root** – necessário para instalações, permissões e execução de containers com privilégios
+- **Make** – para executar comandos definidos no Makefile que facilitam tarefas como build, deploy e testes
+
+
+> [!NOTE]
+> Certifique-se de atender **todos os requisitos mínimos**, especialmente os relacionados à **máquina local**. Eles são fundamentais para garantir o funcionamento adequado e o desempenho esperado do projeto.
+
+---
+
+
+## 6.2 Passos de configurações e execução do Projeto Compass
+---
+
+🧭 **Execução 1 - Replicação do projeto via repositório** 
+
+1.1. Clonagem do Repositório
+
+Clone o repositório utilizando o comando abaixo ou acesse diretamente através do link: [compass-deployment](https://github.com/gacarvalho/compass-deployment)
+
+```bash
+git clone https://github.com/gacarvalho/compass-deployment.git
+```
+
+1.2. Inicialização do Docker Swarm
+
+Dentro do diretório raiz do projeto `compass-deployment`, inicialize o Docker Swarm com o seguinte comando:
+
+```bash
+docker swarm init
+```
+
+1.3. Criação da Rede Docker
+
+A criação da rede será realizada via `Makefile`. Certifique-se de estar na raiz do repositório conforme o path abaixo:
+
+> **Exemplo de path**: `{path-projeto}/compass-deployment$`
+
+Execute o comando a seguir:
+
+```bash
+make create-network
+```
+
+1.4. Configuração do Arquivo `.env`
+
+Crie um arquivo de variáveis de ambiente no diretório indicado:
+
+```bash
+touch services/batch_layer/.env
+```
+
+Cole o conteúdo abaixo dentro do arquivo `.env`:
+
+> [!IMPORTANT]
+> Substitua o valor de `SERPAPI_KEY=<mudanca_1>` pela sua chave de API obtida no site da [SERPAPI](https://serpapi.com/users/sign_in)
+
+```env
+MONGO_USER_ADMIN=gacarvalho
+MONGO_PASS_ADMIN=santand@r
+MONGO_USER=app_user
+MONGO_PASS=santand@r
+MONGO_HOST=mongodb
+MONGO_PORT=27017
+MONGO_DB=compass
+SERPAPI_KEY=<mudanca_1>
+AIRFLOW_IMAGE_NAME=apache/airflow:2.5.1
+AIRFLOW_PROJ_DIR=../../mnt/airflow/
+AIRFLOW_UID=50000
+POSTGRES_PASSWORD=airflow
+POSTGRES_DB=airflow
+AIRFLOW_ENV_DIR=.
+ES_USER=elastic
+ES_PASS=data-@a1
+```
+
+1.5. Criação de Diretórios Locais para ElasticSearch e Kibana
+
+Crie as pastas necessárias e ajuste as permissões de acesso:
+
+```bash
+mkdir -p ~/compass-deployment/mnt/certs
+mkdir -p ~/compass-deployment/mnt/es_data
+mkdir -p ~/compass-deployment/mnt/certs/es-node/
+sudo chmod -R 777 mnt/es_data
+sudo chmod -R 777 mnt/certs
+sudo chmod -R 777 mnt/certs/es-node/
+```
+
+1.6. Geração de Certificados SSL
+
+Criação da Autoridade Certificadora (CA)
+
+```bash
+openssl genpkey -algorithm RSA -out ca.key
+openssl req -new -x509 -key ca.key -out ca.crt -days 365 -subj "/CN=Elasticsearch CA"
+```
+
+Geração do Certificado para o nó do ElasticSearch
+
+```bash
+openssl genpkey -algorithm RSA -out es-node.key
+openssl req -new -key es-node.key -out es-node.csr -subj "/CN=es-node"
+openssl x509 -req -in es-node.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out es-node.crt -days 365
+```
+
+Cópia dos Certificados para o Diretório Esperado
+
+```bash
+cp *.crt *.key ~/compass-deployment/mnt/certs
+```
+
+1.7. Verificação do Caminho dos Certificados
+
+Certifique-se de que os caminhos no arquivo YAML `compass-deployment/services/batch_layer/deployment-elasticsearch-service.yaml` estão configurados corretamente, conforme o exemplo abaixo:
+
+```yaml
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    environment:
+      - node.name=es-node
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=elasticsearch
+      - cluster.initial_master_nodes=es-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=/usr/share/elasticsearch/config/certs/es-node/es-node.key
+      - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node/es-node.crt
+      - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
+      - ELASTIC_PASSWORD=data-@a1
+```
 
 # 7. Melhorias do projeto e Considerações Finais
 
