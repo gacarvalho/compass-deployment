@@ -2448,8 +2448,7 @@ Dentro do diretório raiz do projeto `compass-deployment`, inicialize o Docker S
 docker swarm init
 ```
 
-![<docker-swarm-init>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.2-docker-swarm-init.png?token=GHSAT0AAAAAAC7HETYEWLU3PXCFOSQLEAXI2AG43BA)
-
+![<docker-swarm-init>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.2-docker-swarm-init.png?token=GHSAT0AAAAAAC7HETYE33GSXCV2F6KGXVKG2AHM47Q)
 
 1.3. Criação da Rede Docker
 
@@ -2462,7 +2461,7 @@ Execute o comando a seguir:
 ```bash
 make create-network
 ```
-![<docker-swarm-create-network>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.3-create-network.png?token=GHSAT0AAAAAAC7HETYEJEV5P455BWP7FGVQ2AG433A)
+![<docker-swarm-create-network>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.3-create-network.png?token=GHSAT0AAAAAAC7HETYEUOEY7BZWVTMUVYTS2AHM5CA)
 
 1.4. Configuração do Arquivo `.env`
 
@@ -2495,7 +2494,7 @@ AIRFLOW_ENV_DIR=.
 ES_USER=elastic
 ES_PASS=data-@a1
 ```
-![<SERAPI>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.4.SER_API.png?token=GHSAT0AAAAAAC7HETYEAZEWMCQDBYBFNCPM2AG44OQ)
+![<SERAPI>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.4.SER_API.png?token=GHSAT0AAAAAAC7HETYEJG4XFPTOCZYNDUKU2AHM5EA)
 
 1.5. Criação de Diretórios Locais para ElasticSearch e Kibana
 
