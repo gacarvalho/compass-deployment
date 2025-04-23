@@ -2496,7 +2496,9 @@ ES_PASS=data-@a1
 ```
 ![<SERAPI>](https://raw.githubusercontent.com/gacarvalho/compass-deployment/refs/heads/compass/infra-3.0.0/img/1.4.SER_API.png?token=GHSAT0AAAAAAC7HETYEJG4XFPTOCZYNDUKU2AHM5EA)
 
-1.5. Criação de Diretórios Locais para ElasticSearch e Kibana
+1.5. Criação de Diretórios Locais e configurações para ElasticSearch e Kibana
+
+**Elastic**
 
 Crie as pastas necessárias e ajuste as permissões de acesso:
 
@@ -2509,7 +2511,7 @@ sudo chmod -R 777 mnt/certs
 sudo chmod -R 777 mnt/certs/es-node/
 ```
 
-1.6. Geração de Certificados SSL
+Geração de Certificados SSL
 
 Criação da Autoridade Certificadora (CA)
 
@@ -2554,8 +2556,7 @@ sudo chmod 600 /compass-deployment/mnt/certs/es-node/ca.key
 sudo chmod 600 /compass-deployment/mnt/certs/ca.key
 ```
 
-
-1.7. Verificação do Caminho dos Certificados
+Verificação do Caminho dos Certificados
 
 Certifique-se de que os caminhos no arquivo YAML `compass-deployment/services/batch_layer/deployment-elasticsearch-service.yaml` estão configurados corretamente de acordo com o **volumes**, conforme o exemplo abaixo:
 
@@ -2581,6 +2582,47 @@ services:
       - ../../mnt/es_data:/usr/share/elasticsearch/data
       - ../../mnt/certs:/usr/share/elasticsearch/config/certs
 ```
+
+**Kibana**
+
+Ao subirmos o container do Elasticsearch, vai ser necessário **criar um usuário de acesso antes de subirmos o kibana**, para isso, será necessário entrar no container do elasticsearch e criar um usuário:
+
+Identificar o container:
+
+```bash
+user@maquina:~/compass-deployment$ docker ps | grep elastic
+809cdeb0aa11   docker.elastic.co/elasticsearch/elasticsearch:8.16.1   "/bin/tini -- /usr/l…"   24 minutes ago   Up 24 minutes   9200/tcp, 9300/tcp   deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9
+```
+Entrar no container:
+
+>[!NOTE]
+> Importante substituir o nome do container **deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9** pelo nome do seu container!
+
+```bash
+azureuser@vm-data-master-prd-compass-infra-replicate:~/compass-deployment$ docker exec -it deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9 bash
+```
+
+Agora no shell do container do elasticsearch, executar o comando de criação de usuário:
+
+```bash
+curl -X POST "http://elasticsearch:9200/_security/user/kibana_user" \
+  -H "Content-Type: application/json" \
+  -u elastic:data-@a1 \
+  -d '{"password":"data-@a1","roles":["kibana_system"],"full_name":"Kibana User","email":"kibana_user@compass.com"}'
+```
+
+<imagem>
+
+Ao criarmos o usuário e antes disso, tentamos subir o serviço do elasticsearch e kibana, vamos perceber que o scale do kibana esta em 0/1, é por conta do usuário:
+
+```bash
+user@maquina:~/compass-deployment$ docker service ls
+ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
+d1hdy59orauw   deployment-elasticsearch_elasticsearch   replicated   1/1        docker.elastic.co/elasticsearch/elasticsearch:8.16.1   *:9200->9200/tcp, *:9300->9300/tcp
+gbfet3klxeb3   deployment-elasticsearch_kibana          replicated   0/1        docker.elastic.co/kibana/kibana:8.16.1                 *:5601->5601/tcp
+```
+
+
 
 # 7. Melhorias do projeto e Considerações Finais
 
