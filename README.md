@@ -2529,7 +2529,15 @@ openssl x509 -req -in es-node.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out 
 Cópia dos Certificados para o Diretório Esperado
 
 ```bash
-cp *.crt *.key ~/compass-deployment/mnt/certs
+user@maquinae:~/compass-deployment/mnt$ 
+.
+├── certs
+│   ├── ca.crt
+│   └── es-node
+│       ├── ca.key
+│       ├── es-node.crt
+│       └── es-node.key
+├── es_data/
 ```
 
 1.7. Verificação do Caminho dos Certificados
