@@ -2540,6 +2540,21 @@ user@maquinae:~/compass-deployment/mnt$
 ├── es_data/
 ```
 
+E além disso, vai ser necessário atribuir as permissões necessárias para cada arquivo e pasta:
+
+```
+sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/es-node.key
+sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/es-node.crt
+sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/ca.key
+sudo chown 1000:1000 /compass-deployment/mnt/certs/ca.key
+
+sudo chmod 600 /compass-deployment/mnt/certs/es-node/es-node.key
+sudo chmod 600 /compass-deployment/mnt/certs/es-node/es-node.crt
+sudo chmod 600 /compass-deployment/mnt/certs/es-node/ca.key
+sudo chmod 600 /compass-deployment/mnt/certs/ca.key
+```
+
+
 1.7. Verificação do Caminho dos Certificados
 
 Certifique-se de que os caminhos no arquivo YAML `compass-deployment/services/batch_layer/deployment-elasticsearch-service.yaml` estão configurados corretamente de acordo com o **volumes**, conforme o exemplo abaixo:
