@@ -2542,7 +2542,7 @@ user@maquinae:~/compass-deployment/mnt$
 
 1.7. Verificação do Caminho dos Certificados
 
-Certifique-se de que os caminhos no arquivo YAML `compass-deployment/services/batch_layer/deployment-elasticsearch-service.yaml` estão configurados corretamente, conforme o exemplo abaixo:
+Certifique-se de que os caminhos no arquivo YAML `compass-deployment/services/batch_layer/deployment-elasticsearch-service.yaml` estão configurados corretamente de acordo com o **volumes**, conforme o exemplo abaixo:
 
 ```yaml
 services:
@@ -2562,6 +2562,9 @@ services:
       - xpack.security.transport.ssl.certificate=/usr/share/elasticsearch/config/certs/es-node/es-node.crt
       - xpack.security.transport.ssl.certificate_authorities=/usr/share/elasticsearch/config/certs/ca.crt
       - ELASTIC_PASSWORD=data-@a1
+    volumes:
+      - ../../mnt/es_data:/usr/share/elasticsearch/data
+      - ../../mnt/certs:/usr/share/elasticsearch/config/certs
 ```
 
 # 7. Melhorias do projeto e Considerações Finais
@@ -2577,7 +2580,7 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 
 **Funcional:**
 
-  - **Escalabilidade** – A arquitetura proposta foi pensada para ser escalável e adaptável a diferentes instituições do mesmo segmento. No case, utilizamos como base o aplicativo de cartões do Santander, mas como parte da evolução funcional, fica como sugestão a inclusão de novos pipelines (DAGs no Airflow) para ingestão e tratamento de dados de aplicativos concorrentes, como os das instituições Nubank, Bradesco, Itaú, entre outros. Isso possibilita comparações mais amplas e estratégicas entre os players do mercado.
+  - **Escalabilidade** – A arquitetura proposta foi pensada para ser escalável e adaptável a diferentes instituições do mesmo segmento. No case, utilizamos como base o aplicativo de cartões, conta corrente e conta internal do Santander, mas como parte da evolução funcional, fica como sugestão a inclusão de novos pipelines (DAGs no Airflow) para ingestão e tratamento de dados de aplicativos concorrentes, como os das instituições Nubank, Bradesco, Itaú, entre outros. Isso possibilita comparações mais amplas e estratégicas entre os players do mercado.
   - **Enriquecimento com Dados Externos** –  Incorporar fontes de dados externas adicionais, como Reclame Aqui ou redes sociais, pode oferecer uma visão ainda mais ampla e contextualizada sobre a percepção do cliente. Esse enriquecimento auxilia na construção de análises mais precisas e na priorização de problemas críticos para o negócio.
   - **Segmento por área** – Evoluir o dashboard funcional (Metabase) com a inclusão de filtros por áreas responsáveis pelos produtos, como PIX, Cartões, Contas, Consórcios, entre outros. Essa segmentação permite análises mais direcionadas, facilita a priorização de ações por equipe e contribui para uma visualização estratégica dos indicadores conforme a estrutura organizacional da instituição.
 
