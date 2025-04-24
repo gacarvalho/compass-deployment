@@ -2648,7 +2648,7 @@ curl -u 'elastic:data-@a1' -X POST "http://localhost:5601/api/spaces/space" \
 
 Agora no **container do elasticsearch** você deverá criar os indices do Elastic no terminal pelo comando abaixo:
 
-1. Execução - Criação do `indice compass_dt_datametrics`:
+1. Execução:
 
 ```bash
 curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics" -H 'Content-Type: application/json' -d '{
@@ -2663,7 +2663,7 @@ curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics"
 ```
 
 
-2. Execução - Criação do `indice compass_dt_datametrics_fail`:
+2. Execução:
 
 ```bash
 curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics_fail" -H 'Content-Type: application/json' -d '{
@@ -2680,6 +2680,7 @@ curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics_
 O resultado deverá ser igual da imagem abaixo:
 
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-create-indices.png)
+![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/indices-elastic-kibana.png)
 
 
 
