@@ -2499,6 +2499,7 @@ ES_PASS=data-@a1
 1.5. Criação de Diretórios Locais e configurações para ElasticSearch e Kibana
 
 **Elastic**
+---
 
 Crie as pastas necessárias e ajuste as permissões de acesso:
 
@@ -2584,6 +2585,7 @@ services:
 ```
 
 **Kibana**
+---
 
 Ao subirmos o container do Elasticsearch, vai ser necessário **criar um usuário de acesso antes de subirmos o kibana**, para isso, será necessário entrar no container do elasticsearch e criar um usuário:
 
@@ -2601,6 +2603,12 @@ Entrar no container:
 ```bash
 azureuser@vm-data-master-prd-compass-infra-replicate:~/compass-deployment$ docker exec -it deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9 bash
 ```
+Se tentar subir os containers antes de criar o usuário no Elasticsearch, vai perceber que o container do kibana vai ficar com scale de 0/1, pois vai dar erro de usuario não encontrado:
+
+```bash
+| Root causes: deployment-elasticsearch_kibana.1.8znz03ebk56q@vm-data-master-prd-compass-infra-replicate    
+|                     security_exception: unable to authenticate user [kibana_user_service] for REST request [/_nodes?
+```
 
 Agora no shell do container do elasticsearch, executar o comando de criação de usuário:
 
@@ -2611,17 +2619,10 @@ curl -X POST "http://elasticsearch:9200/_security/user/kibana_user" \
   -d '{"password":"data-@a1","roles":["kibana_system"],"full_name":"Kibana User","email":"kibana_user@compass.com"}'
 ```
 
-<imagem>
+Depois da criação do usuário, rodando o comando `make deployment-elasticsearch-service` na raiz do projeto `/compass-deployment$` para deployarmos novamente o container do kibana pelo yaml base, logo após a execução, o resultado deverá ser o mesmo do print abaixo, onde os containers subiram com sucesso!
 
-Ao criarmos o usuário e antes disso, tentamos subir o serviço do elasticsearch e kibana, vamos perceber que o scale do kibana esta em 0/1, é por conta do usuário:
 
-```bash
-user@maquina:~/compass-deployment$ docker service ls
-ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
-d1hdy59orauw   deployment-elasticsearch_elasticsearch   replicated   1/1        docker.elastic.co/elasticsearch/elasticsearch:8.16.1   *:9200->9200/tcp, *:9300->9300/tcp
-gbfet3klxeb3   deployment-elasticsearch_kibana          replicated   0/1        docker.elastic.co/kibana/kibana:8.16.1                 *:5601->5601/tcp
-```
-
+![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-kibana-running.png)
 
 
 # 7. Melhorias do projeto e Considerações Finais
