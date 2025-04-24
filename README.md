@@ -2624,6 +2624,11 @@ Depois da criação do usuário, rodando o comando `make deployment-elasticsearc
 
 ![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-kibana-running.png)
 
+Agora será necessário acessar a interface do Kibana pelo **usuário** `elastic` e com  **senha** `data-@a1` pela seu `<ip>:5601`
+
+![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/kibana-running.png)
+
+
 
 # 7. Melhorias do projeto e Considerações Finais
 
