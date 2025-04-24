@@ -2624,9 +2624,62 @@ Depois da criação do usuário, rodando o comando `make deployment-elasticsearc
 
 ![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-kibana-running.png)
 
-Agora será necessário acessar a interface do Kibana pelo **usuário** `elastic` e com  **senha** `data-@a1` pela seu `<ip>:5601`
+Agora será necessário acessar a interface do Kibana pelo **usuário** `elastic` e com  **senha** `data-@a1` pelo seu endereço ip e porta: `<ip>:5601`
 
 ![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/kibana-running.png)
+
+**Criação do space e os indices**
+---
+
+Dentro do **container do Kibana**, voce pode criar o space tanto pela interface quanto pelo terminal pelo comando abaixo:
+
+```bash
+curl -u 'elastic:data-@a1' -X POST "http://localhost:5601/api/spaces/space" \
+  -H "kbn-xsrf: true" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "id": "compass",
+        "name": "compass",
+        "description": "Space do projeto Compass",
+        "color": "#FF5733"
+    }'
+
+```
+
+Agora no **container do elasticsearch** você deverá criar os indices do Elastic no terminal pelo comando abaixo:
+
+1. Execução - Criação do `indice compass_dt_datametrics`:
+
+```bash
+curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics" -H 'Content-Type: application/json' -d '{
+  "mappings": {
+    "properties": {
+      "timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}'
+```
+
+
+2. Execução - Criação do `indice compass_dt_datametrics_fail`:
+
+```bash
+curl -u 'elastic:data-@a1' -X PUT "http://localhost:9200/compass_dt_datametrics_fail" -H 'Content-Type: application/json' -d '{
+  "mappings": {
+    "properties": {
+      "timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}'
+```
+
+O resultado deverá ser igual da imagem abaixo:
+
+![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-create-indices.png)
 
 
 
