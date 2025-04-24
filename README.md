@@ -2682,7 +2682,112 @@ O resultado deverá ser igual da imagem abaixo:
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-create-indices.png)
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/indices-elastic-kibana.png)
 
+Airflow
+---
 
+Para configuração do Airflow, vamos precisar uma estrutura, criação de usuário e liberação de acesso.
+
+1. Ajustar UID do usuário `airflow` no host 
+
+```bash
+sudo usermod -u 50000 airflow
+```
+> Garante que o usuário no host tenha o mesmo UID do container (50000). Pode evitar conflitos em alguns setups com volumes montados.
+
+2. Deploy do serviço do Airflow via Makefile
+```bash
+make deployment-airflow-service
+```
+> Realiza o deploy da stack conforme definido no Makefile.
+
+3. Criar o usuário `airflow` no host (já existia)
+```bash
+sudo useradd -r -m airflow
+```
+> **Ignorado**, pois o usuário já existia.
+
+4. Criar o grupo `airflow` no host (já existia)
+```bash
+sudo groupadd airflow
+```
+> **Ignorado**, pois o grupo já existia.
+
+5. Adicionar o usuário `airflow` ao grupo `airflow`
+```bash
+sudo usermod -aG airflow airflow
+```
+> Garante que o usuário pertence ao grupo correto, usado em permissões.
+
+6. Alterar propriedade da pasta de volume para o usuário do container
+```bash
+sudo chown -R airflow:airflow mnt/airflow/
+```
+> Garante que o container consiga ler e escrever nos volumes montados.
+
+7. Reverter propriedade para o usuário do host (`azureuser`) — pode causar conflito
+```bash
+sudo chown -R azureuser:azureuser mnt/airflow/
+```
+> **⚠️ Cuidado:** Isso pode anular a alteração anterior. Use apenas se necessário para uso local.
+
+8. Listar diretórios para verificar se os volumes estão corretos
+```bash
+ls /opt/airflow/logs/
+ls /opt/airflow/
+```
+> Verificação da existência de diretórios e logs no volume.
+
+9. Garantir permissões adequadas no diretório de logs
+```bash
+sudo chmod -R 755 /opt/airflow/logs
+sudo chown -R airflow:airflow /opt/airflow/logs
+sudo mkdir -p /opt/airflow/logs/scheduler
+```
+> Cria e ajusta permissões de logs do scheduler.
+
+10. Ajustar permissões novamente (caso necessário para uso local)
+```bash
+sudo chown -R $(whoami):$(whoami) /opt/airflow/logs
+chmod -R 775 /opt/airflow/logs
+chown -R airflow:airflow /opt/airflow/logs
+```
+> Ajusta permissões finas, garantindo acesso para o container e o host.
+
+11. Preparar diretório de plugins
+```bash
+sudo mkdir -p mnt/airflow/plugins
+sudo chown -R $(whoami):$(whoami) mnt/airflow/plugins/
+sudo chmod -R 775 mnt/airflow/plugins/
+```
+
+Após realizar os ajustes acima, será necessário realizar o deployment do YAML com `make deployment-airflow-service` na pasta raiz do projete e só assim vamos conseguir ver as replicas do Aiflow, conforme o exemplo abaixo:
+
+```bash
+user@maquina:~/compass-deployment$ docker service ls
+ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
+crejifngbav2   deployment-airflow_airflow-cli           replicated   1/1        apache/airflow:2.7.2                                   
+crepz316peh3   deployment-airflow_airflow-init          replicated   0/1        apache/airflow:2.7.2                                   
+lcqyejkpfods   deployment-airflow_airflow-scheduler     replicated   1/1        apache/airflow:2.7.2                                   
+eauq2oh0x53x   deployment-airflow_airflow-triggerer     replicated   1/1        apache/airflow:2.7.2                                   
+mb2bh1kcun4f   deployment-airflow_airflow-webserver     replicated   1/1        apache/airflow:2.7.2                                   *:8080->8080/tcp
+3veo92az5ntq   deployment-airflow_airflow-worker        replicated   1/1        apache/airflow:2.7.2                                   
+nbzi9a39elnr   deployment-airflow_flower                replicated   1/1        apache/airflow:2.7.2                                   *:5555->5555/tcp
+v7130tavltgo   deployment-airflow_postgres              replicated   1/1        postgres:13                                            
+syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        redis:latest                                           
+```
+
+> [!IMPORTANT]
+> Para essa versão e deployment, mesmo inicializando, o container airflow-webserver acaba retorno o erro **ERROR: You need to initialize the database. Please run `airflow db init`.**, que será necessário executar o comando `docker exec -it <nome-do-container-airflow-webserver> airflow db init` (voce deverá subtituir `<nome-do-container-airflow-webserver>` por NAMES do airflow-webserver encontrado pelo comando `docker ps | grep webserver` )
+
+Assim que der certo, voce terá um output parecido com esse:
+
+```
+user@maquina:~/compass-deployment$ docker exec -it deployment-airflow_airflow-webserver.1.zma2fsr1zd7upi9wzu6bw85o6 airflow db init
+/home/airflow/.local/lib/python3.8/site-packages/airflow/cli/commands/db_command.py:43 DeprecationWarning: `db init` is deprecated.  Use `db migrate` instead to migrate the db and/or airflow connections create-default-connections to create the default connections
+DB: postgresql+psycopg2://airflow:***@postgres/airflow
+[2025-04-24T02:32:28.468+0000] {migration.py:213} INFO - Context impl PostgresqlImpl.
+[2025-04-24T02:32:28.483+0000] {migration.py:216} INFO - Will assume transactional DDL.
+```
 
 # 7. Melhorias do projeto e Considerações Finais
 
