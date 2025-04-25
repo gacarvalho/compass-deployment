@@ -2463,6 +2463,15 @@ make create-network
 ```
 ![<docker-swarm-create-network>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/1.3-create-network.png)
 
+E logo em seguida execute o comando abaixo para criar a estrutura de diretórios dentro do `{projeto}/mnt`
+
+```bash
+make prepare-mnt
+```
+
+![<prepare-mnt>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/prepare-mnt.png)
+
+
 1.4. Configuração do Arquivo `.env`
 
 Crie um arquivo de variáveis de ambiente no diretório indicado:
@@ -2844,4 +2853,17 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 ---
 
 O projeto Compass reforça o papel da Engenharia de Dados como elemento central na construção de soluções voltadas para o negócio, com foco direto na experiência do usuário. Ao oferecer uma estrutura confiável, escalável e orientada à geração de insights, a iniciativa não apenas empodera times de produto com dados relevantes sobre seus próprios aplicativos, mas também fornece uma base comparativa frente aos concorrentes do setor. Com isso, o Compass se torna uma ferramenta valiosa para instituições que buscam não só entender, mas também antecipar as necessidades dos seus clientes — fortalecendo sua presença no mercado e avançando na jornada rumo à principalidade financeira.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
