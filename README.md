@@ -2777,17 +2777,39 @@ syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        
 ```
 
 > [!IMPORTANT]
-> Para essa versão e deployment, mesmo inicializando, o container airflow-webserver acaba retorno o erro **ERROR: You need to initialize the database. Please run `airflow db init`.**, que será necessário executar o comando `docker exec -it <nome-do-container-airflow-webserver> airflow db init` (voce deverá subtituir `<nome-do-container-airflow-webserver>` por NAMES do airflow-webserver encontrado pelo comando `docker ps | grep webserver` )
-
-Assim que der certo, voce terá um output parecido com esse:
+> Para essa versão e deployment, mesmo inicializando, o container airflow-webserver acaba retorno o erro **ERROR: You need to initialize the database. Please run `airflow db init`.**, que será necessário executar o comando  abaixo:
 
 ```
-user@maquina:~/compass-deployment$ docker exec -it deployment-airflow_airflow-webserver.1.zma2fsr1zd7upi9wzu6bw85o6 airflow db init
-/home/airflow/.local/lib/python3.8/site-packages/airflow/cli/commands/db_command.py:43 DeprecationWarning: `db init` is deprecated.  Use `db migrate` instead to migrate the db and/or airflow connections create-default-connections to create the default connections
-DB: postgresql+psycopg2://airflow:***@postgres/airflow
-[2025-04-24T02:32:28.468+0000] {migration.py:213} INFO - Context impl PostgresqlImpl.
-[2025-04-24T02:32:28.483+0000] {migration.py:216} INFO - Will assume transactional DDL.
+docker exec -it $(docker ps -q -f name=airflow-webserver) bash
+airflow db init
 ```
+
+E logo em seguida:
+
+```bash
+docker exec -it $(docker ps -q -f name=airflow-webserver) bash
+airflow db migrate
+```
+
+Após essa execução vamos conseguir subir novamente os serviços do airflow com o comando `make deployment-airflow-service` na raiz do projeto!
+
+Após subir o serviço e conseguir acessar a interface do Airflow no navegador pela url `http://<ip>:8080/`, será necessário criar um usuário de admin com o comando abaixo:
+
+```bash
+docker exec -it $(docker ps -q -f name=airflow-webserver) airflow users create \
+   --username admin \
+   --firstname Admin \
+   --lastname User \
+   --role Admin \
+   --email admin@example.com \
+   --password admin
+
+```
+
+Após isso, voce vai conseguir acessar o Airflow com usuário: `admin` e a senha: `admin` e assim voce terá acesso as DAGs.
+
+![airflow-pipeline](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
+
 
 # 7. Melhorias do projeto e Considerações Finais
 
@@ -2822,17 +2844,4 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 ---
 
 O projeto Compass reforça o papel da Engenharia de Dados como elemento central na construção de soluções voltadas para o negócio, com foco direto na experiência do usuário. Ao oferecer uma estrutura confiável, escalável e orientada à geração de insights, a iniciativa não apenas empodera times de produto com dados relevantes sobre seus próprios aplicativos, mas também fornece uma base comparativa frente aos concorrentes do setor. Com isso, o Compass se torna uma ferramenta valiosa para instituições que buscam não só entender, mas também antecipar as necessidades dos seus clientes — fortalecendo sua presença no mercado e avançando na jornada rumo à principalidade financeira.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
