@@ -2820,6 +2820,63 @@ Após isso, voce vai conseguir acessar o Airflow com usuário: `admin` e a senha
 ![airflow-pipeline](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
 
 
+Mongo DB
+---
+
+Para subirmos o serviço do Mongo DB, será necessário executar o Makefile para deployarmos:
+
+```bash
+make deployment-mongodb-service
+```
+
+O resultado esperado com o comando `docker service ls` é que o scale do pod seja 1/1
+
+```
+ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
+hcqtsmor4vzg   deployment-mondodb_database-mongodb      replicated   1/1        mongo:7                                                *:27017->27017/tcp
+```
+
+Agora precisamos criar os usuários de serviço e as collections, primeiro será necessário entrar no terminal do container:
+
+```bash
+docker exec -it $(docker ps -q -f name=database-mongodb) mongosh admin
+```
+
+Agora, será necessário criar as collections com o comando abaixo:
+
+```bash
+use compass
+db.createCollection('dt_d_view_silver_historical_compass')
+db.createCollection('dt_d_view_gold_agg_compass')
+```
+![create-collections](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/create-collections.png)
+
+
+Depois da criação das collections, será necessário também criar um usuário de "serviço", nesse caso estou usando como `gacarvalho`, mas voce pode alterar aqui e posteriormente no arquivo .env do projeto.
+
+```bash
+use admin
+db.createUser({
+  user: "gacarvalho",
+  pwd: "santand@r",
+  roles: [
+    { role: "root", db: "admin" }
+  ]
+})
+```
+
+Logo após a criação do usuário, você poderá sair do container e testar o acesso do usuário novo criado pelo comando abaixo:
+
+```bash
+docker exec -it $(docker ps -q -f name=database-mongodb) mongosh "mongodb://gacarvalho:santand@r@localhost:27017/compass?authSource=compass"
+```
+
+![create-users-mongo](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/create-users-mongo.png)
+
+
+---
+
+
 # 7. Melhorias do projeto e Considerações Finais
 
  
@@ -2853,17 +2910,4 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 ---
 
 O projeto Compass reforça o papel da Engenharia de Dados como elemento central na construção de soluções voltadas para o negócio, com foco direto na experiência do usuário. Ao oferecer uma estrutura confiável, escalável e orientada à geração de insights, a iniciativa não apenas empodera times de produto com dados relevantes sobre seus próprios aplicativos, mas também fornece uma base comparativa frente aos concorrentes do setor. Com isso, o Compass se torna uma ferramenta valiosa para instituições que buscam não só entender, mas também antecipar as necessidades dos seus clientes — fortalecendo sua presença no mercado e avançando na jornada rumo à principalidade financeira.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
