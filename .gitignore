@@ -1,1 +1,10 @@
 services/batch_layer/.env
+mnt/mongodb/
+mnt/certs/
+mnt/elastic_password.txt
+mnt/es_data/
+mnt/airflow/dags/__pycache__/
+mnt/airflow/logs/
+mnt/hadoop/namenode
+mnt/hadoop/datanode
+mnt/grafana_data/

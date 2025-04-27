@@ -26,6 +26,7 @@ def run_docker_run(image, param1, param2=None, config_env="prod"):
             "-e", f"CONFIG_ENV={config_env}",
             "-e", f"PARAM1={param1}",
             "-e", f"PARAM2={param2}",
+            "-e", f"PARAM3={param3}",
             "-v", f"{host_volume_path}:{container_volume_path}:ro",
             "-v", f"{additional_volume_host_path}:{additional_volume_container_path}",
             "-v", "/var/run/docker.sock:/var/run/docker.sock",
@@ -73,7 +74,6 @@ with DAG(
 
     # Dummy inicial e final
     dm_init_bronze = DummyOperator(task_id="dm_init_bronze")
-    dm_init_gold = DummyOperator(task_id="dm_init_gold")
 
     ###################################################################################################################
     # DAG PIPELINE: INGESTAO - Grupo principal para ingestão
@@ -84,10 +84,10 @@ with DAG(
         # Grupo de tarefas do MongoDB
         with TaskGroup("group_jobs_mongo", tooltip="Ingestão MongoDB") as group_jobs_mongo:
             mongo_tasks = []
-            for image, param1 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-select-global"),
+            for image, param1, param2, param3 in [
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-way", "sim", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "banco-santander-br", "sim", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-mongodb-hdfs-compass:1.0.1", "santander-select-global", "sim", "pf"),
             ]:
                 task = PythonOperator(
                     task_id=f"MONGO_INGESTION_{param1.upper()}",
@@ -95,10 +95,11 @@ with DAG(
                     op_kwargs={
                         "config_env": 'prod',
                         "param1": param1,
-                        "param2": 'sim',
+                        "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
-                    task_concurrency=1,  
+                    task_concurrency=1,
                 )
                 mongo_tasks.append(task)
 
@@ -109,10 +110,10 @@ with DAG(
         # Grupo de tarefas do Apple Store
         with TaskGroup("group_jobs_apple", tooltip="Ingestão Apple Store") as group_jobs_apple:
             apple_tasks = []
-            for param1, param2, image in [
-                ("1154266372", "santander-way", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-                ("613365711", "banco-santander-br", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
-                ("6462515499", "santander-select-global", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+            for param1, param2, param3, image in [
+                ("1154266372", "santander-way", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("613365711", "banco-santander-br", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
+                ("6462515499", "santander-select-global", "pf", "iamgacarvalho/dmc-app-ingestion-reviews-apple-store-hdfs-compass:1.0.1"),
             ]:
                 task = PythonOperator(
                     task_id=f"APPLE_INGESTION_{param2.upper()}",
@@ -121,6 +122,7 @@ with DAG(
                         "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
                     task_concurrency=1,
@@ -139,10 +141,10 @@ with DAG(
         # Grupo de tarefas do Google Play
         with TaskGroup("group_jobs_google", tooltip="Ingestão Google Play") as group_jobs_google:
             google_tasks = []
-            for image, param1, param2 in [
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "br.com.santander.way", "santander-way"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.app", "banco-santander-br"),
-                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.selectglobal", "santander-select-global"),
+            for image, param1, param2, param3 in [
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "br.com.santander.way", "santander-way", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.app", "banco-santander-br", "pf"),
+                ("iamgacarvalho/dmc-app-ingestion-reviews-google-play-hdfs-compass:1.0.1", "com.santander.selectglobal", "santander-select-global", "pf"),
             ]:
                 task = PythonOperator(
                     task_id=f"GOOGLE_INGESTION_{param1.upper()}",
@@ -151,6 +153,7 @@ with DAG(
                         "config_env": 'prod',
                         "param1": param1,
                         "param2": param2,
+                        "param3": param3,
                         "image": image 
                     },
                     task_concurrency=1,
@@ -204,28 +207,6 @@ with DAG(
         silver_task_mongo.set_upstream(group_jobs_mongo)
         silver_tasks.append(silver_task_mongo)
 
-    ###################################################################################################################
-    # DAG PIPELINE: GOLD - Grupo de tarefas da camada GOLD
-    ###################################################################################################################
-    
-    with TaskGroup("group_jobs_gold", tooltip="Camada Gold") as group_jobs_gold:
-        gold_tasks = []
-        
-        # Task Silver para Apple Store - Depende de pelo menos 1 ingestão da Apple Store
-        gold_task_aggregate = PythonOperator(
-            task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
-            python_callable=run_docker_run,
-            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.1", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
-            op_kwargs={"config_env": "prod"},
-            task_concurrency=1,
-            trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
-        )
-
-        dm_init_gold.set_upstream(silver_task_apple)
-        dm_init_gold.set_upstream(silver_task_google)
-        dm_init_gold.set_upstream(silver_task_mongo)
-        gold_tasks.append(gold_task_aggregate)
-        dm_init_gold.trigger_rule = "all_success" 
 
     ###################################################################################################################
     # DAG PIPELINE: QUALITY - Grupo de tarefas da camada QUALITY
@@ -260,12 +241,37 @@ with DAG(
         # Dependências
         quality_task_pipeline_s.set_upstream(group_jobs_silver)
         quality_task_pipeline_s.trigger_rule = "all_success" 
+
+    ###################################################################################################################
+    # DAG PIPELINE: GOLD - Grupo de tarefas da camada GOLD
+    ###################################################################################################################
+    
+    with TaskGroup("group_jobs_gold", tooltip="Camada Gold") as group_jobs_gold:
+        gold_tasks = []
+        
+        # Task Silver para Apple Store - Depende de pelo menos 1 ingestão da Apple Store
+        gold_task_aggregate = PythonOperator(
+            task_id="GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER",
+            python_callable=run_docker_run,
+            op_args=["iamgacarvalho/dmc-reviews-aggregate-apps-santander:1.0.1", "GOLD_APP_GOLD_AGGREGATE_REVIEWS_SANTANDER"],
+            op_kwargs={"config_env": "prod"},
+            task_concurrency=1,
+            trigger_rule="all_success",  # Vai rodar se pelo menos uma das tarefas do grupo for bem-sucedida
+        )
+
+        quality_task_pipeline_s.set_upstream(silver_task_apple)
+        quality_task_pipeline_s.set_upstream(silver_task_google)
+        quality_task_pipeline_s.set_upstream(silver_task_mongo)
+        gold_tasks.append(gold_task_aggregate)
+        quality_task_pipeline_s.trigger_rule = "all_success" 
+
         
     ###################################################################################################################
     # Dependências entre as DAGs
     ###################################################################################################################
     dm_init_bronze >> group_ingestion 
     
-    group_jobs_silver >> dm_init_gold
+    group_jobs_silver >> quality_task_pipeline_s
     
-    dm_init_gold >> group_jobs_gold
+    quality_task_pipeline_s >> group_jobs_gold
+
