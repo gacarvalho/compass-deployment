@@ -2874,6 +2874,35 @@ docker exec -it $(docker ps -q -f name=database-mongodb) mongosh "mongodb://gaca
 ![create-users-mongo](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/create-users-mongo.png)
 
 
+**Hadoop**
+---
+
+Agora é a ver de subir a estrutura do Hadoop, onde contamos com o Namenode, Datanode, History Server, Nodemanager e Resource Manager. Para subirmos os serviços só vai ser neececessário deployarmos com o comando de makefile, segue o comando abaixo:
+
+```bash
+make deployment-hadoop-service
+```
+
+E com a subida vamos observar a subida e os scale dos pods:
+
+```bash
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+2dv9xw6w3zid   deployment-hadoop_infra-datanode          replicated   2/2        iamgacarvalho/hadoop-datanode-data-in-compass:2.0.0          *:9854-9864->9864/tcp
+pxi6bojyb3j6   deployment-hadoop_infra-history-server    replicated   1/1        iamgacarvalho/hadoop-historyserver-data-in-compass:2.0.0     *:8188->8188/tcp
+8oea82dervcx   deployment-hadoop_infra-namenode          replicated   1/1        iamgacarvalho/hadoop-namenode-data-in-compass:2.0.0          *:32763->9870/tcp
+n4fj7d4bufef   deployment-hadoop_infra-nodemanager       replicated   2/2        iamgacarvalho/hadoop-nodemanager-data-in-compass:2.0.0       *:8032-8042->8042/tcp
+wjw7w350t62q   deployment-hadoop_infra-resourcemanager   replicated   1/1        iamgacarvalho/hadoop-resourcemanager-data-in-compass:2.0.0   *:8088->8088/tcp
+```
+
+>[!NOTE]
+> Ao subirmos o serviço, assim como o Kibana precisa se conectar ao Elastic Search para subir o serviço, o Nodemanager precisa se conectar ao Namenode, se essa conexão por algum motivo não acontecer e por ventura o container venha dar erro, favor executar o arquivo de "atualização" com o comando `docker stack deploy -c services/batch_layer/deployment-update-services.yaml  deployment-update`
+
+O resultado esperado é que o serviço suba sem erro e com o acesso a porta correta, voce consiga se conectar no navegador.
+
+![hadoop](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/hadoop.png)
+![resource-manager](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/rm.png)
+![namenode](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/namenode.png)
+
 ---
 
 
