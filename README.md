@@ -5618,6 +5618,7 @@ E as conexões deverá aparecer dessa forma:
 >[!NOTE]
 > Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
 
+E um lembrente e ação que será necessário realizar, como foi realizado o **importe** do dashboard com JSON, vai ser necessário clicar no **menu** de cada **quadrante/visualização** dos dashboards, ir em **edit** e ir em salvar, só assim vamos ter a integridade do painel logo após o importe!
 
 **Metabase**
 ---
@@ -5658,6 +5659,7 @@ Se você chegou até essa essão, parabéns! Você conseguiu replicar toda a inf
 
 >[!NOTE]
 > Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações!
+> E para funcionamento correto do Airflow que voce pode ajustar na DAG o diretório, voce deverá criar a pasta e copiar o arquivo na raiz do computador `/env/.env`
 
 Agora já é possível executar o pipeline dag_d_pipeline_compass_reviews e com os acessos devidos.
 
