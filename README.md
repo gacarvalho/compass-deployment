@@ -5652,6 +5652,21 @@ Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta 
 
 ![metabase-dados](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-dados.png)
 
+**Visão Final**
+---
+Se você chegou até essa essão, parabéns! Você conseguiu replicar toda a infraestrutura do projeto Compass! Agora, vamos rodar o pipeline pela 1a vez e consultar os dados.
+
+>[!NOTE]
+> Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações!
+
+Agora já é possível executar o pipeline dag_d_pipeline_compass_reviews e com os acessos devidos.
+
+![airflow-run](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-run.png)
+
+Após o start do pipeline podemos ver os containers das imagens spark rodando no ambiente com inicio da nomeclatura de `dmc-...`
+
+![apps-spark-run](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/apps-spark-run.png)
+
 
 ---
 
