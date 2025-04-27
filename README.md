@@ -2897,11 +2897,2726 @@ wjw7w350t62q   deployment-hadoop_infra-resourcemanager   replicated   1/1       
 >[!NOTE]
 > Ao subirmos o serviço, assim como o Kibana precisa se conectar ao Elastic Search para subir o serviço, o Nodemanager precisa se conectar ao Namenode, se essa conexão por algum motivo não acontecer e por ventura o container venha dar erro, favor executar o arquivo de "atualização" com o comando `docker stack deploy -c services/batch_layer/deployment-update-services.yaml  deployment-update`
 
-O resultado esperado é que o serviço suba sem erro e com o acesso a porta correta, voce consiga se conectar no navegador.
-
 ![hadoop](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/hadoop.png)
 ![resource-manager](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/rm.png)
 ![namenode](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/namenode.png)
+
+
+**Grafana**
+---
+
+Agora, vamos subir o serviço do Grafana pelo comando abaixo:
+
+```bash
+make deployment-grafana-service
+```
+
+O resultado esperado é:
+
+```
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+kexswnm9zbpo   deployment-grafana_grafana                replicated   2/2        grafana/grafana:latest                                       *:4000->3000/tcp
+```
+
+No endereço `<ip>:4000` e com o usuário: `admin` e a senha `admin123` voce consegue acessar a interface do Grafana. 
+
+A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na opção **Menu** > **Dashboard** > **Opção New** > **Import** > **Opção Import via dashboard JSON model**, cole o JSON abaixo:
+
+<details>
+  <summary>Acesse aqui o JSON detalhado </summary> 
+
+    **Dashboard: COMPASS - Operação Aplicacional**
+      
+    ```json
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 2,
+      "links": [],
+      "liveNow": true,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 7,
+            "x": 0,
+            "y": 0
+          },
+          "id": 18,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "\n# TV [OPERAÇÃO MALHA COMPASS]",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.5.2",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 7,
+            "y": 0
+          },
+          "id": 17,
+          "options": {
+            "bgColor": "transparent",
+            "clockType": "24 hour",
+            "countdownSettings": {
+              "endCountdownTime": "2025-03-08T05:21:06-03:00",
+              "endText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "countupSettings": {
+              "beginCountupTime": "2025-03-08T05:21:06-03:00",
+              "beginText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "dateSettings": {
+              "dateFormat": "YYYY-MM-DD",
+              "fontSize": "20px",
+              "fontWeight": "normal",
+              "locale": "",
+              "showDate": true
+            },
+            "descriptionSettings": {
+              "descriptionText": "",
+              "fontSize": "36px",
+              "fontWeight": "bold",
+              "noValueText": "no description found",
+              "source": "none"
+            },
+            "fontMono": false,
+            "mode": "time",
+            "refresh": "sec",
+            "timeSettings": {
+              "fontSize": "26px",
+              "fontWeight": "bold"
+            },
+            "timezone": "",
+            "timezoneSettings": {
+              "fontSize": "12px",
+              "fontWeight": "normal",
+              "showTimezone": false,
+              "zoneFormat": "offsetAbbv"
+            }
+          },
+          "pluginVersion": "2.1.8",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "",
+          "transparent": true,
+          "type": "grafana-clock-panel"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 2
+          },
+          "id": 7,
+          "panels": [],
+          "title": "Apps Historical",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 0,
+            "y": 3
+          },
+          "id": 15,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"bronze\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d",
+                    "trimEdges": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"silver\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"gold\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "timeFrom": "1d",
+          "title": "Apps FInish per layer",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "bars",
+                "fillOpacity": 13,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "stepBefore",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 8,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 17,
+            "x": 7,
+            "y": 3
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "timezone": [
+              "browser"
+            ],
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"bronze\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m",
+                    "min_doc_count": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"silver\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"gold\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Applications completed per layer [historical]",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "semi-dark-green",
+                "mode": "fixed"
+              },
+              "custom": {
+                "neutral": -1
+              },
+              "decimals": 1,
+              "fieldMinMax": false,
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "noValue": "N0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "%"
+            },
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "Invalid data percentage"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": []
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 0,
+            "y": 7
+          },
+          "hideTimeOverride": false,
+          "id": 10,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto",
+            "text": {
+              "percentSize": 1
+            }
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "valid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"bronze\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "valid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"silver\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "valid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"gold\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "timeFrom": "1d",
+          "title": "Valid data percentage",
+          "transparent": true,
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feext6ph5n1fkd"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "fixed",
+                "seriesBy": "min"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 0,
+            "y": 13
+          },
+          "id": 22,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"bronze\")",
+              "refId": "C",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"silver\")",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"gold\")",
+              "refId": "B",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Applications fail per layer [historical]",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feext6ph5n1fkd"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "fixed",
+                "seriesBy": "min"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.9,
+                "drawStyle": "bars",
+                "fillOpacity": 22,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "stepBefore",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 6,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 17,
+            "x": 7,
+            "y": 13
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "timezone": [
+              "browser"
+            ],
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"bronze\")",
+              "refId": "C",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"silver\")",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" AND (layer:\"gold\")",
+              "refId": "B",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Applications fail per layer [historical]",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "fixed"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "max": 100,
+              "min": 1,
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 2
+                  }
+                ]
+              },
+              "unit": "%"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 7,
+            "x": 0,
+            "y": 17
+          },
+          "id": 21,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "invalid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"bronze\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "invalid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"silver\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "invalid_data.percentage",
+                  "id": "1",
+                  "type": "avg"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"gold\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Invalid data percentage",
+          "transparent": true,
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-blue",
+                "mode": "fixed"
+              },
+              "fieldMinMax": false,
+              "mappings": [],
+              "noValue": "N0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 7,
+            "x": 0,
+            "y": 23
+          },
+          "id": 23,
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 0,
+            "minVizWidth": 8,
+            "namePlacement": "top",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "manual",
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "count events: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "total_records",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"bronze\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "count events: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "total_records",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"silver\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "count events: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1d"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feex5fk2nn08wf"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "field": "total_records",
+                  "id": "1",
+                  "type": "sum"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics\" AND owner.layer_lake:\"gold\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Event Count of the Bronze Layer [historical]",
+          "transparent": true,
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "fieldMinMax": true,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "layer: bronze"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": []
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 7,
+            "y": 23
+          },
+          "id": 12,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "same_as_value",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "value_and_name",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze duplicates",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"bronze\" AND validation_results.duplicate_check.code:\"409\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: bronze nulls",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"bronze\" AND validation_results.null_check.code:\"400\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: bronze consistency",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"bronze\" AND validation_results.type_consistency_check.code:\"400\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Event Quality of the Bronze Layer [historical]",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "fieldMinMax": true,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "layer: bronze"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": []
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 13,
+            "y": 23
+          },
+          "id": 13,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: silver duplicates",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"silver\" AND validation_results.duplicate_check.code:\"409\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver nulls",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"silver\" AND validation_results.null_check.code:\"400\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver consistency",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"silver\" AND validation_results.type_consistency_check.code:\"400\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Event Quality of the Silver Layer [historical]",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "fieldMinMax": true,
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "layer: bronze"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": []
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 5,
+            "x": 19,
+            "y": 23
+          },
+          "id": 14,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: gold duplicates",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"gold\" AND validation_results.duplicate_check.code:\"409\"",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold nulls",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"gold\" AND validation_results.null_check.code:\"400\"",
+              "refId": "B",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold consistency",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "owner.layer_lake.keyword:\"gold\" AND validation_results.type_consistency_check.code:\"400\"",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Event Quality of the Gold Layer [historical]",
+          "type": "stat"
+        }
+      ],
+      "preload": false,
+      "refresh": "5s",
+      "schemaVersion": 40,
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "COMPASS - Operação Aplicacional",
+      "uid": "eeex6c5w2x9fkb",
+      "version": 215,
+      "weekStart": ""
+    }
+    ```
+
+    Repita o mesmo passo a passo para o **Dashboard: COMPASS - Sustentação**:
+
+    ```json
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 4,
+      "links": [],
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 8,
+            "x": 0,
+            "y": 0
+          },
+          "id": 3,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "\n# TV COMPASS [SUSTENTAÇÃO]",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.5.2",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 3,
+            "x": 8,
+            "y": 0
+          },
+          "id": 6,
+          "options": {
+            "bgColor": "transparent",
+            "clockType": "24 hour",
+            "countdownSettings": {
+              "endCountdownTime": "2025-03-08T05:21:06-03:00",
+              "endText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "countupSettings": {
+              "beginCountupTime": "2025-03-08T05:21:06-03:00",
+              "beginText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "dateSettings": {
+              "dateFormat": "YYYY-MM-DD",
+              "fontSize": "20px",
+              "fontWeight": "normal",
+              "locale": "",
+              "showDate": true
+            },
+            "descriptionSettings": {
+              "descriptionText": "",
+              "fontSize": "36px",
+              "fontWeight": "bold",
+              "noValueText": "no description found",
+              "source": "none"
+            },
+            "fontMono": false,
+            "mode": "time",
+            "refresh": "sec",
+            "timeSettings": {
+              "fontSize": "26px",
+              "fontWeight": "bold"
+            },
+            "timezone": "",
+            "timezoneSettings": {
+              "fontSize": "12px",
+              "fontWeight": "normal",
+              "showTimezone": false,
+              "zoneFormat": "offsetAbbv"
+            }
+          },
+          "pluginVersion": "2.1.8",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "",
+          "transparent": true,
+          "type": "grafana-clock-panel"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 2
+          },
+          "id": 4,
+          "panels": [],
+          "title": "Sustentração - [Malha]",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feext6ph5n1fkd"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "continuous-reds",
+                "seriesBy": "min"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "light-green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 0,
+            "y": 3
+          },
+          "id": 5,
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "top",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "priority: 0",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (priority.keyword:(0))",
+              "refId": "C",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "priority: 1",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (priority.keyword:(1))",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "priority: 2",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (priority.keyword:(2))",
+              "refId": "B",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Applications fail per priority [total]",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feext6ph5n1fkd"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "fixed",
+                "seriesBy": "min"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "series",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.8,
+                "drawStyle": "bars",
+                "fillOpacity": 100,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "stepBefore",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 6,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 16,
+            "x": 8,
+            "y": 3
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "timezone": [
+              "browser"
+            ],
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "layer: bronze",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (layer:\"bronze\") \nAND (priority.keyword:(0 OR 1 OR 2))",
+              "refId": "C",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: silver",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (layer:\"silver\") \nAND (priority.keyword:(0 OR 1 OR 2))",
+              "refId": "A",
+              "timeField": "timestamp"
+            },
+            {
+              "alias": "layer: gold",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "1h"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (layer:\"gold\") \nAND (priority.keyword:(0 OR 1 OR 2))",
+              "refId": "B",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "Applications fail per priority [historical]",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feext6ph5n1fkd"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "dark-red",
+                "mode": "fixed",
+                "seriesBy": "min"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background",
+                  "wrapText": false
+                },
+                "filterable": true,
+                "inspect": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 17,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "id": 7,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [],
+              "show": true
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "timestamp"
+              }
+            ]
+          },
+          "pluginVersion": "11.5.2",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "feext6ph5n1fkd"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "limit": "500"
+                  },
+                  "type": "logs"
+                }
+              ],
+              "query": "_index:\"compass_dt_datametrics_fail\" \nAND (priority.keyword:(0 OR 1 OR 2))",
+              "refId": "C",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "_id": true,
+                  "_index": true,
+                  "_source": true,
+                  "_type": true,
+                  "client": true,
+                  "highlight": true,
+                  "id": true,
+                  "sort": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "_id": 8,
+                  "_index": 9,
+                  "_source": 10,
+                  "_type": 11,
+                  "client": 5,
+                  "error": 7,
+                  "highlight": 12,
+                  "id": 13,
+                  "job": 2,
+                  "layer": 1,
+                  "priority": 3,
+                  "project": 4,
+                  "sort": 14,
+                  "timestamp": 0,
+                  "tower": 6
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "preload": false,
+      "refresh": "",
+      "schemaVersion": 40,
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-7d",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "COMPASS - Sustentação",
+      "uid": "fef83ot67ctmoe",
+      "version": 30,
+      "weekStart": ""
+    }
+
+    ```
+
+    Agora para o dashboard de "COMPASS - Comece aqui"
+
+
+    ```json
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 3,
+      "links": [],
+      "panels": [
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 3,
+          "panels": [],
+          "title": "README",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "feex5fk2nn08wf"
+          },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 3,
+            "x": 0,
+            "y": 1
+          },
+          "id": 2,
+          "options": {
+            "bgColor": "transparent",
+            "clockType": "24 hour",
+            "countdownSettings": {
+              "endCountdownTime": "2025-03-08T05:21:06-03:00",
+              "endText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "countupSettings": {
+              "beginCountupTime": "2025-03-08T05:21:06-03:00",
+              "beginText": "00:00:00",
+              "invalidValueText": "invalid value",
+              "noValueText": "no value found",
+              "queryCalculation": "last",
+              "source": "input"
+            },
+            "dateSettings": {
+              "dateFormat": "YYYY-MM-DD",
+              "fontSize": "20px",
+              "fontWeight": "normal",
+              "locale": "",
+              "showDate": true
+            },
+            "descriptionSettings": {
+              "descriptionText": "",
+              "fontSize": "36px",
+              "fontWeight": "bold",
+              "noValueText": "no description found",
+              "source": "none"
+            },
+            "fontMono": false,
+            "mode": "time",
+            "refresh": "sec",
+            "timeSettings": {
+              "fontSize": "46px",
+              "fontWeight": "bold"
+            },
+            "timezone": "",
+            "timezoneSettings": {
+              "fontSize": "12px",
+              "fontWeight": "normal",
+              "showTimezone": false,
+              "zoneFormat": "offsetAbbv"
+            }
+          },
+          "pluginVersion": "2.1.8",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "",
+          "transparent": true,
+          "type": "grafana-clock-panel"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 3,
+            "y": 1
+          },
+          "id": 8,
+          "options": {
+            "code": {
+              "language": "markdown",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "<img src=\"https://github.com/gacarvalho/repo-spark-delta-iceberg/blob/main/header.png?raw=true\" alt=\"Arquitetura Data Master Compass\" width=\"1350\">\n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.5.2",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 9,
+            "x": 15,
+            "y": 1
+          },
+          "id": 4,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "`Owner: sigla DT`\n`Project: Compass` \n`enviroment: prod`\n\n#### ♨️ **Projeto Data Master Compass**\n\nO **Projeto Data Master Compass** é uma iniciativa estratégica de **Engenharia de Dados** com **Data Master** para o **Banco Santander**, criada para capturar e analisar as avaliações dos nossos clientes sobre os produtos e serviços do banco. Assim como o nome **Compass** sugere, a proposta do projeto é atuar como uma verdadeira bússola para o time de negócios, orientando o desenvolvimento e a melhoria contínua dos nossos processos e produtos.\n\n#### ♨️ **Objetivos e Benefícios**\n\nAo coletar e interpretar os feedbacks dos clientes, identificamos **necessidades** e **oportunidades de aprimoramento** que fortalecem nosso compromisso com a **satisfação** e **fidelização**. Essa abordagem nos permite não apenas refinar a **experiência do cliente**, mas também consolidar o **Santander** como a **escolha de referência e confiança** para nossos clientes.\n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.5.2",
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 10
+          },
+          "id": 10,
+          "panels": [],
+          "title": "LINKS",
+          "type": "row"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 15,
+            "x": 0,
+            "y": 11
+          },
+          "id": 5,
+          "options": {
+            "folderUID": "eeex5johzxo8we",
+            "includeVars": true,
+            "keepTime": false,
+            "maxItems": 10,
+            "query": "",
+            "showFolderNames": true,
+            "showHeadings": true,
+            "showRecentlyViewed": false,
+            "showSearch": true,
+            "showStarred": true,
+            "tags": []
+          },
+          "pluginVersion": "11.5.2",
+          "title": "Dashboards - utilização",
+          "type": "dashlist"
+        },
+        {
+          "description": "Owner: sigla DT, project Compass",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 9,
+            "x": 15,
+            "y": 11
+          },
+          "id": 9,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "#### ♨️ **Links Úteis**\n\n- `update: 03/2025` **Métricas Funcionais (Metabase)**: [Acessar Metabase](http://51.141.176.64:8085/d)\n\n#### ♨️ **Outros Links**\n\n- `update: 03/2025` **Github do Projeto**: [Projeto Compass Deployment](https://github.com/gacarvalho/compass-deployment)\n- `update: 03/2025` **Infraestrutura**: [Infraestrutura Data Master Compass](https://github.com/gacarvalho/infra-data-master-compass)\n",
+            "mode": "markdown"
+          },
+          "pluginVersion": "11.5.2",
+          "title": "LINKS COMPASS",
+          "transparent": true,
+          "type": "text"
+        }
+      ],
+      "preload": false,
+      "refresh": "",
+      "schemaVersion": 40,
+      "tags": [
+        "datamaster",
+        "compass"
+      ],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "COMPASS - Comece aqui",
+      "uid": "aef6eps590mpsb",
+      "version": 31,
+      "weekStart": ""
+    }
+    ```
+</details>
+
+O resultado esperado é que voce consiga 
+
+![grafana-import](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/dashboard-grafana.png)
+
+Agora vamos criar a conexão com o Elastic Search para aparecer dados no dashboard:
+
+No grafana em **Home** > **Connections** > **Add new connection** > **Elasticsearch** > **Add new data source**
+
+Voce deverá preencher com as opções:
+
+**Nome da conexão:** elasticsearch
+
+  - Connection (URL): `http://elasticsearch:9200`
+  - Authentication - Authentication method - Basic authentication: user: `elastic` password: `data-@a1`
+  - Elasticsearch details - Index name: `compass_dt_datametrics`
+  - Elasticsearch details - Time field name: `timestamp`
+
+Resultado:
+
+```
+Elasticsearch data source is healthy.
+Next, you can start to visualize data by building a dashboard, or by querying data in the Explore view.
+```
+E você vai repetir o mesmo para outro indice:
+
+**Nome da conexão:** elasticsearch-2
+
+  - Connection (URL): `http://elasticsearch:9200`
+  - Authentication - Authentication method - Basic authentication: user: `elastic` password: `data-@a1`
+  - Elasticsearch details - Index name: `compass_dt_datametrics_fail`
+  - Elasticsearch details - Time field name: `timestamp`
+
+Resultado:
+
+```
+Elasticsearch data source is healthy.
+Next, you can start to visualize data by building a dashboard, or by querying data in the Explore view.
+```
+
+E as conexões deverá aparecer dessa forma:
+
+![grafana-conexao](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/conexao-grafana.png)
+
+>[!NOTE]
+> Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
 
 ---
 
