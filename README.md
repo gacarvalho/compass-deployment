@@ -2855,7 +2855,7 @@ db.createCollection('dt_d_view_gold_agg_compass')
 Depois da criação das collections, será necessário também criar um usuário de "serviço", nesse caso estou usando como `gacarvalho`, mas voce pode alterar aqui e posteriormente no arquivo .env do projeto.
 
 ```bash
-use admin
+use compass
 db.createUser({
   user: "gacarvalho",
   pwd: "santand@r",
@@ -2925,7 +2925,7 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
 <details>
   <summary>Acesse aqui o JSON detalhado </summary> 
 
-    **Dashboard: COMPASS - Operação Aplicacional**
+  **Dashboard: COMPASS - Operação Aplicacional**
       
     ```json
     {
@@ -4665,7 +4665,7 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
     }
     ```
 
-    Repita o mesmo passo a passo para o **Dashboard: COMPASS - Sustentação**:
+  Repita o mesmo passo a passo para o **Dashboard: COMPASS - Sustentação**:
 
     ```json
     {
@@ -5292,7 +5292,7 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
 
     ```
 
-    Agora para o dashboard de "COMPASS - Comece aqui"
+  Agora para o dashboard de "COMPASS - Comece aqui"
 
 
     ```json
@@ -5572,7 +5572,7 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
     ```
 </details>
 
-O resultado esperado é que voce consiga 
+O resultado esperado é que voce consiga visualizar os dashboard listados!
 
 ![grafana-import](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/dashboard-grafana.png)
 
@@ -5617,6 +5617,41 @@ E as conexões deverá aparecer dessa forma:
 
 >[!NOTE]
 > Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
+
+
+**Metabase**
+---
+
+Agora, vamos subir o serviço do Metabase com o comando abaixo:
+
+```bash
+make deployment-metabase-service
+```
+
+>[!NOTE]
+> Na estrutura do projeto em `{path_compass_deployment}/mnt/metabase` temos já um arquivo configuração de backup (arquivos .db), então não será necessário realizar muitas configurações.
+
+Após a subida voce verá que o scale do pod ficou em 1/1
+
+```bash
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+igc5savoteqh   deployment-metabase_business-metabase     replicated   1/1        metabase/metabase:latest                                     *:8085->3000/tcp
+```
+
+E assim voce poderá acessar no navegador `http://<ip>:8085/auth/login` e com o usuário `gacarvalho.contato@gmail.com` e a senha `data1-in@a` você terá acesso ao painel do Metabase e o dashboard Compass!
+
+![metabase](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase.png)
+
+Você vai perceber que não temos informações no painel, pois precisamos rodar o nosso pipeline além disso, gerar uma conexão com o MongoDB! Para isso você irá no **canto superior direito** > **Configuração de Admin** > **Banco de Dados** > **mongodb-connection** >  E verifique se o status está como **Conectado**, se não tiver, verifique a string de conexão!
+
+A interface de conexão deverá aparecer dessa forma:
+
+![metabase-conexao](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-conexao.png)
+
+Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta "sem dados" (pois ainda não rodamos o pipeline) é essa igual da imagem abaixo:
+
+![metabase-dados](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-dados.png)
+
 
 ---
 
