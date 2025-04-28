@@ -15,8 +15,6 @@ O repositório **compass-deployment** é uma solução desenvolvida no contexto 
 
 Este documento apresenta a visão geral do projeto, abrangendo desde os objetivos iniciais até a descrição técnica da arquitetura, fluxos funcionais, tecnologias empregadas, instruções para execução e considerações finais. A proposta é oferecer um panorama completo sobre o funcionamento do Compass como produto de analytics voltado à experiência do cliente.
 
-
-
 - [1. Objetivo do Projeto](#1-objetivo-do-projeto)
   * [1.1 O Projeto Compass](#11-o-projeto-compass)
 - [2. Arquitetura da Solução](#2-arquitetura-da-solução)
@@ -38,7 +36,21 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
   * [5.2 Dicionário de Dados](#52-dicionário-de-dados)
   * [5.3 Produtos Compass](#53-produtos-compass)
 - [6. Instruções para Configuração e Execução do Projeto Compass](#6-instruções-para-configuração-e-execução-do-projeto-compass)
-- [7. Melhorias do projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
+  * [6.1 Pré-requisitos](#61-pré-requisitos)
+    * [Requisitos da Máquina Local](#requisitos-da-máquina-local)
+    * [Requisitos de Conectividade](#requisitos-de-conectividade)
+    * [Portas Necessárias (Protocolos TCP)](#portas-necessárias-protocolos-tcp)
+    * [Ferramentas Necessárias](#ferramentas-necessárias)
+  * [6.2 Passos para Configuração e Execução](#62-passos-de-configurações-e-execução-do-projeto-compass)
+    * [Deployment do Elastic](#deployment-do-elastic)
+    * [Deployment do Kibana](#deployment-do-kibana)
+    * [Deployment do Airflow](#deployment-do--airflow)
+    * [Deployment do MongoDB](#deployment-do-mongo-db)
+    * [Deployment do Hadoop](#deployment-do-hadoop)
+    * [Deployment do Grafana](#deployment-do-grafana)
+    * [Deployment do Metabase](#deployment-do-metabase)
+    * [Visão Final](#visão-final)
+- [7. Melhorias no Projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
 
 
 
@@ -2387,7 +2399,7 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 ---
 ### Requisitos da Máquina Local
 - **CPU:** Mínimo de 4 vCPUs
-- **Memória RAM:** 32 GiB
+- **Memória RAM:** Mínimo 32 GiB
 - **Sistema Operacional:** Linux (recomendado)
 
 ### Requisitos de Conectividade
@@ -2398,17 +2410,10 @@ Certifique-se de que as seguintes portas estejam **liberadas**:
 
 | Porta | Descrição / Serviço Relacionado      |
 |-------|--------------------------------------|
-| 5601  | Kibana                               |
-| 9861  | HDFS DataNode HTTP                   |
-| 9862  | HDFS DataNode IPC                    |
-| 8188  | Timeline Server (YARN)               |
-| 32763 | Porta aleatória mapeada (ajustável)  |
+| 32763 | Namenode                             |
+| 8188  | History Server (YARN)                |
 | 8088  | ResourceManager (YARN)               |
-| 7077  | Spark Master                         |
-| 8080  | Spark UI / Serviços Web              |
-| 9870  | HDFS NameNode Web UI                 |
-| 8084  | Serviço personalizado (ex: API)      |
-| 8090  | Serviço personalizado (ex: UI)       |
+| 8084  | Spark Master                         |
 | 8085  | Metabase                             |
 | 4000  | Grafana                              |
 
@@ -2432,7 +2437,7 @@ Certifique-se de que as seguintes portas estejam **liberadas**:
 
 🧭 **Execução 1 - Replicação do projeto via repositório** 
 
-1.1. Clonagem do Repositório
+Clonagem do Repositório
 
 Clone o repositório utilizando o comando abaixo ou acesse diretamente através do link: [compass-deployment](https://github.com/gacarvalho/compass-deployment)
 
@@ -2440,7 +2445,7 @@ Clone o repositório utilizando o comando abaixo ou acesse diretamente através 
 git clone https://github.com/gacarvalho/compass-deployment.git
 ```
 
-1.2. Inicialização do Docker Swarm
+Inicialização do Docker Swarm
 
 Dentro do diretório raiz do projeto `compass-deployment`, inicialize o Docker Swarm com o seguinte comando:
 
@@ -2450,29 +2455,38 @@ docker swarm init
 
 ![<docker-swarm-init>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/1.2-docker-swarm-init.png)
 
-1.3. Criação da Rede Docker
+Criação da Rede Docker
 
 A criação da rede será realizada via `Makefile`. Certifique-se de estar na raiz do repositório conforme o path abaixo:
 
-> **Exemplo de path**: `{path-projeto}/compass-deployment$`
+> **Exemplo -  raiz do projeto**: `{path-projeto}/compass-deployment$`
 
 Execute o comando a seguir:
 
 ```bash
 make create-network
 ```
+
 ![<docker-swarm-create-network>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/1.3-create-network.png)
 
-E logo em seguida execute o comando abaixo para criar a estrutura de diretórios dentro do `{projeto}/mnt`
+Para preparar o ambiente, execute o seguinte comando para criar a estrutura de diretórios necessária dentro de {projeto}/mnt:
 
 ```bash
+# Cria o grupo 'airflow' (caso não exista) -> Necessário para executar o comando make prepare-mnt
+sudo groupadd airflow
+
+# Cria o usuário 'airflow', adiciona-o ao grupo 'airflow' e cria seu diretório home -> Necessário para executar o comando make prepare-mnt
+sudo useradd -m -g airflow airflow
+
 make prepare-mnt
 ```
+
+O resultado esperado é algo semelhante ao log abaixo:
 
 ![<prepare-mnt>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/prepare-mnt.png)
 
 
-1.4. Configuração do Arquivo `.env`
+Configuração do Arquivo `.env`
 
 Crie um arquivo de variáveis de ambiente no diretório indicado:
 
@@ -2489,7 +2503,7 @@ Cole o conteúdo abaixo dentro do arquivo `.env`:
 MONGO_USER_ADMIN=gacarvalho
 MONGO_PASS_ADMIN=santand@r
 MONGO_USER=app_user
-MONGO_PASS=santand@r
+MONGO_PASS=secure_password123
 MONGO_HOST=mongodb
 MONGO_PORT=27017
 MONGO_DB=compass
@@ -2503,11 +2517,17 @@ AIRFLOW_ENV_DIR=.
 ES_USER=elastic
 ES_PASS=data-@a1
 ```
+
 ![<SERAPI>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/1.4.SER_API.png)
 
-1.5. Criação de Diretórios Locais e configurações para ElasticSearch e Kibana
+E faça uma cópia do arquivo `.env` para uma pasta que você deverá criar também em `/env` na raiz do computador!
 
-**Elastic**
+```bash
+sudo mkdir /env
+cp services/batch_layer/.env /env/
+```
+
+**Deployment do Elastic**
 ---
 
 Crie as pastas necessárias e ajuste as permissões de acesso:
@@ -2541,29 +2561,31 @@ openssl x509 -req -in es-node.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out 
 Cópia dos Certificados para o Diretório Esperado
 
 ```bash
-user@maquinae:~/compass-deployment/mnt$ 
+user@maquina:~/compass-deployment/mnt$ 
 .
 ├── certs
 │   ├── ca.crt
-│   └── es-node
-│       ├── ca.key
-│       ├── es-node.crt
-│       └── es-node.key
-├── es_data/
+│   ├── ca.key
+│   ├── es-node
+│   │   ├── ca.key
+│   │   ├── es-node.crt
+│   │   ├── es-node.csr
+│   │   └── es-node.key
+│   ├── es-node.crt
+│   ├── es-node.csr
+│   └── es-node.key
+├── es_data
 ```
 
 E além disso, vai ser necessário atribuir as permissões necessárias para cada arquivo e pasta:
 
-```
-sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/es-node.key
-sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/es-node.crt
-sudo chown 1000:1000 /compass-deployment/mnt/certs/es-node/ca.key
-sudo chown 1000:1000 /compass-deployment/mnt/certs/ca.key
+```bash
+sudo chown 1000:1000 mnt/certs/*
+sudo chown 1000:1000 mnt/certs/es-node/*
 
-sudo chmod 600 /compass-deployment/mnt/certs/es-node/es-node.key
-sudo chmod 600 /compass-deployment/mnt/certs/es-node/es-node.crt
-sudo chmod 600 /compass-deployment/mnt/certs/es-node/ca.key
-sudo chmod 600 /compass-deployment/mnt/certs/ca.key
+sudo chmod 644 mnt/certs/*
+sudo chmod 644 mnt/certs/es-node/*
+
 ```
 
 Verificação do Caminho dos Certificados
@@ -2593,7 +2615,7 @@ services:
       - ../../mnt/certs:/usr/share/elasticsearch/config/certs
 ```
 
-**Kibana**
+**Deployment do Kibana**
 ---
 
 Ao subirmos o container do Elasticsearch, vai ser necessário **criar um usuário de acesso antes de subirmos o kibana**, para isso, será necessário entrar no container do elasticsearch e criar um usuário:
@@ -2612,7 +2634,10 @@ Entrar no container:
 ```bash
 azureuser@vm-data-master-prd-compass-infra-replicate:~/compass-deployment$ docker exec -it deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9 bash
 ```
-Se tentar subir os containers antes de criar o usuário no Elasticsearch, vai perceber que o container do kibana vai ficar com scale de 0/1, pois vai dar erro de usuario não encontrado:
+
+Caso tente subir os contêineres antes de criar o usuário no Elasticsearch, observar-se-á que o contêiner do Kibana permanecerá com scale de 0/1, pois ocorrerá um erro de usuário não encontrado.
+
+
 
 ```bash
 | Root causes: deployment-elasticsearch_kibana.1.8znz03ebk56q@vm-data-master-prd-compass-infra-replicate    
@@ -2628,7 +2653,9 @@ curl -X POST "http://elasticsearch:9200/_security/user/kibana_user" \
   -d '{"password":"data-@a1","roles":["kibana_system"],"full_name":"Kibana User","email":"kibana_user@compass.com"}'
 ```
 
-Depois da criação do usuário, rodando o comando `make deployment-elasticsearch-service` na raiz do projeto `/compass-deployment$` para deployarmos novamente o container do kibana pelo yaml base, logo após a execução, o resultado deverá ser o mesmo do print abaixo, onde os containers subiram com sucesso!
+Depois da criação do usuário, rodando o comando `make deployment-elasticsearch-service` na raiz do projeto `/compass-deployment$` para deployarmos novamente o container do kibana pelo yaml base, logo após a execução, o resultado deverá ser o mesmo do print abaixo, onde os containers subiram com sucesso! 
+
+Ou voce poderá dar restart apenas no container do kibana com o comando `docker service update --force deployment-elasticsearch_kibana` que o resultado será o mesmo!
 
 
 ![elastic-kibana-running](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-kibana-running.png)
@@ -2691,118 +2718,145 @@ O resultado deverá ser igual da imagem abaixo:
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-create-indices.png)
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/indices-elastic-kibana.png)
 
-Airflow
+**Deployment do  Airflow**
 ---
 
-Para configuração do Airflow, vamos precisar uma estrutura, criação de usuário e liberação de acesso.
+Antes de iniciar o deploy do Airflow, é essencial preparar o ambiente, garantindo que a estrutura de diretórios, permissões e usuários estejam corretamente configurados.
 
-1. Ajustar UID do usuário `airflow` no host 
+Deploy do Serviço Airflow via Makefile
+
+Para realizar o deploy inicial do serviço Airflow, execute:
+
+```bash
+make deployment-airflow-service
+```
+
+Caso necessário, siga os ajustes descritos abaixo.
+
+---
+
+**Ajustes no Host**
+
+Ajustar UID do Usuário `airflow`
+
+Garante que o UID do usuário `airflow` no host corresponda ao UID do container (50000), evitando conflitos de permissões em volumes:
 
 ```bash
 sudo usermod -u 50000 airflow
 ```
-> Garante que o usuário no host tenha o mesmo UID do container (50000). Pode evitar conflitos em alguns setups com volumes montados.
 
-2. Deploy do serviço do Airflow via Makefile
-```bash
-make deployment-airflow-service
-```
-> Realiza o deploy da stack conforme definido no Makefile.
+Criar Usuário e Grupo `airflow` (caso não existam)
 
-3. Criar o usuário `airflow` no host (já existia)
-```bash
-sudo useradd -r -m airflow
-```
-> **Ignorado**, pois o usuário já existia.
-
-4. Criar o grupo `airflow` no host (já existia)
 ```bash
 sudo groupadd airflow
+sudo useradd -r -m -g airflow airflow
 ```
-> **Ignorado**, pois o grupo já existia.
 
-5. Adicionar o usuário `airflow` ao grupo `airflow`
+**Ajustar Permissões dos Diretórios**
+
+Definir o usuário e grupo corretos nas pastas de volumes montados:
+
 ```bash
-sudo usermod -aG airflow airflow
+sudo chown -R airflow:airflow /mnt/airflow/
+sudo chown -R airflow:airflow /opt/airflow/
 ```
-> Garante que o usuário pertence ao grupo correto, usado em permissões.
 
-6. Alterar propriedade da pasta de volume para o usuário do container
-```bash
-sudo chown -R airflow:airflow mnt/airflow/
-```
-> Garante que o container consiga ler e escrever nos volumes montados.
+**Ajustar Permissões no Diretório de Logs**
 
-7. Reverter propriedade para o usuário do host (`azureuser`) — pode causar conflito
-```bash
-sudo chown -R azureuser:azureuser mnt/airflow/
-```
-> **⚠️ Cuidado:** Isso pode anular a alteração anterior. Use apenas se necessário para uso local.
-
-8. Listar diretórios para verificar se os volumes estão corretos
-```bash
-ls /opt/airflow/logs/
-ls /opt/airflow/
-```
-> Verificação da existência de diretórios e logs no volume.
-
-9. Garantir permissões adequadas no diretório de logs
 ```bash
 sudo chmod -R 755 /opt/airflow/logs
-sudo chown -R airflow:airflow /opt/airflow/logs
 sudo mkdir -p /opt/airflow/logs/scheduler
 ```
-> Cria e ajusta permissões de logs do scheduler.
 
-10. Ajustar permissões novamente (caso necessário para uso local)
+Para acesso local (opcional, apenas durante desenvolvimento):
+
 ```bash
 sudo chown -R $(whoami):$(whoami) /opt/airflow/logs
 chmod -R 775 /opt/airflow/logs
-chown -R airflow:airflow /opt/airflow/logs
-```
-> Ajusta permissões finas, garantindo acesso para o container e o host.
-
-11. Preparar diretório de plugins
-```bash
-sudo mkdir -p mnt/airflow/plugins
-sudo chown -R $(whoami):$(whoami) mnt/airflow/plugins/
-sudo chmod -R 775 mnt/airflow/plugins/
+sudo chown -R airflow:airflow /opt/airflow/logs
 ```
 
-Após realizar os ajustes acima, será necessário realizar o deployment do YAML com `make deployment-airflow-service` na pasta raiz do projete e só assim vamos conseguir ver as replicas do Aiflow, conforme o exemplo abaixo:
+**Preparar Diretório de Plugins**
 
 ```bash
-user@maquina:~/compass-deployment$ docker service ls
-ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
-crejifngbav2   deployment-airflow_airflow-cli           replicated   1/1        apache/airflow:2.7.2                                   
-crepz316peh3   deployment-airflow_airflow-init          replicated   0/1        apache/airflow:2.7.2                                   
-lcqyejkpfods   deployment-airflow_airflow-scheduler     replicated   1/1        apache/airflow:2.7.2                                   
-eauq2oh0x53x   deployment-airflow_airflow-triggerer     replicated   1/1        apache/airflow:2.7.2                                   
-mb2bh1kcun4f   deployment-airflow_airflow-webserver     replicated   1/1        apache/airflow:2.7.2                                   *:8080->8080/tcp
-3veo92az5ntq   deployment-airflow_airflow-worker        replicated   1/1        apache/airflow:2.7.2                                   
-nbzi9a39elnr   deployment-airflow_flower                replicated   1/1        apache/airflow:2.7.2                                   *:5555->5555/tcp
-v7130tavltgo   deployment-airflow_postgres              replicated   1/1        postgres:13                                            
-syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        redis:latest                                           
+sudo mkdir -p /mnt/airflow/plugins
+sudo chmod -R 775 /mnt/airflow/plugins/
 ```
 
-> [!IMPORTANT]
-> Para essa versão e deployment, mesmo inicializando, o container airflow-webserver acaba retorno o erro **ERROR: You need to initialize the database. Please run `airflow db init`.**, que será necessário executar o comando  abaixo:
+---
+
+**Verificação dos Volumes**
+
+Liste os diretórios para garantir a estrutura correta:
+
+```bash
+ls -la /opt/airflow/
+ls -la /opt/airflow/logs/
+```
+
+Certifique-se de que as permissões estejam corretas.
+
+---
+
+**🛠️ Inicialização e Ajuste do Banco de Dados**
+
+Após os ajustes:
+
+```bash
+make deployment-airflow-service
+```
+
+Verifique se os serviços estão no ar:
+
+```bash
+docker service ls
+```
+
+Exemplo de retorno do comando:
 
 ```
+ID             NAME                                     MODE         REPLICAS   IMAGE                      PORTS
+crejifngbav2   deployment-airflow_airflow-cli           replicated   1/1        apache/airflow:2.7.2        
+crepz316peh3   deployment-airflow_airflow-init          replicated   0/1        apache/airflow:2.7.2        
+lcqyejkpfods   deployment-airflow_airflow-scheduler     replicated   1/1        apache/airflow:2.7.2        
+eauq2oh0x53x   deployment-airflow_airflow-triggerer     replicated   1/1        apache/airflow:2.7.2        
+mb2bh1kcun4f   deployment-airflow_airflow-webserver     replicated   1/1        apache/airflow:2.7.2      *:8080->8080/tcp
+3veo92az5ntq   deployment-airflow_airflow-worker        replicated   1/1        apache/airflow:2.7.2        
+nbzi9a39elnr   deployment-airflow_flower                replicated   1/1        apache/airflow:2.7.2      *:5555->5555/tcp
+v7130tavltgo   deployment-airflow_postgres              replicated   1/1        postgres:13                
+syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        redis:latest               
+```
+
+**Correção de Erro de Inicialização do Banco de Dados**
+
+> ⚠️ Caso o `airflow-webserver` exiba o erro: `ERROR: You need to initialize the database. Please run 'airflow db init'.`
+
+Execute:
+
+```bash
 docker exec -it $(docker ps -q -f name=airflow-webserver) bash
 airflow db init
+airflow db migrate
+exit
 ```
 
-E logo em seguida:
+Depois, redeploy:
 
 ```bash
-docker exec -it $(docker ps -q -f name=airflow-webserver) bash
-airflow db migrate
+make deployment-airflow-service
 ```
 
-Após essa execução vamos conseguir subir novamente os serviços do airflow com o comando `make deployment-airflow-service` na raiz do projeto!
+---
 
-Após subir o serviço e conseguir acessar a interface do Airflow no navegador pela url `http://<ip>:8080/`, será necessário criar um usuário de admin com o comando abaixo:
+**Criação do Usuário Admin**
+
+Acesse a interface Web do Airflow:
+
+```
+http://<IP-OU-HOST>:8080/
+```
+
+Crie o usuário administrador:
 
 ```bash
 docker exec -it $(docker ps -q -f name=airflow-webserver) airflow users create \
@@ -2812,15 +2866,21 @@ docker exec -it $(docker ps -q -f name=airflow-webserver) airflow users create \
    --role Admin \
    --email admin@example.com \
    --password admin
-
 ```
 
-Após isso, voce vai conseguir acessar o Airflow com usuário: `admin` e a senha: `admin` e assim voce terá acesso as DAGs.
+**Login:**
 
-![airflow-pipeline](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
+- **Usuário:** `admin`
+- **Senha:** `admin`
+
+Exemplo de visualização das DAGs:
+
+![Pipeline do Airflow](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
 
 
-Mongo DB
+
+
+**Deployment do Mongo DB**
 ---
 
 Para subirmos o serviço do Mongo DB, será necessário executar o Makefile para deployarmos:
@@ -2855,10 +2915,18 @@ db.createCollection('dt_d_view_gold_agg_compass')
 Depois da criação das collections, será necessário também criar um usuário de "serviço", nesse caso estou usando como `gacarvalho`, mas voce pode alterar aqui e posteriormente no arquivo .env do projeto.
 
 ```bash
-use admin
+use compass
 db.createUser({
   user: "gacarvalho",
   pwd: "santand@r",
+  roles: [
+    { role: "root", db: "admin" }
+  ]
+})
+
+db.createUser({
+  user: "app_user",
+  pwd: "secure_password123",
   roles: [
     { role: "root", db: "admin" }
   ]
@@ -2874,7 +2942,7 @@ docker exec -it $(docker ps -q -f name=database-mongodb) mongosh "mongodb://gaca
 ![create-users-mongo](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/create-users-mongo.png)
 
 
-**Hadoop**
+**Deployment do Hadoop**
 ---
 
 Agora é a ver de subir a estrutura do Hadoop, onde contamos com o Namenode, Datanode, History Server, Nodemanager e Resource Manager. Para subirmos os serviços só vai ser neececessário deployarmos com o comando de makefile, segue o comando abaixo:
@@ -2895,14 +2963,14 @@ wjw7w350t62q   deployment-hadoop_infra-resourcemanager   replicated   1/1       
 ```
 
 >[!NOTE]
-> Ao subirmos o serviço, assim como o Kibana precisa se conectar ao Elastic Search para subir o serviço, o Nodemanager precisa se conectar ao Namenode, se essa conexão por algum motivo não acontecer e por ventura o container venha dar erro, favor executar o arquivo de "atualização" com o comando `docker stack deploy -c services/batch_layer/deployment-update-services.yaml  deployment-update`
+> Ao subirmos o serviço, assim como o Kibana precisa se conectar ao Elastic Search para subir o serviço, o Nodemanager precisa se conectar ao Namenode, se essa conexão por algum motivo não acontecer e por ventura o container venha dar erro, favor executar o arquivo de "atualização" com o comando `docker stack deploy -c services/batch_layer/deployment-update-services.yaml  deployment-update` ou como ponto de certeza, você poderá executar o comando `docker service update --force deployment-hadoop_infra-nodemanager` forçando o restart do container, pois ao acessar o resource manager o **Active Nodes** deverá ficar com valor igual a 3!	
 
 ![hadoop](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/hadoop.png)
 ![resource-manager](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/rm.png)
 ![namenode](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/namenode.png)
 
 
-**Grafana**
+**Deployment do Grafana**
 ---
 
 Agora, vamos subir o serviço do Grafana pelo comando abaixo:
@@ -2925,9 +2993,9 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
 <details>
   <summary>Acesse aqui o JSON detalhado </summary> 
 
-    **Dashboard: COMPASS - Operação Aplicacional**
+  **Dashboard: COMPASS - Operação Aplicacional**
       
-    ```json
+  ```json
     {
       "annotations": {
         "list": [
@@ -4663,11 +4731,11 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
       "version": 215,
       "weekStart": ""
     }
-    ```
+  ```
 
-    Repita o mesmo passo a passo para o **Dashboard: COMPASS - Sustentação**:
+  Repita o mesmo passo a passo para o **Dashboard: COMPASS - Sustentação**:
 
-    ```json
+  ```json
     {
       "annotations": {
         "list": [
@@ -5290,12 +5358,12 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
       "weekStart": ""
     }
 
-    ```
+```
 
-    Agora para o dashboard de "COMPASS - Comece aqui"
+Agora para o dashboard de "COMPASS - Comece aqui"
 
 
-    ```json
+```json
     {
       "annotations": {
         "list": [
@@ -5569,10 +5637,10 @@ A ideia agora é que voce faça o importe dos dashboard para o seu Grafana, na o
       "version": 31,
       "weekStart": ""
     }
-    ```
+  ```
 </details>
 
-O resultado esperado é que voce consiga 
+O resultado esperado é que voce consiga visualizar os dashboard listados!
 
 ![grafana-import](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/dashboard-grafana.png)
 
@@ -5618,8 +5686,153 @@ E as conexões deverá aparecer dessa forma:
 >[!NOTE]
 > Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
 
+
+**Deployment do Metabase**
 ---
 
+Agora, vamos subir o serviço do Metabase com o comando abaixo:
+
+```bash
+make deployment-metabase-service
+```
+
+>[!NOTE]
+> Na estrutura do projeto em `{path_compass_deployment}/mnt/metabase` temos já um arquivo configuração de backup (arquivos .db), então não será necessário realizar muitas configurações.
+
+Após a subida voce verá que o scale do pod ficou em 1/1
+
+```bash
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+igc5savoteqh   deployment-metabase_business-metabase     replicated   1/1        metabase/metabase:latest                                     *:8085->3000/tcp
+```
+
+E assim voce poderá acessar no navegador `http://<ip>:8085/auth/login` e com o usuário `gacarvalho.contato@gmail.com` e a senha `data1-in@a` você terá acesso ao painel do Metabase e o dashboard Compass!
+
+![metabase](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase.png)
+
+Você vai perceber que não temos informações no painel, pois precisamos rodar o nosso pipeline além disso, gerar uma conexão com o MongoDB! Para isso você irá no **canto superior direito** > **Configuração de Admin** > **Banco de Dados** > **mongodb-connection** >  E verifique se o status está como **Conectado**, se não tiver, verifique a string de conexão!
+
+A interface de conexão deverá aparecer dessa forma:
+
+![metabase-conexao](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-conexao.png)
+
+Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta "sem dados" (pois ainda não rodamos o pipeline) é essa igual da imagem abaixo:
+
+![metabase-dados](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-dados.png)
+
+**Visão Final**
+---
+Se você chegou até essa essão, parabéns! Você conseguiu replicar toda a infraestrutura do projeto Compass! Agora, vamos rodar o pipeline pela 1a vez e consultar os dados.
+
+>[!NOTE]
+> Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações!
+> E para funcionamento correto do Airflow que voce pode ajustar na DAG o diretório, voce deverá criar a pasta e copiar o arquivo na raiz do computador `/env/.env`
+
+Um ponto crucial para rodar o pipeline `dag_d_pipeline_compass_reviews` é rodar uma DAG eventual que vai gerar dados de forma eventual "simulando" a alimentação de feedbacks no Mongo DB como se fosse o canal.
+
+![dag_eventual](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/dag_e.png)
+
+Agora já é possível executar o pipeline dag_d_pipeline_compass_reviews e com os acessos devidos.
+
+![airflow-run](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-run.png)
+
+Após o start do pipeline podemos ver os containers das imagens spark rodando no ambiente com inicio da nomeclatura de `dmc-...`
+
+![apps-spark-run](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/apps-spark-run.png)
+
+Agora é possível perceber que o pipeline diário teve a sua primeira execução com sucesso.
+
+![dag_diario](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/dag_d.png)
+
+As aplicações listadas no Yarn.
+
+![yarn](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/replicate-2.png)
+
+E os dados de negócios entregue no Metabase:
+
+![metabase-populado](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-ok.png)
+
+**Spark**
+---
+
+Agora será possível realizar o deploy dos containers Spark para se conectar ao Hadoop, assim você poderá acessar o HDFS e abrir sessões em pyspark e spark-shell.
+
+Com o comando abaixo será realizado o deploy do Spark Master (1 container) e o Spark Worker (2 containers).
+
+```bash
+make deployment-spark-service
+```
+
+O resultado esperado é que seja semanalhante a esse output abaixo:
+
+```bash
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+                                                     *:27017->27017/tcp
+ldzfn8t9c725   deployment-spark_infra-spark-master       replicated   1/1        iamgacarvalho/spark-master-data-in-compass:3.0.0             *:7077->7077/tcp, *:8084->8082/tcp
+djskgqaj7v0t   deployment-spark_infra-spark-worker       replicated   2/2        iamgacarvalho/spark-worker-data-in-compass:3.0.0             *:8090-8100->8081/tcp
+```
+
+Agora acessando qualquer um dos containers, vamos conseguir navegador no HDFS:
+
+![spark-hdfs](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/spark-hdfs.png)
+
+E abrindo a sessão em pyspark é possível realizar a leitura dos arquivos alocados no HDFS:
+
+![spark-read](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/spark-read.png)
+
+Abaixo é uma leitura dos registros rejeitados e fora do padrão, nesse caso especifico é um rejeitado por conta do **pattern** que não foi atendido:
+
+```bash
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 3.5.0
+      /_/
+
+Using Python version 3.7.3 (default, Mar 23 2024 16:12:05)
+Spark context Web UI available at http://b595c75b463e:4040
+Spark context available as 'sc' (master = local[*], app id = local-1745842549531).
+SparkSession available as 'spark'.
+>>> path = "/santander/quality/compass/reviews/pattern/apple_store/odate=20250427/"
+>>> df = spark.read.parquet(path)
+>>> df.printSchema()
+root
+ |-- id: string (nullable = true)
+ |-- name_client: string (nullable = true)
+ |-- app: string (nullable = true)
+ |-- im_version: string (nullable = true)
+ |-- im_rating: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- content: string (nullable = true)
+ |-- updated: string (nullable = true)
+ |-- segmento: string (nullable = true)
+ |-- historical_data: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- title: string (nullable = true)
+ |    |    |-- content: string (nullable = true)
+ |    |    |-- app: string (nullable = true)
+ |    |    |-- segmento: string (nullable = true)
+ |    |    |-- im_version: string (nullable = true)
+ |    |    |-- im_rating: string (nullable = true)
+ |-- failed_columns: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- validation: string (nullable = true)
+
+>>> df.show(truncate=False)
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+|id         |name_client|app             |im_version|im_rating|title|content              |updated                  |segmento|historical_data|failed_columns|validation|
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+|12528197545|ULISSES.   |santander-way_pf|25.3.2    |5        |     |SALVACAO DO DIA A DIA|2025-04-10T17:08:12-07:00|pf      |[]             |[title]       |no_match  |
+|12551740578|QUEROLLEN  |santander-way_pf|25.3.2    |5        |     |MARAVILHOSO          |2025-04-16T16:35:29-07:00|pf      |[]             |[title]       |no_match  |
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+
+```
+
+![spark-rejeitado](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/rejeitado.png)
+
+
+Se você chegou até essa última interação com o Spark, você conseguiu replicar todo o projeto Compass! 
+
+---
 
 # 7. Melhorias do projeto e Considerações Finais
 
@@ -5654,4 +5867,3 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 ---
 
 O projeto Compass reforça o papel da Engenharia de Dados como elemento central na construção de soluções voltadas para o negócio, com foco direto na experiência do usuário. Ao oferecer uma estrutura confiável, escalável e orientada à geração de insights, a iniciativa não apenas empodera times de produto com dados relevantes sobre seus próprios aplicativos, mas também fornece uma base comparativa frente aos concorrentes do setor. Com isso, o Compass se torna uma ferramenta valiosa para instituições que buscam não só entender, mas também antecipar as necessidades dos seus clientes — fortalecendo sua presença no mercado e avançando na jornada rumo à principalidade financeira.
-
