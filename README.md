@@ -15,8 +15,6 @@ O repositório **compass-deployment** é uma solução desenvolvida no contexto 
 
 Este documento apresenta a visão geral do projeto, abrangendo desde os objetivos iniciais até a descrição técnica da arquitetura, fluxos funcionais, tecnologias empregadas, instruções para execução e considerações finais. A proposta é oferecer um panorama completo sobre o funcionamento do Compass como produto de analytics voltado à experiência do cliente.
 
-
-
 - [1. Objetivo do Projeto](#1-objetivo-do-projeto)
   * [1.1 O Projeto Compass](#11-o-projeto-compass)
 - [2. Arquitetura da Solução](#2-arquitetura-da-solução)
@@ -53,7 +51,6 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
     * [Deployment do Metabase](#deployment-do-metabase)
     * [Visão Final](#visão-final)
 - [7. Melhorias no Projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
-
 
 
 
@@ -5754,6 +5751,86 @@ As aplicações listadas no Yarn.
 E os dados de negócios entregue no Metabase:
 
 ![metabase-populado](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-ok.png)
+
+**Spark**
+---
+
+Agora será possível realizar o deploy dos containers Spark para se conectar ao Hadoop, assim você poderá acessar o HDFS e abrir sessões em pyspark e spark-shell.
+
+Com o comando abaixo será realizado o deploy do Spark Master (1 container) e o Spark Worker (2 containers).
+
+```bash
+make deployment-spark-service
+```
+
+O resultado esperado é que seja semanalhante a esse output abaixo:
+
+```bash
+ID             NAME                                      MODE         REPLICAS   IMAGE                                                        PORTS
+                                                     *:27017->27017/tcp
+ldzfn8t9c725   deployment-spark_infra-spark-master       replicated   1/1        iamgacarvalho/spark-master-data-in-compass:3.0.0             *:7077->7077/tcp, *:8084->8082/tcp
+djskgqaj7v0t   deployment-spark_infra-spark-worker       replicated   2/2        iamgacarvalho/spark-worker-data-in-compass:3.0.0             *:8090-8100->8081/tcp
+```
+
+Agora acessando qualquer um dos containers, vamos conseguir navegador no HDFS:
+
+![spark-hdfs](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/spark-hdfs.png)
+
+E abrindo a sessão em pyspark é possível realizar a leitura dos arquivos alocados no HDFS:
+
+![spark-read](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/spark-read.png)
+
+Abaixo é uma leitura dos registros rejeitados e fora do padrão, nesse caso especifico é um rejeitado por conta do **pattern** que não foi atendido:
+
+```bash
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 3.5.0
+      /_/
+
+Using Python version 3.7.3 (default, Mar 23 2024 16:12:05)
+Spark context Web UI available at http://b595c75b463e:4040
+Spark context available as 'sc' (master = local[*], app id = local-1745842549531).
+SparkSession available as 'spark'.
+>>> path = "/santander/quality/compass/reviews/pattern/apple_store/odate=20250427/"
+>>> df = spark.read.parquet(path)
+>>> df.printSchema()
+root
+ |-- id: string (nullable = true)
+ |-- name_client: string (nullable = true)
+ |-- app: string (nullable = true)
+ |-- im_version: string (nullable = true)
+ |-- im_rating: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- content: string (nullable = true)
+ |-- updated: string (nullable = true)
+ |-- segmento: string (nullable = true)
+ |-- historical_data: array (nullable = true)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- title: string (nullable = true)
+ |    |    |-- content: string (nullable = true)
+ |    |    |-- app: string (nullable = true)
+ |    |    |-- segmento: string (nullable = true)
+ |    |    |-- im_version: string (nullable = true)
+ |    |    |-- im_rating: string (nullable = true)
+ |-- failed_columns: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- validation: string (nullable = true)
+
+>>> df.show(truncate=False)
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+|id         |name_client|app             |im_version|im_rating|title|content              |updated                  |segmento|historical_data|failed_columns|validation|
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+|12528197545|ULISSES.   |santander-way_pf|25.3.2    |5        |     |SALVACAO DO DIA A DIA|2025-04-10T17:08:12-07:00|pf      |[]             |[title]       |no_match  |
+|12551740578|QUEROLLEN  |santander-way_pf|25.3.2    |5        |     |MARAVILHOSO          |2025-04-16T16:35:29-07:00|pf      |[]             |[title]       |no_match  |
++-----------+-----------+----------------+----------+---------+-----+---------------------+-------------------------+--------+---------------+--------------+----------+
+
+```
+
+![spark-rejeitado](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/rejeitado.png)
+
+
+Se você chegou até essa última interação com o Spark, você conseguiu replicar todo o projeto Compass! 
 
 ---
 
