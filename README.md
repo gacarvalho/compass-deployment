@@ -38,7 +38,22 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
   * [5.2 Dicionário de Dados](#52-dicionário-de-dados)
   * [5.3 Produtos Compass](#53-produtos-compass)
 - [6. Instruções para Configuração e Execução do Projeto Compass](#6-instruções-para-configuração-e-execução-do-projeto-compass)
-- [7. Melhorias do projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
+  * [6.1 Pré-requisitos](#61-pré-requisitos)
+    * [Requisitos da Máquina Local](#requisitos-da-máquina-local)
+    * [Requisitos de Conectividade](#requisitos-de-conectividade)
+    * [Portas Necessárias (Protocolos TCP)](#portas-necessárias-protocolos-tcp)
+    * [Ferramentas Necessárias](#ferramentas-necessárias)
+  * [6.2 Passos para Configuração e Execução](#62-passos-para-configuração-e-execução)
+    * [Deployment do Elastic](#deployment-do-elastic)
+    * [Deployment do Kibana](#deployment-do-kibana)
+    * [Deployment do Airflow](#deployment-do-airflow)
+    * [Deployment do MongoDB](#deployment-do-mongo-db)
+    * [Deployment do Hadoop](#deployment-do-hadoop)
+    * [Deployment do Grafana](#deployment-do-grafana)
+    * [Deployment do Metabase](#deployment-do-metabase)
+    * [Visão Final](#visão-final)
+- [7. Melhorias no Projeto e Considerações Finais](#7-melhorias-no-projeto-e-considerações-finais)
+
 
 
 
@@ -2387,7 +2402,7 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 ---
 ### Requisitos da Máquina Local
 - **CPU:** Mínimo de 4 vCPUs
-- **Memória RAM:** 32 GiB
+- **Memória RAM:** Mínimo 32 GiB
 - **Sistema Operacional:** Linux (recomendado)
 
 ### Requisitos de Conectividade
@@ -2398,17 +2413,10 @@ Certifique-se de que as seguintes portas estejam **liberadas**:
 
 | Porta | Descrição / Serviço Relacionado      |
 |-------|--------------------------------------|
-| 5601  | Kibana                               |
-| 9861  | HDFS DataNode HTTP                   |
-| 9862  | HDFS DataNode IPC                    |
-| 8188  | Timeline Server (YARN)               |
-| 32763 | Porta aleatória mapeada (ajustável)  |
+| 32763 | Namenode                             |
+| 8188  | History Server (YARN)                |
 | 8088  | ResourceManager (YARN)               |
-| 7077  | Spark Master                         |
-| 8080  | Spark UI / Serviços Web              |
-| 9870  | HDFS NameNode Web UI                 |
-| 8084  | Serviço personalizado (ex: API)      |
-| 8090  | Serviço personalizado (ex: UI)       |
+| 8084  | Spark Master                         |
 | 8085  | Metabase                             |
 | 4000  | Grafana                              |
 
@@ -2432,7 +2440,7 @@ Certifique-se de que as seguintes portas estejam **liberadas**:
 
 🧭 **Execução 1 - Replicação do projeto via repositório** 
 
-1.1. Clonagem do Repositório
+Clonagem do Repositório
 
 Clone o repositório utilizando o comando abaixo ou acesse diretamente através do link: [compass-deployment](https://github.com/gacarvalho/compass-deployment)
 
@@ -2440,7 +2448,7 @@ Clone o repositório utilizando o comando abaixo ou acesse diretamente através 
 git clone https://github.com/gacarvalho/compass-deployment.git
 ```
 
-1.2. Inicialização do Docker Swarm
+Inicialização do Docker Swarm
 
 Dentro do diretório raiz do projeto `compass-deployment`, inicialize o Docker Swarm com o seguinte comando:
 
@@ -2450,11 +2458,11 @@ docker swarm init
 
 ![<docker-swarm-init>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/1.2-docker-swarm-init.png)
 
-1.3. Criação da Rede Docker
+Criação da Rede Docker
 
 A criação da rede será realizada via `Makefile`. Certifique-se de estar na raiz do repositório conforme o path abaixo:
 
-> **Exemplo de path**: `{path-projeto}/compass-deployment$`
+> **Exemplo -  raiz do projeto**: `{path-projeto}/compass-deployment$`
 
 Execute o comando a seguir:
 
@@ -2476,10 +2484,12 @@ sudo useradd -m -g airflow airflow
 make prepare-mnt
 ```
 
+O resultado esperado é algo semelhante ao log abaixo:
+
 ![<prepare-mnt>](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/prepare-mnt.png)
 
 
-1.4. Configuração do Arquivo `.env`
+Configuração do Arquivo `.env`
 
 Crie um arquivo de variáveis de ambiente no diretório indicado:
 
@@ -2520,7 +2530,7 @@ sudo mkdir /env
 cp services/batch_layer/.env /env/
 ```
 
-**Elastic**
+**Deployment do Elastic**
 ---
 
 Crie as pastas necessárias e ajuste as permissões de acesso:
@@ -2608,7 +2618,7 @@ services:
       - ../../mnt/certs:/usr/share/elasticsearch/config/certs
 ```
 
-**Kibana**
+**Deployment do Kibana**
 ---
 
 Ao subirmos o container do Elasticsearch, vai ser necessário **criar um usuário de acesso antes de subirmos o kibana**, para isso, será necessário entrar no container do elasticsearch e criar um usuário:
@@ -2627,7 +2637,10 @@ Entrar no container:
 ```bash
 azureuser@vm-data-master-prd-compass-infra-replicate:~/compass-deployment$ docker exec -it deployment-elasticsearch_elasticsearch.1.uinpl1zt1e5f0i19eqdd6u5y9 bash
 ```
-Se tentar subir os containers antes de criar o usuário no Elasticsearch, vai perceber que o container do kibana vai ficar com scale de 0/1, pois vai dar erro de usuario não encontrado:
+
+Caso tente subir os contêineres antes de criar o usuário no Elasticsearch, observar-se-á que o contêiner do Kibana permanecerá com scale de 0/1, pois ocorrerá um erro de usuário não encontrado.
+
+
 
 ```bash
 | Root causes: deployment-elasticsearch_kibana.1.8znz03ebk56q@vm-data-master-prd-compass-infra-replicate    
@@ -2708,126 +2721,145 @@ O resultado deverá ser igual da imagem abaixo:
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/elastic-create-indices.png)
 ![elastic-create-indices](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/indices-elastic-kibana.png)
 
-Airflow
+**Deployment do  Airflow**
 ---
 
-Para configuração do Airflow, vamos precisar uma estrutura, criação de usuário e liberação de acesso.
+Antes de iniciar o deploy do Airflow, é essencial preparar o ambiente, garantindo que a estrutura de diretórios, permissões e usuários estejam corretamente configurados.
 
-1. Deploy do serviço do Airflow via Makefile:
+Deploy do Serviço Airflow via Makefile
+
+Para realizar o deploy inicial do serviço Airflow, execute:
 
 ```bash
 make deployment-airflow-service
 ```
 
-Se necessário, faça os ajustes abaixo:
+Caso necessário, siga os ajustes descritos abaixo.
 
-> Ajustar UID do usuário `airflow` no host, garantindo que o usuário no host tenha o mesmo UID do container (50000). Pode evitar conflitos em alguns setups com volumes montados.
+---
+
+**Ajustes no Host**
+
+Ajustar UID do Usuário `airflow`
+
+Garante que o UID do usuário `airflow` no host corresponda ao UID do container (50000), evitando conflitos de permissões em volumes:
 
 ```bash
 sudo usermod -u 50000 airflow
 ```
 
-> Criar o usuário `airflow` no host (já existia)
-
-```bash
-sudo useradd -r -m airflow
-```
-
-> Criar o grupo `airflow` no host (já existia)
+Criar Usuário e Grupo `airflow` (caso não existam)
 
 ```bash
 sudo groupadd airflow
+sudo useradd -r -m -g airflow airflow
 ```
 
-> Adicionar o usuário `airflow` ao grupo `airflow`
+**Ajustar Permissões dos Diretórios**
+
+Definir o usuário e grupo corretos nas pastas de volumes montados:
 
 ```bash
-sudo usermod -aG airflow airflow
+sudo chown -R airflow:airflow /mnt/airflow/
+sudo chown -R airflow:airflow /opt/airflow/
 ```
 
-> Alterar propriedade da pasta de volume para o usuário do container, garantindo que o container consiga ler e escrever nos volumes montados.
-
-```bash
-sudo chown -R airflow:airflow mnt/airflow/
-```
-
-> Vamos alterar as permissões de volta ao seu usuário (no meu caso azureuser) para atribuirmos as permissões.
-
-```bash
-sudo chown -R azureuser:azureuser mnt/airflow/
-```
-
-> Listar diretórios para verificar se os volumes estão corretos
-
-```bash
-ls /opt/airflow/logs/
-ls /opt/airflow/
-```
-
-> Garantir permissões adequadas no diretório de logs
+**Ajustar Permissões no Diretório de Logs**
 
 ```bash
 sudo chmod -R 755 /opt/airflow/logs
-sudo chown -R airflow:airflow /opt/airflow/logs
 sudo mkdir -p /opt/airflow/logs/scheduler
 ```
 
-> Ajustar permissões novamente (caso necessário para uso local), ajustando permissões finas, garantindo acesso para o container e o host.
+Para acesso local (opcional, apenas durante desenvolvimento):
 
 ```bash
 sudo chown -R $(whoami):$(whoami) /opt/airflow/logs
 chmod -R 775 /opt/airflow/logs
-chown -R airflow:airflow /opt/airflow/logs
+sudo chown -R airflow:airflow /opt/airflow/logs
 ```
 
-> Preparar diretório de plugins
+**Preparar Diretório de Plugins**
 
 ```bash
-sudo mkdir -p mnt/airflow/plugins
-sudo chmod -R 775 mnt/airflow/plugins/
+sudo mkdir -p /mnt/airflow/plugins
+sudo chmod -R 775 /mnt/airflow/plugins/
 ```
 
-> Agora, vamos devolver os acessos ao usuário airflow
+---
+
+**Verificação dos Volumes**
+
+Liste os diretórios para garantir a estrutura correta:
 
 ```bash
-sudo chown -R airflow:airflow mnt/airflow/
-sudo chown -R airflow:airflow /opt/airflow/
+ls -la /opt/airflow/
+ls -la /opt/airflow/logs/
 ```
 
-Após realizar os ajustes acima, será necessário realizar o deployment do YAML com `make deployment-airflow-service` na pasta raiz do projete e só assim vamos conseguir ver as replicas do Aiflow, conforme o exemplo abaixo:
+Certifique-se de que as permissões estejam corretas.
+
+---
+
+**🛠️ Inicialização e Ajuste do Banco de Dados**
+
+Após os ajustes:
 
 ```bash
-user@maquina:~/compass-deployment$ docker service ls
-ID             NAME                                     MODE         REPLICAS   IMAGE                                                  PORTS
-crejifngbav2   deployment-airflow_airflow-cli           replicated   1/1        apache/airflow:2.7.2                                   
-crepz316peh3   deployment-airflow_airflow-init          replicated   0/1        apache/airflow:2.7.2                                   
-lcqyejkpfods   deployment-airflow_airflow-scheduler     replicated   1/1        apache/airflow:2.7.2                                   
-eauq2oh0x53x   deployment-airflow_airflow-triggerer     replicated   1/1        apache/airflow:2.7.2                                   
-mb2bh1kcun4f   deployment-airflow_airflow-webserver     replicated   1/1        apache/airflow:2.7.2                                   *:8080->8080/tcp
-3veo92az5ntq   deployment-airflow_airflow-worker        replicated   1/1        apache/airflow:2.7.2                                   
-nbzi9a39elnr   deployment-airflow_flower                replicated   1/1        apache/airflow:2.7.2                                   *:5555->5555/tcp
-v7130tavltgo   deployment-airflow_postgres              replicated   1/1        postgres:13                                            
-syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        redis:latest                                           
+make deployment-airflow-service
 ```
 
-> [!IMPORTANT]
-> Para essa versão e deployment, mesmo inicializando, o container airflow-webserver acaba retorno o erro **ERROR: You need to initialize the database. Please run `airflow db init`.**, que será necessário executar o comando  abaixo:
+Verifique se os serviços estão no ar:
+
+```bash
+docker service ls
+```
+
+Exemplo de retorno do comando:
 
 ```
+ID             NAME                                     MODE         REPLICAS   IMAGE                      PORTS
+crejifngbav2   deployment-airflow_airflow-cli           replicated   1/1        apache/airflow:2.7.2        
+crepz316peh3   deployment-airflow_airflow-init          replicated   0/1        apache/airflow:2.7.2        
+lcqyejkpfods   deployment-airflow_airflow-scheduler     replicated   1/1        apache/airflow:2.7.2        
+eauq2oh0x53x   deployment-airflow_airflow-triggerer     replicated   1/1        apache/airflow:2.7.2        
+mb2bh1kcun4f   deployment-airflow_airflow-webserver     replicated   1/1        apache/airflow:2.7.2      *:8080->8080/tcp
+3veo92az5ntq   deployment-airflow_airflow-worker        replicated   1/1        apache/airflow:2.7.2        
+nbzi9a39elnr   deployment-airflow_flower                replicated   1/1        apache/airflow:2.7.2      *:5555->5555/tcp
+v7130tavltgo   deployment-airflow_postgres              replicated   1/1        postgres:13                
+syt6imxu24kb   deployment-airflow_redis                 replicated   1/1        redis:latest               
+```
+
+**Correção de Erro de Inicialização do Banco de Dados**
+
+> ⚠️ Caso o `airflow-webserver` exiba o erro: `ERROR: You need to initialize the database. Please run 'airflow db init'.`
+
+Execute:
+
+```bash
 docker exec -it $(docker ps -q -f name=airflow-webserver) bash
 airflow db init
+airflow db migrate
+exit
 ```
 
-E logo em seguida:
+Depois, redeploy:
 
 ```bash
-docker exec -it $(docker ps -q -f name=airflow-webserver) bash
-airflow db migrate
+make deployment-airflow-service
 ```
 
-Após essa execução vamos conseguir subir novamente os serviços do airflow com o comando `make deployment-airflow-service` na raiz do projeto!
+---
 
-Após subir o serviço e conseguir acessar a interface do Airflow no navegador pela url `http://<ip>:8080/`, será necessário criar um usuário de admin com o comando abaixo:
+**Criação do Usuário Admin**
+
+Acesse a interface Web do Airflow:
+
+```
+http://<IP-OU-HOST>:8080/
+```
+
+Crie o usuário administrador:
 
 ```bash
 docker exec -it $(docker ps -q -f name=airflow-webserver) airflow users create \
@@ -2837,15 +2869,21 @@ docker exec -it $(docker ps -q -f name=airflow-webserver) airflow users create \
    --role Admin \
    --email admin@example.com \
    --password admin
-
 ```
 
-Após isso, voce vai conseguir acessar o Airflow com usuário: `admin` e a senha: `admin` e assim voce terá acesso as DAGs.
+**Login:**
 
-![airflow-pipeline](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
+- **Usuário:** `admin`
+- **Senha:** `admin`
+
+Exemplo de visualização das DAGs:
+
+![Pipeline do Airflow](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/airflow-pipeline.png)
 
 
-Mongo DB
+
+
+**Deployment do Mongo DB**
 ---
 
 Para subirmos o serviço do Mongo DB, será necessário executar o Makefile para deployarmos:
@@ -2907,7 +2945,7 @@ docker exec -it $(docker ps -q -f name=database-mongodb) mongosh "mongodb://gaca
 ![create-users-mongo](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/create-users-mongo.png)
 
 
-**Hadoop**
+**Deployment do Hadoop**
 ---
 
 Agora é a ver de subir a estrutura do Hadoop, onde contamos com o Namenode, Datanode, History Server, Nodemanager e Resource Manager. Para subirmos os serviços só vai ser neececessário deployarmos com o comando de makefile, segue o comando abaixo:
@@ -2935,7 +2973,7 @@ wjw7w350t62q   deployment-hadoop_infra-resourcemanager   replicated   1/1       
 ![namenode](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/namenode.png)
 
 
-**Grafana**
+**Deployment do Grafana**
 ---
 
 Agora, vamos subir o serviço do Grafana pelo comando abaixo:
@@ -5652,7 +5690,7 @@ E as conexões deverá aparecer dessa forma:
 > Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
 
 
-**Metabase**
+**Deployment do Metabase**
 ---
 
 Agora, vamos subir o serviço do Metabase com o comando abaixo:
@@ -5752,4 +5790,3 @@ A seguir, será listada os itens de sugestão de melhorias, evolução e contrib
 ---
 
 O projeto Compass reforça o papel da Engenharia de Dados como elemento central na construção de soluções voltadas para o negócio, com foco direto na experiência do usuário. Ao oferecer uma estrutura confiável, escalável e orientada à geração de insights, a iniciativa não apenas empodera times de produto com dados relevantes sobre seus próprios aplicativos, mas também fornece uma base comparativa frente aos concorrentes do setor. Com isso, o Compass se torna uma ferramenta valiosa para instituições que buscam não só entender, mas também antecipar as necessidades dos seus clientes — fortalecendo sua presença no mercado e avançando na jornada rumo à principalidade financeira.
-
