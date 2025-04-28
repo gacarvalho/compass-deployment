@@ -43,16 +43,16 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
     * [Requisitos de Conectividade](#requisitos-de-conectividade)
     * [Portas Necessárias (Protocolos TCP)](#portas-necessárias-protocolos-tcp)
     * [Ferramentas Necessárias](#ferramentas-necessárias)
-  * [6.2 Passos para Configuração e Execução](#62-passos-para-configuração-e-execução)
+  * [6.2 Passos para Configuração e Execução](#62-passos-de-configurações-e-execução-do-projeto-compass)
     * [Deployment do Elastic](#deployment-do-elastic)
     * [Deployment do Kibana](#deployment-do-kibana)
-    * [Deployment do Airflow](#deployment-do-airflow)
+    * [Deployment do Airflow](#deployment-do--airflow)
     * [Deployment do MongoDB](#deployment-do-mongo-db)
     * [Deployment do Hadoop](#deployment-do-hadoop)
     * [Deployment do Grafana](#deployment-do-grafana)
     * [Deployment do Metabase](#deployment-do-metabase)
     * [Visão Final](#visão-final)
-- [7. Melhorias no Projeto e Considerações Finais](#7-melhorias-no-projeto-e-considerações-finais)
+- [7. Melhorias no Projeto e Considerações Finais](#7-melhorias-do-projeto-e-considerações-finais)
 
 
 
