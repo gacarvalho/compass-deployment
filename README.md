@@ -302,7 +302,7 @@ A seguir, são apresentados os detalhes sobre cada tecnologia, seus diretórios,
 
   - **Metodologia e boas práticas:** Utilizando as boas práticas, o dashboard foi dividido em 3 visões: (1) visão gerencial, (2) visão macro por ano-mes e (3) visão granular.
 
-    A visão (1) é dedicada para a visão gerencial estruturado com visões gráficas estraturada em:
+    A visão (1) é dedicada para a visão gerencial estruturada com visões gráficas estraturada em:
 
       - Média da experiência do cliente atual
       - Segmentação do(s) canais Santander PF e PJ 
@@ -2432,7 +2432,7 @@ Certifique-se de que as seguintes portas estejam **liberadas**:
 ---
 
 
-## 6.2 Passos de configurações e execução do Projeto Compass
+## 6.2 Passos de configuração e execução do Projeto Compass
 ---
 
 🧭 **Execução 1 - Replicação do projeto via repositório** 
@@ -5722,7 +5722,7 @@ Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta 
 
 **Visão Final**
 ---
-Se você chegou até essa essão, parabéns! Você conseguiu replicar toda a infraestrutura do projeto Compass! Agora, vamos rodar o pipeline pela 1a vez e consultar os dados.
+Se você chegou até essa sessão, parabéns! Você conseguiu replicar toda a infraestrutura do projeto Compass! Agora, vamos rodar o pipeline pela 1a vez e consultar os dados.
 
 >[!NOTE]
 > Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações!
