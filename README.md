@@ -2399,7 +2399,7 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 ---
 ### Requisitos da Máquina Local
 - **CPU:** Mínimo de 4 vCPUs
-- **Memória RAM:** Mínimo 32 GiB
+- **Memória RAM:** Mínimo 32 GB
 - **Sistema Operacional:** Linux (recomendado)
 
 ### Requisitos de Conectividade
@@ -2840,7 +2840,7 @@ airflow db migrate
 exit
 ```
 
-Depois, redeploy:
+Depois, reimplantamos:
 
 ```bash
 make deployment-airflow-service
@@ -5679,12 +5679,12 @@ Elasticsearch data source is healthy.
 Next, you can start to visualize data by building a dashboard, or by querying data in the Explore view.
 ```
 
-E as conexões deverá aparecer dessa forma:
+E as conexões deverão aparecer dessa forma:
 
 ![grafana-conexao](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/conexao-grafana.png)
 
 >[!NOTE]
-> Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana!
+> Lembrando que não rodamos as aplicações, então não vamos ter dados no Elastic Search de logs para exibir no Grafana.
 
 
 **Deployment do Metabase**
@@ -5710,13 +5710,13 @@ E assim voce poderá acessar no navegador `http://<ip>:8085/auth/login` e com o 
 
 ![metabase](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase.png)
 
-Você vai perceber que não temos informações no painel, pois precisamos rodar o nosso pipeline além disso, gerar uma conexão com o MongoDB! Para isso você irá no **canto superior direito** > **Configuração de Admin** > **Banco de Dados** > **mongodb-connection** >  E verifique se o status está como **Conectado**, se não tiver, verifique a string de conexão!
+Você vai perceber que não temos informações no painel, pois precisamos rodar o nosso pipeline além disso, gerar uma conexão com o MongoDB. Para isso você irá no **canto superior direito** > **Configuração de Admin** > **Banco de Dados** > **mongodb-connection** >  E verifique se o status está como **CONECTADO**, se não tiver, verifique a string de conexão.
 
 A interface de conexão deverá aparecer dessa forma:
 
 ![metabase-conexao](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-conexao.png)
 
-Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta "sem dados" (pois ainda não rodamos o pipeline) é essa igual da imagem abaixo:
+Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta "sem dados" é como a imagem abaixo (pois ainda não rodamos o pipeline):
 
 ![metabase-dados](https://github.com/gacarvalho/compass-deployment/blob/compass/infra-3.0.0/img/metabase-dados.png)
 
@@ -5725,8 +5725,8 @@ Ao sairmos da visão de ADMIN e voltar ao painel do dashboard, a visão correta 
 Se você chegou até essa essão, parabéns! Você conseguiu replicar toda a infraestrutura do projeto Compass! Agora, vamos rodar o pipeline pela 1a vez e consultar os dados.
 
 >[!NOTE]
-> Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações!
-> E para funcionamento correto do Airflow que voce pode ajustar na DAG o diretório, voce deverá criar a pasta e copiar o arquivo na raiz do computador `/env/.env`
+> Antes da execução do pipeline no Airflow é importante executar o comando `sudo chmod 666 /var/run/docker.sock` para permitir que o container do orquestrador tenha acesso para executar imagens das aplicações.
+> E para que o Airflow funcione corretamente, você deve ajustar na DAG o caminho do diretório e garantir que a pasta /env/ exista na raiz do computador, copiando para ela o arquivo `/env/.env`.
 
 Um ponto crucial para rodar o pipeline `dag_d_pipeline_compass_reviews` é rodar uma DAG eventual que vai gerar dados de forma eventual "simulando" a alimentação de feedbacks no Mongo DB como se fosse o canal.
 
