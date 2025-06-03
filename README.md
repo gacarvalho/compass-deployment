@@ -41,7 +41,7 @@ Este documento apresenta a visão geral do projeto, abrangendo desde os objetivo
     * [Requisitos de Conectividade](#requisitos-de-conectividade)
     * [Portas Necessárias (Protocolos TCP)](#portas-necessárias-protocolos-tcp)
     * [Ferramentas Necessárias](#ferramentas-necessárias)
-  * [6.2 Passos para Configuração e Execução](#62-passos-de-configurações-e-execução-do-projeto-compass)
+  * [6.2 Passos para Configuração e Execução](#62-passos-de-configuração-e-execução-do-projeto-compass)
     * [Deployment do Elastic](#deployment-do-elastic)
     * [Deployment do Kibana](#deployment-do-kibana)
     * [Deployment do Airflow](#deployment-do--airflow)
@@ -86,7 +86,10 @@ Além disso, times responsáveis por produtos e serviços diversos podem monitor
 Em resumo, o Projeto Compass é uma iniciativa estratégica que alinha o desenvolvimento de produtos e serviços às necessidades reais dos usuários, impulsionando a excelência operacional e aprimorando a experiência do cliente.
 
 
-
+>[!NOTE]
+> 🧭 **Por que o nome "Compass"?**
+> O nome Compass (em português, bússola) foi escolhido por representar a principal missão do projeto: guiar decisões estratégicas com base em dados confiáveis.
+> Assim como uma bússola orienta o caminho em meio à incerteza, o projeto orienta as equipes de produto, tecnologia e negócios na identificação de problemas, oportunidades e prioridades nos aplicativos, com base na percepção real dos usuários.
 
 # 2. Arquitetura da Solução
 ---
