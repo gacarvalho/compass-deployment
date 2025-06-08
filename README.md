@@ -2405,6 +2405,7 @@ Este painel é direcionado a times técnicos de Engenharia de Dados, Sustentaç�
 ### Requisitos da Máquina Local
 - **CPU:** Mínimo de 4 vCPUs
 - **Memória RAM:** Mínimo 32 GB
+- **Disco Rígido:** Mínimo 500GB
 - **Sistema Operacional:** Linux (recomendado)
 
 ### Requisitos de Conectividade
