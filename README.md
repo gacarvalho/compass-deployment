@@ -3,7 +3,7 @@
 
 <p align="left">
   <img src="https://img.shields.io/badge/projeto-Compass-blue?style=flat-square" alt="Projeto">
-  <img src="https://img.shields.io/badge/versão-1.0.0-blue?style=flat-square" alt="Versão">
+  <img src="https://img.shields.io/badge/versão pipeline-1.0.0-blue?style=flat-square" alt="Versão">
   <img src="https://img.shields.io/badge/status-deployed-green?style=flat-square" alt="Status">
   <img src="https://img.shields.io/badge/autor-Gabriel_Carvalho-lightgrey?style=flat-square" alt="Autor">
 </p>
@@ -107,9 +107,9 @@ Separando a arquitetura do Compass por componentes, é possível entender que é
 | **Visualização**       | Visualização de métricas:<br> - Técnicas: Grafana.<br> - Funcionais: Metabase. | Grafana, Metabase |
 | **Orquestração**        | Orquestração dos fluxos de dados realizada com Apache Airflow.               | Apache Airflow 2.7.2 |
 
-
-> [!NOTE]
-> O repositório com a infraestrutura do Hadoop utilizada neste case está disponível em: [infra-data-master-compass no GitHub](https://github.com/gacarvalho/infra-data-master-compass).Para obter acesso, entre em contato diretamente pelo [LinkedIn](https://www.linkedin.com/in/iamgacarvalho/)
+> [!IMPORTANT]
+> O repositório com a infraestrutura do Hadoop utilizada neste case está disponível em: [infra-data-master-compass no GitHub](https://github.com/gacarvalho/infra-data-master-compass).
+> Para solicitar acesso, entre em contato diretamente comigo pelo [LinkedIn](https://www.linkedin.com/in/iamgacarvalho/) ou por outro e-mail que você tenha à disposição.
 
 
 
@@ -521,7 +521,9 @@ As aplicações responsáveis por realizar as ingestões, transformações e car
 A arquitetura Batch foi escolhida para garantir alta confiabilidade, escalabilidade e eficiência no processamento de grandes volumes de dados, executando em um schedule diário. Embora o processamento em tempo real (Streaming) seja uma alternativa viável para outros cenários, o foco do projeto é consolidar dados de forma estruturada, assegurando a consistência necessária para que os times de negócios possam acompanhar e analisar as necessidades e desafios dos clientes de forma precisa e estratégica.
 
 > [!IMPORTANT]
-> Para acessar os repositórios das aplicações abaixo, favor entrar em contato para liberação do acesso ao repositório!
+> Os repositórios das aplicações desenvolvidas para este case estão disponíveis nos links indicados em cada item abaixo.
+> Para solicitar acesso, entre em contato diretamente comigo pelo [LinkedIn](https://www.linkedin.com/in/iamgacarvalho/) ou por outro e-mail que você tenha à disposição.
+
 
 ♨️ **Aplicações - Ingestões de dados**
 
