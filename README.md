@@ -1499,7 +1499,7 @@ No exemplo abaixo, é possível observar que a validação de volumetria foi rea
 
   - **Versão:** `1.0.1`
   - **Repositório:** [GitHub](https://github.com/gacarvalho/quality-pipeline-compass)  
-  - **Imagem Docker:** [Docker Hub](hhttps://hub.docker.com/repository/docker/iamgacarvalho/dmc-quality-pipeline-compass/tags/1.0.1/sha256-a089704d2d12d1816d85246347e9604d082d605229d95116aaff145f1be990ba)  
+  - **Imagem Docker:** [Docker Hub](https://hub.docker.com/repository/docker/iamgacarvalho/dmc-quality-pipeline-compass/tags/1.0.1/sha256-a089704d2d12d1816d85246347e9604d082d605229d95116aaff145f1be990ba)  
 
     ```shell
       /app/app-code-compass-quality-pipeline.py $CONFIG_ENV $PARAM1
